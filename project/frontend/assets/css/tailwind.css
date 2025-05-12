@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    scroll-behavior: smooth;
+}
+
+
+.noto-sans-old-turkic-regular {
+    font-family: "Noto Sans Old Turkic", serif;
+    font-weight: 400;
+    font-style: normal;
+}

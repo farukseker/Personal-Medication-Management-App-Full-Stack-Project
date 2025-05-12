@@ -1,0 +1,52 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "serve": "nuxt dev --host 0.0.0.0 --port 3000",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxt/content": "^2.13.4",
+    "@nuxt/image": "^1.9.0",
+    "@nuxt/ui": "^2.21.0",
+    "@nuxtjs/color-mode": "^3.5.2",
+    "@nuxtjs/dayjs": "^1.4.1",
+    "@nuxtjs/google-fonts": "^3.2.0",
+    "@nuxtjs/mdc": "^0.11.1",
+    "@nuxtjs/sitemap": "^7.2.6",
+    "@pinia/nuxt": "^0.9.0",
+    "@prisma/client": "^6.7.0",
+    "@prisma/nuxt": "^0.3.0",
+    "@vercel/analytics": "^1.4.1",
+    "@vesp/nuxt-fontawesome": "^1.1.0",
+    "@vite-pwa/nuxt": "^1.0.0",
+    "@vueuse/motion": "^2.2.6",
+    "axios": "^1.7.9",
+    "dayjs": "^1.11.13",
+    "debug": "^4.4.0",
+    "framer-motion": "^12.0.5",
+    "highlight.js": "^11.11.1",
+    "install": "^0.13.0",
+    "nuxt": "^3.14.1592",
+    "pinia": "^2.3.0",
+    "prisma": "^6.7.0",
+    "relative-time": "^1.0.0",
+    "vue": "latest",
+    "vue-carousel": "^0.18.0",
+    "vue-router": "latest",
+    "vue3-carousel-nuxt": "^1.1.5"
+  },
+  "devDependencies": {
+    "@fortawesome/free-brands-svg-icons": "^6.7.2",
+    "@fortawesome/free-regular-svg-icons": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@nuxtjs/tailwindcss": "^6.13.1",
+    "@types/node": "^22.14.0",
+    "daisyui": "^4.12.22"
+  }
+}

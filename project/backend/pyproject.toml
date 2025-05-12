@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "django-development-templates"
+version = "0.1.0"
+description = ""
+authors = ["F4ruk.seker <ahmetfaruk731@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.2.1"
+django-cors-headers = "^4.7.0"
+django-environ = "^0.12.0"
+djangorestframework = "^3.16.0"
+djangorestframework-simplejwt = "^5.5.0"
+psycopg2 = "^2.9.10"
+tzdata = "^2025.2"
+jupyter = "^1.1.1"
+django-extensions = "^4.1"
+notebook = "^7.4.2"
+ipython = "^9.2.0"
+jupyterlab = "^4.4.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,60 @@
+:is(h1, h2, h3, h4, h5, h6){
+    @apply mb-2 text-wrap
+}
+
+:is(h1, h2, h3, h4, h5, h6) a {
+    --tw-text-opacity: 1!important;
+    color: rgb(75 85 99 / var(--tw-text-opacity, 1))!important /* #4b5563 */;
+    text-decoration: none!important;
+}
+
+:is(h1, h2, h3, h4, h5, h6) a:hover {
+    --tw-text-opacity: 1!important;
+    color: rgb(75 85 99 / var(--tw-text-opacity, 1))!important /* #4b5563 */;
+    text-decoration: none!important;
+}
+/* !important */
+
+h1 {
+    @apply text-2xl md:text-4xl lg:text-5xl font-bold font-sans
+}
+
+h2 {
+    @apply text-4xl font-bold font-sans
+}
+
+h3 {
+    @apply text-3xl font-bold font-sans
+}
+
+h4 {
+    @apply text-2xl font-bold font-sans
+}
+
+h4 {
+    @apply text-xl font-bold font-sans
+}
+
+h5 {
+    @apply text-lg font-bold font-sans
+}
+
+h6 {
+    @apply text-sm font-bold font-sans
+}
+
+blockquote {
+    @apply p-2 mb-4 border-l-4 border-primary text-gray-400
+}
+
+.mark-downed table {
+    @apply table table-zebra
+}
+
+.mark-downed a {
+    @apply link link-primary
+}
+
+input[type=checkbox]{
+    @apply checkbox checkbox-success
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="137" height="137" viewBox="0 0 137 137" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter color-interpolation-filters="sRGB" x="-123" y="-123" width="125" height="125" id="filter_1">
+      <feFlood flood-opacity="0" result="BackgroundImageFix_1" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0" in="SourceAlpha" />
+      <feOffset dx="0" dy="4" />
+      <feGaussianBlur stdDeviation="2" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.251 0" />
+      <feBlend mode="normal" in2="BackgroundImageFix_1" result="Shadow_2" />
+      <feBlend mode="normal" in="SourceGraphic" in2="Shadow_2" result="Shape_3" />
+    </filter>
+  </defs>
+  <g transform="translate(6 2)">
+    <path d="M0 62.5C0 27.9822 27.9822 0 62.5 0C97.0178 0 125 27.9822 125 62.5C125 97.0178 97.0178 125 62.5 125C27.9822 125 0 97.0178 0 62.5Z" fill="#E1EBF5" fill-rule="evenodd" filter="url(#filter_1)" />
+    <path d="M18 0C21.3142 0 24 2.68584 24 6L24 54C24 57.3142 21.3142 60 18 60L6 60C2.68584 60 0 57.3142 0 54L0 6C0 2.68584 2.68584 0 6 0L18 0Z" fill="#0E2338" stroke-width="6" stroke="#0E2338" transform="translate(25 32)" />
+    <path d="M16 0C18.2094 0 20 1.79056 20 4L20 26C20 28.2094 18.2094 30 16 30L4 30C1.79056 30 0 28.2094 0 26L0 4C0 1.79056 1.79056 0 4 0L16 0Z" fill="#E1EBF5" transform="translate(27 34)" />
+    <path d="M24 0C24 0 0 0 0 0C-7.62939e-06 3.15172 0.620598 3.77258 1.82671 6.6844C3.03283 9.59622 4.80065 12.242 7.02927 14.4706C9.25788 16.6992 11.9036 18.467 14.8154 19.6731C17.7272 20.8792 20.8481 21.5 23.9998 21.5C27.1516 21.5 30.2725 20.8792 33.1843 19.6731C36.0961 18.467 38.7418 16.6992 40.9704 14.4706C43.199 12.242 44.9669 9.59622 46.173 6.6844C47.3791 3.77258 48 3.15173 48 0C48 0 24 0 24 0Z" fill="#0E2338" fill-rule="evenodd" transform="matrix(0.755 0.656 -0.656 0.755 65.716 58)" />
+    <path d="M24 3.8147e-06C24 3.8147e-06 0 0 0 0C1.52588e-05 3.15173 0.620605 3.77259 1.82671 6.6844C3.03284 9.59622 4.80066 12.242 7.02928 14.4706C9.25788 16.6992 11.9036 18.467 14.8154 19.6731C17.7272 20.8792 20.8481 21.5 23.9998 21.5C27.1516 21.5 30.2724 20.8792 33.1843 19.6731C36.0961 18.467 38.7418 16.6992 40.9704 14.4706C43.199 12.242 44.9669 9.59621 46.173 6.6844C47.3791 3.77258 48 3.15172 48 -7.62939e-06C48 -7.62939e-06 24 3.8147e-06 24 3.8147e-06Z" fill="#0E2338" fill-rule="evenodd" transform="matrix(-0.755 -0.656 0.656 -0.755 104.895 86)" />
+  </g>
+</svg>
