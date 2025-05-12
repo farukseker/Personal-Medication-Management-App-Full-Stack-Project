@@ -1,6 +1,6 @@
 ![APP](.previews/app.png)
 
-# 💊 MediMind (ya da seçtiğin isim)
+# 💊 MediMind
 
 **Açık kaynaklı, hasta odaklı ilaç takip ve hatırlatma uygulaması.**  
 Karmaşık senaryoları desteklemek için tasarlandı: farklı dozlar, değişken tedavi süreleri, doktor notları, uyarılar ve daha fazlası.
