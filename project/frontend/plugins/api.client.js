@@ -29,15 +29,15 @@ retryStatusCodes: [401],
 
           // Yeni access token'ı cookie'ye yaz
           accessToken.value = tokens.access
-
+          options.headers.set('Authorization', `Bearer ${newToken}`)
           // Yeni header'la tekrar dene
-          return await $fetch.raw(request, {
-            ...options,
-            headers: {
-              ...options.headers,
-              Authorization: `Bearer ${tokens.access}`
-            }
-          })
+          // return await $fetch.raw(request, {
+          //   ...options,
+          //   headers: {
+          //     ...options.headers,
+          //     Authorization: `Bearer ${tokens.access}`
+          //   }
+          // })
         } catch (err) {
           console.error('Token refresh failed', err)
           // throw err

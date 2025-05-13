@@ -26,16 +26,6 @@ const { $api } = useNuxtApp()
 
 const my_medication_list = ref('')
 // const load_my_medication_list = async () => my_medication_list.value = await $api('/medication/medications/')
-const load_my_medication_list = async () => {
-  const res = await $api('/medication/medications/')
-  console.log('API response:', res)
-  my_medication_list.value = res
-}
-onMounted(async () => {
-  try {
-    await load_my_medication_list()
-  } catch (err) {
-    console.error('Hata:', err)
-  }
-})
+const load_my_medication_list = async () => my_medication_list.value = await $api('/medication/medications/')
+onMounted(load_my_medication_list)
 </script>
