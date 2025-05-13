@@ -1,10 +1,10 @@
 <template>
-<div class="card bg-base-100 shadow-sm">
+<div class="card bg-base-100 shadow">
     <div class="card-body p-3">
         <div class="flex justify-between items-center">
             <div>
-            <p class="font-semibold">Parol 500mg</p>
-            <p class="text-sm text-gray-500">Saat 14:00 - 1 tablet</p>
+            <p class="font-semibold">{{ medication.medication_name }} {{ medication.dose }}{{ medication.unit }}</p>
+            <p class="text-sm text-gray-500">Saat {{ medication.time }}  - 1 tablet</p>
             </div>
             <div class="flex gap-2">
             <button class="btn btn-success btn-sm">Aldım</button>
@@ -14,3 +14,7 @@
     </div>
 </div>
 </template>
+
+<script setup>
+defineProps(['medication'])
+</script>

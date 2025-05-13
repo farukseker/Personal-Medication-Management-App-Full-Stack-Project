@@ -26,6 +26,7 @@ const theme = ref('light')
 function toggleTheme() {
     theme.value = localStorage.getItem('theme') || 'light'
     theme.value = theme.value === 'dark' ? 'light' : 'dark'
+    document.documentElement.setAttribute('class', theme.value)
     document.documentElement.setAttribute('data-theme', theme.value)
     localStorage.setItem('theme', theme.value)
 }
