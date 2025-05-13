@@ -45,11 +45,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]+[
     # your apps
-    'medication_management'
+    'medication',
+    'medication_management',
+    'custom_auth'
 ]+[
     # third party app
     'rest_framework',
     'rest_framework_simplejwt',
+    "allauth",
+    "allauth.account",
+    "allauth.mfa",
+    "allauth.socialaccount",
 ]
 
 MIDDLEWARE = [
@@ -65,6 +71,8 @@ MIDDLEWARE = [
 ]+[
     # third party middleware
     'corsheaders.middleware.CorsMiddleware',
+    "allauth.account.middleware.AccountMiddleware",
+
 ]
 
 REST_FRAMEWORK = {
@@ -123,3 +131,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
+AUTH_USER_MODEL = "custom_auth.User"
+# https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
+# LOGIN_REDIRECT_URL = "users:redirect"
+# https://docs.djangoproject.com/en/dev/ref/settings/#login-url
+# LOGIN_URL = "account_login"
+
+DJANGO_ADMIN_FORCE_ALLAUTH = env.bool("DJANGO_ADMIN_FORCE_ALLAUTH", default=False)
