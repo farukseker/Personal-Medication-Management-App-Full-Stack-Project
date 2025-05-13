@@ -19,7 +19,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     async onResponseError({ response, request, options }) {
       if (response.status === 401 && refreshToken.value) {
         try {
-          const tokens = await $fetch('/auth/refresh', {
+          const tokens = await $fetch('/auth/token/refresh', {
             method: 'POST',
             baseURL: config.public.API_HOST,
             body: {
