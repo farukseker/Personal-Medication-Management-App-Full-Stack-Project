@@ -14,6 +14,7 @@
           <button class="btn btn-primary btn-sm">+ ilaç ekle</button>
         </div>
         <div class="space-y-3">
+          {{ my_medication_list }}
           <MedicationPillListItem v-for="medication in my_medication_list" :medication="medication" />
         </div>
       </div>
@@ -24,6 +25,17 @@
 const { $api } = useNuxtApp()
 
 const my_medication_list = ref('')
-const load_my_medication_list = async () => my_medication_list.value = await $api('/medication/medications/')
-onMounted(load_my_medication_list)
+// const load_my_medication_list = async () => my_medication_list.value = await $api('/medication/medications/')
+const load_my_medication_list = async () => {
+  const res = await $api('/medication/medications/')
+  console.log('API response:', res)
+  my_medication_list.value = res
+}
+onMounted(async () => {
+  try {
+    await load_my_medication_list()
+  } catch (err) {
+    console.error('Hata:', err)
+  }
+})
 </script>

@@ -1,12 +1,12 @@
 export default defineNuxtPlugin((nuxtApp) => {
   const config = useRuntimeConfig()
-
   const accessToken = useCookie('access_token')
   const refreshToken = useCookie('refresh_token')
 
   const api = $fetch.create({
     baseURL: config.public.API_HOST,
-
+retryStatusCodes: [401],
+  retry: 1,
     async onRequest({ options }) {
       if (accessToken.value) {
         options.headers = {
@@ -19,34 +19,32 @@ export default defineNuxtPlugin((nuxtApp) => {
     async onResponseError({ response, request, options }) {
       if (response.status === 401 && refreshToken.value) {
         try {
-          const tokens = await $fetch('/auth/token/refresh', {
+          const tokens = await $fetch('/auth/token/refresh/', {
             method: 'POST',
             baseURL: config.public.API_HOST,
             body: {
-              refresh_token: refreshToken.value
+              refresh: refreshToken.value
             }
           })
 
-          accessToken.value = tokens.access_token
-          refreshToken.value = tokens.refresh_token
+          // Yeni access token'ı cookie'ye yaz
+          accessToken.value = tokens.access
 
-          // retry original request
+          // Yeni header'la tekrar dene
           return await $fetch.raw(request, {
             ...options,
             headers: {
               ...options.headers,
-              Authorization: `Bearer ${tokens.access_token}`
+              Authorization: `Bearer ${tokens.access}`
             }
           })
         } catch (err) {
-          accessToken.value = null
-          refreshToken.value = null
-          throw err
+          console.error('Token refresh failed', err)
+          // throw err
         }
       }
 
-      throw response || new Error('API error')
-      // throw response._data || new Error('API error')
+      // throw response || new Error('API error')
     }
   })
 
