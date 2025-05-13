@@ -45,7 +45,8 @@ export default defineNuxtPlugin((nuxtApp) => {
         }
       }
 
-      throw response._data || new Error('API error')
+      throw response || new Error('API error')
+      // throw response._data || new Error('API error')
     }
   })
 

@@ -1,7 +1,10 @@
 <template>
     <!-- Open the modal using ID.showModal() method -->
     <!-- Open Modal Button -->
-<button class="btn btn-primary w-full sm:w-auto" onclick="my_modal_2.showModal()">İlaç Seç</button>
+<button class="btn btn-primary w-full  text-lg" onclick="my_modal_2.showModal()">
+  <font-awesome :icon="faTablets" />
+  <span class="ps-2 hidden md:block">İlaç Al</span>
+</button>
 
 <!-- Modal -->
 <dialog id="my_modal_2" class="modal">
@@ -72,6 +75,7 @@
 </template>
 
 <script setup>
+import { faTablets, faPills } from '@fortawesome/free-solid-svg-icons'
 const { $api } = useNuxtApp()
 import { faClockFour } from '@fortawesome/free-solid-svg-icons'
 import { useMyMedicationStore } from '@/stores/my_medication_store.js'

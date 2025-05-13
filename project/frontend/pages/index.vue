@@ -1,21 +1,32 @@
 <template>
-  <div class="flex flex-col gap-4 bg-gradient-to-t from-base-300 to-base-100">
-    <UsersUserHeader class="sticky top-0 left-0" />
-    <NavNavigationShortcut />
-    
-    <section class="flex flex-col gap-4 px-2 md:px-4 min-h-screen">
-      <FormsMedicineHistoryForm />
-      <article class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <MedicationUseHistory />
-        <MedicationNextHistory />
-      </article>
-    </section>
-</div>
+  <!-- <FormsNewMedicationForm /> -->
+   <NavNavigationShortcut />
+   <div class="p-4 space-y-4 max-w-md mx-auto">
+
+      <div class="flex flex-col gap-4 flex-1">
+        <div class="flex justify-between items-center">
+            <h1 class="text-xl font-bold">İlaç Takibi</h1>
+            <button class="btn btn-ghost text-2xl">
+              pp
+            </button>
+            </div>
+        </div>
+      <div>
+        <div class="flex w-full">
+          <h2 class="text-lg font-semibold mb-2 w-full">Bugün, 13 Mayıs</h2>
+          <button class="btn btn-primary btn-sm">+ ilaç ekle</button>
+        </div>
+        <div class="space-y-3">
+          <MedicationPillReminder />
+        </div>
+      </div>
+   </div>
 </template>
   
 <script setup>
 import { useMyMedicationStore } from '@/stores/my_medication_store.js'
 import { NavNavigationShortcut } from '#components'
+import { faTablets, faPills, faPlus, faGear, faCalendar, faHome, faUserGroup } from '@fortawesome/free-solid-svg-icons'
 
 const my_medication_store = useMyMedicationStore()
 onMounted(my_medication_store.getMedicationList)

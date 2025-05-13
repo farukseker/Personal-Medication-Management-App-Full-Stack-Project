@@ -1,7 +1,7 @@
 <template>
   <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
   <legend class="fieldset-legend">
-    <h2>Yaklaşan İlaçlarını</h2>
+    <h2>İlaçlar</h2>
   </legend>
       <!--TransitionGroup name="slide-fade" tag="ul" class="w-full flex flex-col gap-2"-->
       <ul class="w-full flex flex-col gap-2">
