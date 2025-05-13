@@ -5,30 +5,79 @@
     from-base-300 to-base-100
     text-xl
     ">
-    <div class="my-auto w-full sm:w-8/12 md:w-4/12 px-4">
+    <div class="m-auto w-full sm:w-8/12 lg:w-4/12 px-4">
         <article class="w-fit mx-auto">
             <img src="/pill.svg" alt="">
             <h1 class="text-4xl font-bold text-center">Kayıt Ol</h1>
         </article>
-        <article class="w-full">
-            <label class="label">Rumuz</label>
-            <input type="text" class="input w-full" placeholder="Kullanıcı adınız" />
+        <form @submit.prevent="register" class="w-full">
+            <label class="label">Adınız</label>
+            <input v-model="first_name" type="text" class="input bg-base-200 border-b-gray-600 w-full" placeholder="Kullanıcı adınız" />
 
+            <label class="label">Soyadınız</label>
+            <input v-model="last_name" type="text" class="input bg-base-200 border-b-gray-600 w-full" placeholder="Kullanıcı adınız" />
+            
             <label class="label">E-posta</label>
-            <input type="email" class="input w-full" placeholder="Email" />
+            <input v-model="email" type="email" class="input bg-base-200 border-b-gray-600 w-full" placeholder="Email" />
 
             <label class="label">Şifre</label>
-            <input type="password" class="input w-full" placeholder="Password" />
+            <input v-model="password" type="password" class="input bg-base-200 border-b-gray-600 w-full" placeholder="Password" />
 
-            <button class="btn btn-primary w-full">
-                Giriş yap
+            <button class="btn btn-primary w-full mt-4">
+                Kayıt ol
             </button>
-        </article>
-        <article class="bottom-5 sm:bottom-10 md:bottom-20 w-full left-0 px-4 md:px-8 absolute flex">
-            <button class="btn btn-warning text-white w-full sm:w-8/12 md:w-4/12 mx-auto">
+            <div class="py-20">
+            </div>
+            <button class="btn btn-warning text-white w-full mx-auto">
                 Google ile giriş
             </button> 
-        </article>
+        </form>
     </div>
 </section>
 </template>
+
+<script setup>
+const accessToken = useCookie('access_token')
+const refreshToken = useCookie('refresh_token')
+const { $api } = useNuxtApp()
+const toast = useToast()
+const router = useRouter()
+
+const first_name = ref('')
+const last_name = ref('')
+const email = ref('')
+const password = ref('')
+
+const register = async () => {
+    try{
+        const tokens = await $api('/auth/register',{
+        method: 'POST',
+            body: {
+                first_name: first_name.value,
+                last_name: last_name.value,
+                email: email.value,
+                password: password.value
+            }
+        })
+        accessToken.value = tokens.access
+        refreshToken.value = tokens.refresh
+        toast.add({
+            title:'Kayıt Başarılı',
+            description: 'Giriş Sayfasına yönlendiriliyorsunuz, e-postanızı onaylamayı unutmayın'
+        })
+        router.push('/auth/login')
+    } catch (e) {
+        if (e.status === 406){
+            toast.add({
+                title: 'Kayıt Başarısız!',
+                description: 'E-postanızı kontrol ediniz',
+                color: 'red',
+                icon: 'i-heroicons-exclamation-triangle'
+            })
+        }
+    }
+}
+definePageMeta({
+  layout: 'auth'
+})
+</script>

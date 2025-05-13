@@ -1,10 +1,10 @@
 <template>
-    <div class="z-10 fixed bottom-0 right-0 w-[200px] h-[200px] grid grid-cols-2 grid-rows-2">
+    <div class="z-10 fixed bottom-20 right-0 w-[200px] h-[200px] grid grid-cols-2 grid-rows-2 pointer-events-none">
       <div class="w-full h-full flex justify-center relative">
         <Transition>
           <button 
           v-if="show_shurtcuts" 
-          class="btn btn-circle btn-success text-white text-lg mt-auto ms-auto shadow">
+          class="btn btn-circle btn-success text-white text-lg mt-auto ms-auto shadow pointer-events-auto">
             <font-awesome :icon="faPills" />
           </button>
         </Transition>
@@ -21,13 +21,13 @@
       </div>
       <div class="w-full h-full flex justify-center">
         <Transition>
-          <button v-if="show_shurtcuts" class="btn btn-circle btn-success text-white text-lg shadow m-auto">
+          <button v-if="show_shurtcuts" class="pointer-events-auto btn btn-circle btn-success text-white text-lg shadow m-auto">
             <font-awesome :icon="faCalendar" />
           </button>
         </Transition>
       </div>
       <div class="w-full h-full flex justify-center">
-        <button class="btn btn-circle btn-success shadow m-auto text-white text-lg" @click="show_shurtcuts=!show_shurtcuts">
+        <button class="pointer-events-auto btn btn-circle btn-success shadow m-auto text-white text-lg" @click="show_shurtcuts=!show_shurtcuts">
           <font-awesome :icon="faGear" />
         </button>
       </div>
