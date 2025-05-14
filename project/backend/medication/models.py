@@ -67,15 +67,29 @@ class MedicationDoseTime(models.Model):
         unique_together = ('schedule', 'time')  # Aynı programda aynı saati tekrar girilmesin
 
 class MedicationLog(models.Model):
+    """
+    sechglude id koy böylece hangi durumun ilacı alındı anlarız time sync e gerek yok aynı mantık da olur
+    second:
+    """
+    TAKEN_CHOICES = [
+        ('be_taken', 'Alınacak'),
+        ('taken', 'Aldındı'),
+        ('pass', 'Pas'),
+    ]
     """Kullanıcının bir ilacı aldığı zamanı kaydeder (geçmiş kayıtlar)."""
     user = models.ForeignKey(User, on_delete=models.CASCADE)  # Kayıt sahibi kullanıcı
     medication = models.ForeignKey(Medication, null=True, blank=True, on_delete=models.SET_NULL)
+    dose_time = models.ForeignKey(MedicationDoseTime, null=True, blank=True, on_delete=models.SET_NULL)
+
     # Ilacın FK'sı, silinirse null olur
     medication_name = models.CharField(max_length=200)
     # Kayıt sırasında ilaç adı (silinen ilaç için gösterim)
     date = models.DateField()  # Alım tarihi
     time = models.TimeField(null=True, blank=True)
     # Alım saati (opsiyonel)
+    taken_time = models.TimeField(null=True, blank=True)
+    taken_status = models.CharField(max_length=10, choices=TAKEN_CHOICES, default='be_taken')
+
     dose_taken = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     dose_unit = models.CharField(max_length=50, blank=True)
     # Alınan doz miktarı ve birimi
