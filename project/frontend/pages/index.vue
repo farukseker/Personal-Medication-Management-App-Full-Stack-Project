@@ -15,7 +15,7 @@
           <button class="btn btn-primary btn-sm">+ ilaç ekle</button>
         </div>
         <div class="space-y-3">
-          <MedicationPillReminder v-for="medication_today in medication_today_list" :medication="medication_today" />
+          <MedicationPillReminder v-for="medication_today in medication_today_list" :medication="medication_today" @load_medication='load_medication_today_list' />
         </div>
       </div>
         <!-- Haftalık Durum -->

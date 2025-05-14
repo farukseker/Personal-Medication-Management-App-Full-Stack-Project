@@ -17,7 +17,8 @@
       </button>
         
       <button 
-
+        @click="$router.push('/history')"
+        :class="$route.name === 'history' ? 'dock-active':''"
         >
         <font-awesome :icon="faCalendar" class="size-[1.2em]" />
         <span class="dock-label">Geçmiş</span>

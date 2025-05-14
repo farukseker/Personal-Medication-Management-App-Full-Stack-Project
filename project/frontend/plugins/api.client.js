@@ -29,7 +29,8 @@ retryStatusCodes: [401],
 
           // Yeni access token'ı cookie'ye yaz
           accessToken.value = tokens.access
-          options.headers.set('Authorization', `Bearer ${tokens.access}`)
+          // options.headers.set('Authorization', `Bearer ${tokens.access}`)
+          options.headers['Authorization'] = `Bearer ${tokens.access}`
           // Yeni header'la tekrar dene
           // return await $fetch.raw(request, {
           //   ...options,
