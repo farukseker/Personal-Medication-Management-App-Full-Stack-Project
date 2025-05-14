@@ -1,12 +1,11 @@
-from datetime import timedelta, date
-from medication.models import MedicationSchedule, WeekDay
-from django.utils.timezone import localdate, now
-
+from datetime import date
+from django.utils.timezone import localdate
+from medication.models import MedicationSchedule, MedicationDoseTime, MedicationLog
 
 class MedicationTimeService:
     @staticmethod
     def for_user_today(user):
-        today = localdate(now())
+        today = localdate()
         return MedicationTimeService.for_user_on_date(user, today)
 
     @staticmethod
@@ -14,22 +13,47 @@ class MedicationTimeService:
         schedules = MedicationSchedule.objects.filter(
             medication__user=user,
             start_date__lte=target_date
-        ).select_related('medication')
+        ).select_related('medication').prefetch_related('dose_times')
 
+        # O gün alınan ilaç loglarını önceden çekelim
+        taken_logs = MedicationLog.objects.filter(user=user, date=target_date)
+        taken_map = {(
+            log.medication_id,
+            log.time,
+            log.dose_time.id if log.dose_time else None
+        ) for log in taken_logs if log.time is not None}
         due_medications = []
+
+        taken_dose_time_ids = {
+            log.dose_time.id
+            for log in taken_logs
+            if log.time is not None and log.dose_time is not None
+        }
 
         for schedule in schedules:
             if schedule.end_date and schedule.end_date < target_date:
-                continue  # program bitmiş
+                continue
 
             if MedicationTimeService.is_due_on(schedule, target_date):
-                # schedule
-                due_medications.append({
-                    'medication_name': schedule.medication.name,
-                    'dose': schedule.dose_amount,
-                    'unit': schedule.dose_unit,
-                    'schedules_id': schedule.id,
-                })
+                for dose_time in schedule.dose_times.all():
+                    med_id = schedule.medication.id
+                    dose_time_key = (med_id, dose_time.time)
+
+                    if dose_time.id in taken_dose_time_ids:
+                        continue  # zaten alınmış, gösterme
+
+                    if dose_time_key in taken_map:
+                        continue  # zaten alınmış, gösterme
+
+                    due_medications.append({
+                        'medication_name': schedule.medication.name,
+                        'dose': dose_time.dose_amount or schedule.dose_amount,
+                        'unit': dose_time.dose_unit or schedule.dose_unit,
+                        'dose_time_id': dose_time.id,
+                        'schedule_id': schedule.id,
+                        "medication_id": schedule.medication.id,
+                        'time': dose_time.time.strftime('%H:%M'),
+                    })
 
         return due_medications
 
@@ -38,7 +62,6 @@ class MedicationTimeService:
         frequency = schedule.frequency
         interval = schedule.interval
         start = schedule.start_date
-
         delta_days = (target_date - start).days
 
         if delta_days < 0:
