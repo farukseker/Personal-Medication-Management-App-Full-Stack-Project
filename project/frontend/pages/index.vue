@@ -1,6 +1,5 @@
 <template>
   <!-- <FormsNewMedicationForm /> -->
-   <NavNavigationShortcut />
    <div class="p-4 space-y-4 max-w-md mx-auto">
       <div class="flex flex-col gap-4 flex-1">
         <div class="flex justify-between items-center">
