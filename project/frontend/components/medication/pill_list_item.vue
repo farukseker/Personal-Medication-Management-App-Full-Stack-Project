@@ -10,7 +10,8 @@
                 {{ medication.schedules.length > 0 ? 'Planlandı':''  }}
             </div>
             <div class="flex gap-2">
-                <button v-if="medication.schedules.length === 0" class="btn btn-success btn-sm">Planla</button>
+                <button v-if="medication.schedules.length === 0" class="btn btn-primary btn-sm">Planla</button>
+                <button v-if="medication.schedules.length === 0" class="btn btn-secondary btn-sm">Al</button>
                 <button class="btn btn-success btn-sm">Düzenle</button>
                 <button class="btn btn-outline btn-sm">Sil</button>
             </div>
@@ -21,4 +22,7 @@
 
 <script setup>
 defineProps(['medication'])
+
+
+
 </script>
