@@ -41,10 +41,15 @@ const { $api } = useNuxtApp()
 const on_progress = ref(false)
 
 const trigger = async () => {
-  const result = await emit('load_medication'); // Bu Promise'leri dizi olarak döner
-  if (result.length > 0) {
-    await result[0]; // ilk dönen Promise varsa beklet
-  }
+    try{
+        const result = await emit('load_medication'); // Bu Promise'leri dizi olarak döner
+        if (result.length > 0) {
+            await result[0]; // ilk dönen Promise varsa beklet
+        }
+    } catch {} finally {
+        on_progress.value = false
+    }
+
 };
 
 const take_pill = async (status) => {
