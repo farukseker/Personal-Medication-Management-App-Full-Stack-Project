@@ -1,5 +1,5 @@
 <template>
-  <!-- <FormsNewMedicationForm /> -->
+  <!-- <History.vue /> -->
    <div class="p-4 space-y-4 max-w-md mx-auto">
       <div class="flex flex-col gap-4 flex-1">
         <div class="flex justify-between items-center">
@@ -13,8 +13,8 @@
         <div class="flex w-full">
           <h2 class="text-lg font-semibold mb-2 w-full">Bugün, 13 Mayıs. Aldığın ilaçlar</h2>
         </div>
-        <div class="card bg-base-100 shadow-md">
-            <div class="card-boday flex flex-row gap-2 w-full">
+        <div class="card bg-base-100 shadow mb-3">
+            <div class="card-body flex flex-row gap-2 w-full justify-between">
                 <button class="btn btn-sm"
                 :class="filter_type === 'today' ? 'btn-primary': 'btn-outline'"
                 @click="filter_type='today'">Bugün</button>
@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="space-y-3">
-          <MedicationPillReminder v-for="medication_today in medication_history_list" :medication="medication_today" @load_medication='load_medication_history_list' />
+          <MedicationPillReminder v-for="medication_today in medication_history_list" :key="medication_today.id + 3" :medication="medication_today" @load_medication='load_medication_history_list' />
         </div>
       </div>
    </div>
@@ -47,7 +47,7 @@ watch(filter_type, async new_filter_type => {
     medication_history_list.value = await $api(`/medication/medication-logs/?date=${new_filter_type}`)
 })
 
-const medication_history_list = ref('')
+const medication_history_list = ref([])
 const load_medication_history_list = async () => medication_history_list.value = await $api('/medication/medication-logs/?date=today')
 onMounted(load_medication_history_list)
 //'/medication/medication-logs/23/'

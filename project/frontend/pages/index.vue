@@ -1,5 +1,5 @@
 <template>
-  <!-- <FormsNewMedicationForm /> -->
+  <!-- <İndex.vue /> -->
    <div class="p-4 space-y-4 max-w-md mx-auto">
       <div class="flex flex-col gap-4 flex-1">
         <div class="flex justify-between items-center">
@@ -15,7 +15,13 @@
           <button class="btn btn-primary btn-sm">+ ilaç ekle</button>
         </div>
         <div class="space-y-3">
-          <MedicationPillReminder v-for="medication_today in medication_today_list" :medication="medication_today" @load_medication='load_medication_today_list' />
+          <MedicationPillReminder
+          v-for="medication_today in medication_today_list"
+          :key="medication_today.id" 
+          :medication="medication_today" 
+          @load_medication="async () => await load_medication_today_list()"
+
+          />
         </div>
       </div>
         <!-- Haftalık Durum -->
@@ -38,8 +44,12 @@ import { faTablets, faPills, faPlus, faGear, faCalendar, faHome, faUserGroup } f
 // onMounted(my_medication_store.getMedicationList)
 const { $api } = useNuxtApp()
 
-const medication_today_list = ref('')
-const load_medication_today_list = async () => medication_today_list.value = await $api('/medication/today/')
+const medication_today_list = ref([])
+const load_medication_today_list = async () => {
+  const data = await $api('/medication/today/')
+  medication_today_list.value = data
+  return true // Burada önemli olan bir değer döndürmen
+}
 onMounted(load_medication_today_list)
 
 useSeoMeta({
