@@ -7,11 +7,18 @@ export const useNewMdcStore = defineStore('new_mdc_store', {
     start_date: '',
     end_date: '',
     // temp values
+    // weeky dose START
+    weekly_dose_plans: [],
+    // weeky dose END
+
     // DoseTime-START
     dose_times:[],
     // DoseTime-END 
+
     // Schedule-START
     dose_amount: 1,
+    medicine_dose_unit: 'miligram',
+    medicine_dose_amount: 1,
     dose_unit: 'miligram',
     frequency: '', // (daily | weekly | monthly | custom)
     days_of_week: [],

@@ -1,7 +1,10 @@
 <template>
 <section class="flex flex-col gap-4">
     <fieldset class="w-full fieldset border-b-2 shadow card border-base-300 rounded-box p-4">
-        <legend class="fieldset-legend font-bold">Hatırlatıcı Zamanla</legend>
+        <legend class="fieldset-legend font-bold">
+          <input type="checkbox" class="input checkbox checkbox-primary" checked>
+          Hatırlatıcı Zamanla
+        </legend>
     
     <div>
       <div class="space-y-2 w-full">
@@ -41,7 +44,9 @@ function addDoseTime() {
 }
 
 onMounted(() => {
-  new_mdc_store.dose_times.push({ time: '10:30', dose_amount: 1.0, dose_unit: '' })
+  if (new_mdc_store.dose_times.length === 0) {
+    new_mdc_store.dose_times.push({ time: '10:30', dose_amount: 1.0, dose_unit: '' })
+  }
 })
 
 function removeDoseTime(index) {

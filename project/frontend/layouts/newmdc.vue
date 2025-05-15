@@ -12,59 +12,55 @@
         <div class="flex w-full">
           <h2 class="text-lg font-semibold mb-2 w-full">İlaç Ekle/Düzenle</h2>
         </div>
-        {{ new_mdc_store.form_index }}
-        <ul class="steps">
+        <ul class="steps mx-auto w-full">
             <li
+            @click="$router.push('/new_medicine/medicine_name'); new_mdc_store.form_index = 0"
             class="step"
             :class="new_mdc_store.form_index >= 0 ? 'step-primary':''"
             >
                 <span class="step-icon">
                     <font-awesome :icon="faPills" />
                 </span>
-                Register
             </li>
             <li 
+            @click="$router.push('/new_medicine/medicine_plan'); new_mdc_store.form_index = 1"
             class="step"
-            :class="new_mdc_store.form_index >= 1 ? 'step-primary':''"
+            :class="new_mdc_store.form_index >= 1 ? 'step-error':''"
             >
                 <span class="step-icon">
                     <font-awesome :icon="faCalendar" />
                 </span>
-            Choose plan
             </li>
-            <li class="step"
+            <li 
+            @click="$router.push('/new_medicine/medicine_clock'); new_mdc_store.form_index = 2"
+            class="step"
             :class="new_mdc_store.form_index >= 2 ? 'step-primary':''"
             >
                 <span class="step-icon">
                     <font-awesome :icon="faClock" />
                 </span>
-                Purchase
             </li>
-            <li class="step"
+            <li 
+            @click="$router.push('/new_medicine/medicine_dose'); new_mdc_store.form_index = 3"
+            class="step"
             :class="new_mdc_store.form_index >= 3 ? 'step-primary':''"
             >
                 <span class="step-icon">
                     <font-awesome :icon="faClock" />
                 </span>
-                Receive Product
             </li>
         </ul>
-        <ul>
-            <li @click="$router.push('/new_medicine/medicine_name')">
-                medicine name
-            </li>
-            <li @click="$router.push('/new_medicine/medicine_plan')">
-                medicine plan
-            </li>
-            <li @click="$router.push('/new_medicine/medicine_clock')">
-                medicine clock
-            </li>
-            <li @click="$router.push('/new_medicine/medicine_dose')">
-                medicine dose
-            </li>
-        </ul>
-        <slot />
+        <div class="relative overflow-hidden p-4 space-y-4 max-w-md mx-auto">
+            <transition
+            :name="transitionName"
+            mode="out-in"
+            >
+                <slot />
+            </transition>
+        </div>
     </div>
+    <NavBottomNav />
+
 </div>
 </template>
 
@@ -77,4 +73,51 @@ onMounted(() => {
     const theme = localStorage.getItem('theme') || 'light'
     document.documentElement.setAttribute('data-theme', theme)
 })
+
+const transitionName = ref('slide-left')
+let previousIndex = ref(new_mdc_store.form_index)
+
+watch(() => new_mdc_store.form_index, (newVal, oldVal) => {
+  transitionName.value = newVal > oldVal ? 'slide-left' : 'slide-right'
+  previousIndex.value = newVal
+})
 </script>
+
+<style scoped>
+.slide-left-enter-active,
+.slide-right-enter-active {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.slide-left-leave-active,
+.slide-right-leave-active {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.slide-left-enter-from {
+  @apply translate-x-full opacity-0;
+}
+.slide-left-enter-to {
+  @apply translate-x-0 opacity-100;
+}
+.slide-left-leave-from {
+  @apply translate-x-0 opacity-100;
+}
+.slide-left-leave-to {
+  @apply -translate-x-full opacity-0;
+}
+
+.slide-right-enter-from {
+  @apply -translate-x-full opacity-0;
+}
+.slide-right-enter-to {
+  @apply translate-x-0 opacity-100;
+}
+.slide-right-leave-from {
+  @apply translate-x-0 opacity-100;
+}
+.slide-right-leave-to {
+  @apply translate-x-full opacity-0;
+}
+
+</style>
