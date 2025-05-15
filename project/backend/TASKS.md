@@ -2,3 +2,4 @@
 * [ ] Eğer kullanıcı aynı ilacı 2. kez eklemek isterse kullanıcıyı uyar > front side
 
 göme engelliler için özel nav ve elevnlabs ile seslendirme eklenebilir
+stok yönetimi couut bazlı olabilir
