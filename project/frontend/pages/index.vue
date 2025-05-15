@@ -12,7 +12,9 @@
       <div>
         <div class="flex w-full">
           <h2 class="text-lg font-semibold mb-2 w-full">Bugün, 13 Mayıs</h2>
-          <button class="btn btn-primary btn-sm">+ ilaç ekle</button>
+          <button class="btn btn-primary btn-sm"
+          @click="$router.push('/new_medicine/medicine_name')"
+          >+ ilaç ekle</button>
         </div>
         <div class="space-y-3">
           <MedicationPillReminder

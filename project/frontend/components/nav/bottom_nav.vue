@@ -24,7 +24,10 @@
         <span class="dock-label">Geçmiş</span>
       </button>
       
-      <button>
+      <button
+        @click="$router.push('/settings')"
+        :class="$route.name === 'settings' ? 'dock-active':''"
+        >
         <font-awesome :icon="faGear" />
         <span class="dock-label">Settings</span>
       </button>

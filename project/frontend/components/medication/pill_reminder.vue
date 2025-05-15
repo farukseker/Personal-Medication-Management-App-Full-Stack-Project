@@ -45,6 +45,7 @@ const trigger = async () => {
         const result = await emit('load_medication'); // Bu Promise'leri dizi olarak döner
         if (result.length > 0) {
             await result[0]; // ilk dönen Promise varsa beklet
+            await nextTick()
         }
     } catch {} finally {
         on_progress.value = false
