@@ -3,3 +3,4 @@
 
 göme engelliler için özel nav ve elevnlabs ile seslendirme eklenebilir
 stok yönetimi couut bazlı olabilir
+Su içme | hedefi istatistiksel veri (1 aylık)

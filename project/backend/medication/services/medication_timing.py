@@ -13,47 +13,52 @@ class MedicationTimeService:
         schedules = MedicationSchedule.objects.filter(
             medication__user=user,
             start_date__lte=target_date
-        ).select_related('medication').prefetch_related('dose_times')
+        ).select_related('medication')
 
-        # O gün alınan ilaç loglarını önceden çekelim
         taken_logs = MedicationLog.objects.filter(user=user, date=target_date)
-        taken_map = {(
-            log.medication_id,
-            log.time,
-            log.dose_time.id if log.dose_time else None
-        ) for log in taken_logs if log.time is not None}
-        due_medications = []
+        taken_map = {
+            (
+                log.medication_id,
+                log.time,
+                log.dose_time_id
+            )
+            for log in taken_logs if log.time is not None
+        }
 
         taken_dose_time_ids = {
-            log.dose_time.id
+            log.dose_time_id
             for log in taken_logs
-            if log.time is not None and log.dose_time is not None
+            if log.time is not None and log.dose_time_id is not None
         }
+
+        due_medications = []
 
         for schedule in schedules:
             if schedule.end_date and schedule.end_date < target_date:
                 continue
 
-            if MedicationTimeService.is_due_on(schedule, target_date):
-                for dose_time in schedule.dose_times.all():
-                    med_id = schedule.medication.id
-                    dose_time_key = (med_id, dose_time.time)
+            if not MedicationTimeService.is_due_on(schedule, target_date):
+                continue
 
-                    if dose_time.id in taken_dose_time_ids:
-                        continue  # zaten alınmış, gösterme
+            for dose_time in schedule.medication.dose_times.all():
+                dose_time_key = (schedule.medication.id, dose_time.time)
 
-                    if dose_time_key in taken_map:
-                        continue  # zaten alınmış, gösterme
+                if dose_time.id in taken_dose_time_ids:
+                    continue
 
-                    due_medications.append({
-                        'medication_name': schedule.medication.name,
-                        'dose': dose_time.dose_amount or schedule.dose_amount,
-                        'unit': dose_time.dose_unit or schedule.dose_unit,
-                        'dose_time_id': dose_time.id,
-                        'schedule_id': schedule.id,
-                        "medication_id": schedule.medication.id,
-                        'time': dose_time.time.strftime('%H:%M'),
-                    })
+                if dose_time_key in taken_map:
+                    continue
+
+                due_medications.append({
+                    'medication_name': schedule.medication.name,
+                    'dose': dose_time.dose_amount or schedule.dose_amount,
+                    'unit': dose_time.dose_unit or schedule.dose_unit,
+                    'dose_time_id': dose_time.id,
+                    # 'schedules': schedule.id,
+                    'schedule_id': schedule.id,
+                    'medication_id': schedule.medication.id,
+                    'time': dose_time.time.strftime('%H:%M'),
+                })
 
         return due_medications
 

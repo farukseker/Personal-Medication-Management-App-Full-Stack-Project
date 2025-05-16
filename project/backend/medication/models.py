@@ -7,6 +7,15 @@ User = get_user_model()
 class WeekDay(models.Model):
     """Haftanın günü modelidir (Pazartesi, Salı vb.)."""
     name = models.CharField(max_length=10, unique=True)  # Örneğin 'Pazartesi', 'Salı'
+    WEEKDAY_CHOICES = [
+        ('monday', 'Pazartesi'),
+        ('tuesday', 'Sal'),
+        ('wednesday', 'Çarşamba'),
+        ('thursday', 'Perşembe'),
+        ('friday', 'Cuma'),
+        ('saturday', 'Cumartesi'),
+        ('sunday', 'Pazar')
+    ]
 
     def __str__(self):
         return self.name
@@ -35,7 +44,7 @@ class MedicationSchedule(models.Model):
         ('monthly', 'Aylık'),
         ('custom', 'Özel'),
     ]
-    medication = models.ForeignKey(Medication, on_delete=models.CASCADE)  # İlaç kaydı
+    medication = models.ForeignKey(Medication, on_delete=models.CASCADE, related_name='schedules')  # İlaç kaydı
     start_date = models.DateField()  # Programın başlangıç tarihi
     end_date = models.DateField(null=True, blank=True)  # (Opsiyonel) Bitiş tarihi
     frequency = models.CharField(max_length=10, choices=FREQUENCY_CHOICES, default='daily')
@@ -58,13 +67,15 @@ class MedicationSchedule(models.Model):
 
 class MedicationDoseTime(models.Model):
     # Her doz zamanı için kayıt (örn. sabah 08:00'de 1 tablet)
-    schedule = models.ForeignKey(MedicationSchedule, on_delete=models.CASCADE, related_name='dose_times')
+    medication = models.ForeignKey(Medication, on_delete=models.CASCADE, related_name='dose_times')  # İlaç kaydı
+    # schedule = models.ForeignKey(MedicationSchedule, on_delete=models.CASCADE, related_name='schedule')
     time = models.TimeField()           # Örneğin sabah 08:00
     dose_amount = models.FloatField()  # Örneğin 1.0
     dose_unit = models.CharField(max_length=20)  # Örneğin 'tablet'
 
     class Meta:
-        unique_together = ('schedule', 'time')  # Aynı programda aynı saati tekrar girilmesin
+        # unique_together = ('schedule', 'time')  # Aynı programda aynı saati tekrar girilmesin
+        unique_together = ('medication', 'time')  # Aynı programda aynı saati tekrar girilmesin
 
 class MedicationLog(models.Model):
     """
@@ -124,3 +135,10 @@ class WeeklyDosePlan(models.Model):
 
     class Meta:
         unique_together = ('schedule', 'week_number')
+
+
+class MedicationAutoCompilationModel(models.Model):
+    name = models.CharField(max_length=255)
+    barcode = models.CharField(max_length=30, blank=True)
+    value = models.CharField(max_length=30, blank=True)
+    unit = models.CharField(max_length=30, blank=True)
