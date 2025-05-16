@@ -11,7 +11,10 @@
         <div v-for="(dose, index) in new_mdc_store.dose_times" :key="index" class="grid grid-cols-5 grid-flow-dense items-center gap-2 w-full">
           <input v-model="dose.time" type="time" class="input input-bordered col-span-2" />
           <input v-model="dose.dose_amount" type="number" step="0.01" class="input input-bordered col-span-1" placeholder="Doz" />
-          <input v-model="dose.dose_unit" type="text" class="input input-bordered col-span-1" placeholder="Birim" />
+          <select v-model="dose.dose_unit" class="input col-span-1">
+                <option class="text-gray-600" disabled selected>Ölçek</option>
+                <option v-for="(dose_unit, index) in new_mdc_store.dose_unit_list" :key="index + 'dose_unit' " class="text-gray-600" :value="dose_unit.param">{{dose_unit.value}}</option>
+            </select>
           <button @click.prevent="removeDoseTime" class="btn btn-error col-span-1">✕</button>
         </div>
         <button @click.prevent="addDoseTime" class="btn btn-outline w-full">+ Saat Ekle</button>
@@ -45,7 +48,7 @@ function addDoseTime() {
 
 onMounted(() => {
   if (new_mdc_store.dose_times.length === 0) {
-    new_mdc_store.dose_times.push({ time: '10:30', dose_amount: 1.0, dose_unit: '' })
+    new_mdc_store.dose_times.push({ time: '10:30', dose_amount: 1.0, dose_unit: new_mdc_store.dose_unit})
   }
 })
 

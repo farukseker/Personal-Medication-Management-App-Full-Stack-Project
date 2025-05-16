@@ -14,7 +14,7 @@
           <button class="btn btn-primary btn-sm">+ ilaç ekle</button>
         </div>
         <div class="space-y-3">
-          <MedicationPillListItem v-for="medication in my_medication_list" :medication="medication" />
+          <MedicationPillListItem v-for="medication in my_medication_list" :key="medication.id + 'medication_lcl'" :medication="medication" @load_medication_list="load_my_medication_list" />
         </div>
       </div>
    </div>
@@ -23,7 +23,7 @@
 <script setup>
 const { $api } = useNuxtApp()
 
-const my_medication_list = ref('')
+const my_medication_list = ref([])
 
 // const load_my_medication_list = async () => my_medication_list.value = await $api('/medication/medications/')
 const load_my_medication_list = async () => my_medication_list.value = await $api('/medication/medications/')

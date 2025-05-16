@@ -7,7 +7,6 @@
         <legend class="fieldset-legend font-bold">İlaç bilgileri</legend>
         <div
         class="w-full bg-base-200 "
-        :class="on_focus ? 'fixed md:static top-0 left-0 z-10':''"
         >
         <input 
             type="text"
@@ -16,7 +15,7 @@
             @focusin="on_focus = true"
             @focusout="() => setTimeout(() => { on_focus = false }, 200)"
             placeholder="İlaç adı">
-            <div v-if="on_focus" class="h-screen">
+            <div v-if="on_focus" class="max-h-[40vh]">
                 <ul class="px-3 py-2">
                     <li 
                     class="py-1 text-base cursor-pointer"
@@ -61,6 +60,11 @@
 const on_focus = ref(false)
 import { useNewMdcStore } from '@/stores/new_mdc_store.js'
 
+const new_mdc_store = useNewMdcStore()
+const router = useRouter()
+
+new_mdc_store.vaild_form_1 = new_mdc_store.medicine_name.length > 0 && new_mdc_store.dose_amount !== '' && new_mdc_store.dose_unit !== ''
+
 const apply_selected_mdc = (mdc) => {
   new_mdc_store.medicine_name = mdc.name
   new_mdc_store.medicine_dose_unit = mdc.unit
@@ -68,9 +72,6 @@ const apply_selected_mdc = (mdc) => {
   on_focus.value = false
   results.value = []
 }
-
-const new_mdc_store = useNewMdcStore()
-const router = useRouter()
 
 const go_next_page = () => {
     new_mdc_store.form_index = 1

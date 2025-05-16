@@ -20,11 +20,19 @@ export const useNewMdcStore = defineStore('new_mdc_store', {
     medicine_dose_unit: 'miligram',
     medicine_dose_amount: 1,
     dose_unit: 'miligram',
-    frequency: '', // (daily | weekly | monthly | custom)
+    frequency: 'daily', // (daily | weekly | monthly | custom)
     days_of_week: [],
     day_of_month: 1,
     interval: 1,
+    doses_per_period:0,
     // Schedule-END
+
+    // is vaild form START
+    vaild_form_1: false, 
+    vaild_form_2: false, 
+    vaild_form_3: false, 
+    vaild_form_4: false, 
+    // is vaild form END
     form_index: 0,
     dose_unit_list: [
     {

@@ -50,7 +50,6 @@ const trigger = async () => {
     } catch {} finally {
         on_progress.value = false
     }
-
 };
 
 const take_pill = async (status) => {
