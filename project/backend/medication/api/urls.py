@@ -1,14 +1,17 @@
 from django.urls import path, include
 from .views import (
-    MedicationListCreateView, MedicationDetailView,
+    MedicationDetailView,
     MedicationScheduleListCreateView, MedicationScheduleDetailView,
     MedicationLogListCreateView, MedicationLogDetailView,
     DailyNoteListCreateView, DailyNoteDetailView,
-    TodayMedicationAPIView, MedicationLogCreateView
+    TodayMedicationAPIView, MedicationLogCreateView,
+    MedicationScheduleCreateView,
+    MedicationListView, MedicationCreateView
 )
 
 urlpatterns = [
-    path('medications/', MedicationListCreateView.as_view()),
+    path('medications/', MedicationListView.as_view()),
+    path('medications/create/', MedicationCreateView.as_view()),
     path('medications/<int:pk>/', MedicationDetailView.as_view()),
 
     path('medication-schedules/', MedicationScheduleListCreateView.as_view()),

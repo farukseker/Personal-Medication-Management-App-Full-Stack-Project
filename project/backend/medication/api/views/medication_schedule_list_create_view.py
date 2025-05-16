@@ -5,7 +5,7 @@ from medication.models import MedicationSchedule
 
 
 class MedicationScheduleListCreateView(ListCreateAPIView):
-    serializer_class = MedicationScheduleSerializer
+    serializer_class =MedicationScheduleSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):

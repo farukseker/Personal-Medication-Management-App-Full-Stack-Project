@@ -1,33 +1,33 @@
 from django.core.management.base import BaseCommand, CommandError
-from medication.models import MedicationAutoCompilationModel
-import json
+from medication.models import WeekDay
+from django.core.exceptions import ValidationError
 
 
 class Command(BaseCommand):
     def add_arguments(self, parser):
-        parser.add_argument('source_file', type=str)
+        ...
 
     @staticmethod
-    def bulk_update_medications(new_medications):
-        existing_names = set(MedicationAutoCompilationModel.objects.values_list('name', flat=True))
-        new_entries = [med for med in new_medications if med['name'] not in existing_names]
+    def bulk_update_medications(day_list: list[str]):
+        if WeekDay.objects.count() >= 6:
+            raise ValidationError('Days are already defined')
 
-        if new_entries:
-            medication_objects = [MedicationAutoCompilationModel(**med) for med in new_entries]
-            MedicationAutoCompilationModel.objects.bulk_create(medication_objects)
+        WeekDay.objects.bulk_create([
+            WeekDay(**{
+                "id": index,
+                "name": day
+            })
+            for index, day in enumerate(day_list)
+        ])
 
     def handle(self, *args, **options):
-        source_file = options.get('source_file')
-        with open(source_file, 'r', encoding='utf-8') as data_file:
-            data = json.loads(data_file.read())
-
-        data_set = [
-            {
-                "barcode": str(m.get('Güncel Barkod')).strip(),
-                "name": m.get('medicine_name').strip(),
-                "value": m.get('medicine_value') if m.get('medicine_value', None) else 'Unknown',
-                "unit": m.get('medicine_unit') if m.get('medicine_unit', None) else 'Unknown',
-            }
-            for m in data if m.get('Güncel Barkod', None)
+        day_list = [
+            'monday',
+            'tuesday',
+            'wednesday',
+            'thursday',
+            'friday',
+            'saturday',
+            'sunday',
         ]
-        self.bulk_update_medications(data_set)
+        self.bulk_update_medications(day_list)
