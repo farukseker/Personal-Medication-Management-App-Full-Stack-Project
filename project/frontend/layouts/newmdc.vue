@@ -8,7 +8,7 @@
             </button>
         </div>
     </div>
-    <div> 
+    <div class="pb-14"> 
         <div class="flex w-full">
           <h2 class="text-lg font-semibold mb-2 w-full">İlaç Ekle/Düzenle</h2>
         </div>
@@ -16,7 +16,7 @@
             <li
             @click="$router.push('/new_medicine/medicine_name'); new_mdc_store.form_index = 0"
             class="step"
-            :class="new_mdc_store.form_index >= 0 ? 'step-primary':''"
+            :class="new_mdc_store.form_index >= 0 ? 'step-primary': ''"
             >
                 <span class="step-icon">
                     <font-awesome :icon="faPills" />
@@ -25,7 +25,7 @@
             <li 
             @click="$router.push('/new_medicine/medicine_plan'); new_mdc_store.form_index = 1"
             class="step"
-            :class="new_mdc_store.form_index >= 1 ? 'step-error':''"
+            :class="new_mdc_store.form_index >= 1 ? 'step-primary':''"
             >
                 <span class="step-icon">
                     <font-awesome :icon="faCalendar" />

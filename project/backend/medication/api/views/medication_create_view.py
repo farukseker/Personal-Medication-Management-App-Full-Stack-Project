@@ -6,10 +6,12 @@ from medication.models import Medication
 
 class MedicationListCreateView(ListCreateAPIView):
     serializer_class = MedicationSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Medication.objects.filter(user=self.request.user)
+        # return Medication.objects.filter(user=self.request.user)
+        return Medication.objects.all()
 
     def perform_create(self, serializer):
+        print(serializer)
         serializer.save(user=self.request.user)

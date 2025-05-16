@@ -18,7 +18,7 @@
     <!-- Tekrar Sıklığı -->
     <div class="mb-2">
       <label class="label">Tekrar Sıklığı</label>
-      <select v-model="frequency" class="select select-bordered w-full">
+      <select v-model="new_mdc_store.frequency" class="select select-bordered w-full">
         <option value="daily">Günlük</option>
         <option value="weekly">Haftalık</option>
         <option value="monthly">Aylık</option>
@@ -26,7 +26,7 @@
       </select>
     </div>
 
-    <div v-if="frequency === 'weekly'" class="join join-vertical">
+    <div v-if="new_mdc_store.frequency === 'weekly'" class="join join-vertical">
         <input class="join-item btn btn-md justify-start" type="checkbox" name="Monday" v-model="new_mdc_store.days_of_week" value="Monday" aria-label="Pazartesi" />
         <input class="join-item btn btn-md justify-start" type="checkbox" name="Tuesday" v-model="new_mdc_store.days_of_week" value="Tuesday" aria-label="Salı" />
         <input class="join-item btn btn-md justify-start" type="checkbox" name="Wednesday" v-model="new_mdc_store.days_of_week" value="Wednesday" aria-label="Çarşamba" />
@@ -37,13 +37,13 @@
     </div>
     
     <!-- Ayın Günü (Aylık için) -->
-    <div v-if="frequency === 'monthly'">
+    <div v-if="new_mdc_store.frequency === 'monthly'">
       <label class="label">Ayın Kaçıncı Günü?</label>
       <input v-model="new_mdc_store.day_of_month" type="number" min="1" max="31" class="input input-bordered w-full" />
     </div>
 
     <!-- Özel Tekrar Aralığı -->
-    <div v-if="frequency === 'custom'">
+    <div v-if="new_mdc_store.frequency === 'custom'">
       <label class="label">Kaç Günde Bir?</label>
       <input v-model="new_mdc_store.interval" type="number" min="1" class="input input-bordered w-full" />
     </div>
@@ -63,8 +63,8 @@
 </template>
 
 <script setup>
-const frequency = ref('daily')
 import { useNewMdcStore } from '@/stores/new_mdc_store.js'
+
 
 const new_mdc_store = useNewMdcStore()
 const router = useRouter()
