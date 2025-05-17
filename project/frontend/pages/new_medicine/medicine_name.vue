@@ -7,10 +7,10 @@
         <legend class="fieldset-legend font-bold">İlaç bilgileri</legend>
         <div
         class="w-full bg-base-200 "
-        >
+            >
         <input 
             type="text"
-            class="input w-full mt-2"
+            class="input w-full"
             v-model="new_mdc_store.medicine_name"
             @focusin="on_focus = true"
             @focusout="() => setTimeout(() => { on_focus = false }, 200)"
@@ -27,7 +27,6 @@
                 </ul>
             </div>
         </div>
-
         <article class="flex mt-2 gap-2">
             <input class="input w-2/3" type="number" v-model="new_mdc_store.medicine_dose_amount" placeholder="İlaç tek ünite değeri">
             <select v-model="new_mdc_store.medicine_dose_unit" class="input w-1/3">
