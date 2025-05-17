@@ -45,9 +45,9 @@ retryStatusCodes: [401],
         }
       }
       // refresh tokeni olmaması durumunda auth var sayılamaz
-      else {
-        // const router = useRouter()
-        // router.push('/auth/login')
+      else if (response.status === 401) {
+        const router = useRouter()
+        router.push('/auth/login')
       }
       // throw response || new Error('API error')
     }
