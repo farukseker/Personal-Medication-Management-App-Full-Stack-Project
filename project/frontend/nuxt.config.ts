@@ -8,6 +8,7 @@ export default defineNuxtConfig({
       enabled: true,
     },
   },
+  plugins: [{ src: '~/plugins/registerServiceWorker.js', mode: 'client' }],
   ssr: false,
     routeRules: {
     '/': {
@@ -45,28 +46,41 @@ export default defineNuxtConfig({
     preference: 'light',
     fallback: 'light',
   },
-  // pwa: {
-  //   registerType: 'autoUpdate',
-  //   manifest: {
-  //     name: 'Uygulama Adı',
-  //     short_name: 'Kısa Ad',
-  //     description: 'Uygulamanızın açıklaması',
-  //     theme_color: '#ffffff',
-  //     icons: [
-  //       {
-  //         src: '/icon-192x192.png',
-  //         sizes: '192x192',
-  //         type: 'image/png',
-  //       },
-  //       {
-  //         src: '/icon-512x512.png',
-  //         sizes: '512x512',
-  //         type: 'image/png',
-  //       },
-  //     ],
-  //   },
-    
-  // },
+  pwa: {
+    registerType: 'autoUpdate',
+    manifest: {
+      name: 'Medicine Tracker',
+      short_name: 'Pars Meds',
+      description: 'Tracker',
+      theme_color: '#ffffff',
+      "icons": [
+        {
+          "src": "/icons/launchericon-192-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        },
+        {
+          "src": "/icons/launchericon-512-512.png",
+          "sizes": "512x512",
+          "type": "image/png"
+        }
+      ],
+      "screenshots": [
+        {
+          "src": "/screenshots/mobile-home.png",
+          "sizes": "500x778",
+          "type": "image/png",
+          "form_factor": "narrow"
+        },
+        {
+          "src": "/screenshots/desktop-dashboard.png",
+          "sizes": "1280x720",
+          "type": "image/png",
+          "form_factor": "wide"
+        }
+      ]
+    },
+  },
   mdc: {
     components: {
       map: {
@@ -81,9 +95,6 @@ export default defineNuxtConfig({
   },
   css: [
     '@/assets/css/tailwind.css',
-  ],
-  plugins: [
-    // '~/plugins/heatmap.client.ts'
   ],
   fontawesome: {
     icons: {
