@@ -1,13 +1,13 @@
 from .base import *
 
 CSRF_TRUSTED_ORIGINS = [
-    f"https://{env('PRODUCT_HOST')}/",
-    f"https://{env('PRODUCT_API_HOST')}"
+    f"http://{env('PRODUCT_HOST')}/",
+    f"http://{env('PRODUCT_API_HOST')}"
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    f"https://{env('PRODUCT_HOST')}/",
-    f"https://{env('PRODUCT_API_HOST')}"
+    f"http://{env('PRODUCT_HOST')}/",
+    f"http://{env('PRODUCT_API_HOST')}"
 ]
 
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS")

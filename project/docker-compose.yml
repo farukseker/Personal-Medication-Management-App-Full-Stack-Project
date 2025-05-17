@@ -1,0 +1,72 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: medication-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password_medication
+      POSTGRES_DB: medication
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - my_network
+    ports:
+      - 2000:5432
+
+  backend:
+    build:
+      context: ./backend
+    container_name: medication-backend
+    command: >
+      bash -c "poetry install &&
+               python manage.py migrate &&
+               python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - db
+    networks:
+      - my_network
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings.product
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: medication-frontend
+    volumes:
+      - frontend_dist:/usr/share/nginx/html
+    depends_on:
+      - backend
+    networks:
+      - my_network
+
+  nginx:
+    image: nginx:latest
+    container_name: medication-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - frontend_dist:/usr/share/nginx/html
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - my_network
+
+volumes:
+  postgres_data:
+    driver: local
+  frontend_dist:
+
+networks:
+  my_network:
+    driver: bridge
