@@ -1,28 +1,73 @@
-# Base image olarak Node.js kullanıyoruz
-FROM node:22.13.1
+# # Use the official Bun image
+# FROM oven/bun:1 as base
+# WORKDIR /usr/src/app
 
-# Çalışma dizinini oluştur ve ayarla
-WORKDIR /app
+# # Temp install için dev klasörü
+# FROM base AS install
+# RUN mkdir -p /temp/dev
+# COPY package.json bun.lockb /temp/dev/
+# RUN cd /temp/dev && bun install --frozen-lockfile
 
-# package.json ve package-lock.json dosyalarını kopyala
-COPY package*.json ./
+# # Prod bağımlılıkları için
+# RUN mkdir -p /temp/prod
+# COPY package.json bun.lockb /temp/prod/
+# RUN cd /temp/prod && bun install --frozen-lockfile
 
-ENV NUXT_API_PATH="https://api.farukseker.com.tr/api"
+# # Build aşaması
+# FROM base AS prerelease
+# COPY --from=install /temp/dev/node_modules /usr/src/app/node_modules
+# COPY . /usr/src/app
+# ENV NODE_ENV=production
+# RUN bun --bun run build
 
-# Bağımlılıkları yükle
-RUN npm install
+# # Final image
+# FROM base AS release
+# WORKDIR /usr/src/app
+# COPY --from=install /temp/prod/node_modules /usr/src/app/node_modules
+# COPY --from=prerelease /usr/src/app/.output /usr/src/app/.output
+# COPY package.json /usr/src/app/
+# USER bun
+# EXPOSE 3000/tcp
+# ENV NUXT_HOST=0.0.0.0
+# ENTRYPOINT ["sh", "-c", "bun run /usr/src/app/.output/server/index.mjs --host $NUXT_HOST"]
+# Build Stage 1
 
-# Nuxt.js hazırlık komutunu çalıştır
-RUN npm run postinstall
+# Base image olarak resmi Node.js slim kullan
+FROM node:20-slim as base
+WORKDIR /usr/src/app
 
-# Uygulama dosyalarını kopyala
+# Sistem bağımlılıkları
+RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+
+# Geliştirme bağımlılıkları için ayrı katman
+FROM base AS install
+COPY package.json package-lock.json ./
+RUN npm ci
+
+# Build aşaması
+FROM base AS build
+COPY --from=install /usr/src/app/node_modules ./node_modules
 COPY . .
-
-# Nuxt.js uygulamasını build et
+ENV NODE_ENV=production
 RUN npm run build
 
-# Uygulamanın çalışacağı portu tanımla
-EXPOSE 3000
+# Final imaj (sadece çıktılar ve prod modül)
+FROM base AS release
+WORKDIR /usr/src/app
 
-# Uygulamayı başlat
-CMD ["npm", "run", "preview"]
+# Yalnızca üretim bağımlılıklarını kopyala
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
+
+# Build çıktısını kopyala (önemli: .output dizini NGINX için gerekli)
+COPY --from=build /usr/src/app/.output /usr/src/app/.output
+
+# Opsiyonel: Config veya env varsa onları da kopyala
+COPY --from=build /usr/src/app/.env /usr/src/app/.env
+COPY --from=build /usr/src/app/nuxt.config.ts /usr/src/app/
+
+EXPOSE 3000
+ENV NUXT_HOST=0.0.0.0
+
+# Nuxt'ün Node server modunda çalıştırılması
+CMD ["node", ".output/server/index.mjs"]

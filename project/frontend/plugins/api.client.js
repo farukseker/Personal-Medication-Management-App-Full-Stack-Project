@@ -1,7 +1,17 @@
 export default defineNuxtPlugin((nuxtApp) => {
   const config = useRuntimeConfig()
-  const accessToken = useCookie('access_token')
-  const refreshToken = useCookie('refresh_token')
+  const accessToken = useCookie('access_token', {
+      maxAge: 60 * 60 * 24 * 30,
+      sameSite: 'lax',   // CSRF dostu
+      secure:  true,     // prod’da HTTPS şart
+      path:    '/',      // tüm route'larda erişilsin
+  })
+  const refreshToken = useCookie('refresh_token',{
+    maxAge: 60 * 60 * 24 * 30 * 6, // 6 ay mesela
+    sameSite: 'lax',
+    secure:  true,
+    path:    '/',
+  })
 
   const api = $fetch.create({
     baseURL: config.public.API_HOST,
