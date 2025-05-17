@@ -46,7 +46,7 @@ INSTALLED_APPS = [
 ]+[
     # your apps
     'medication',
-    'medication_management',
+    # 'medication_management',
     'custom_auth'
 ]+[
     # third party app
