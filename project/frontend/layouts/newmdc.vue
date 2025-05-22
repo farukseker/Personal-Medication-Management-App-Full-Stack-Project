@@ -1,10 +1,12 @@
 <template>
-<div class="p-4 space-y-4 max-w-md mx-auto">
+<div class="py-4 px-2 sm:px-4 space-y-4 max-w-md mx-auto">
     <div class="flex flex-col gap-4 flex-1">
         <div class="flex justify-between items-center">
             <h1 class="text-xl font-bold">İlaç Takip Formu</h1>
-            <button class="btn btn-ghost text-2xl">
-                pp
+            <button 
+              @click="$router.push('/settings')"
+              class="btn btn-ghost text-2xl p-0">
+                <img class="w-[36px] h-[36px] object-cover rounded-full shadow-md" src="/pp.jpg" alt="">
             </button>
         </div>
     </div>
@@ -50,7 +52,7 @@
                 </span>
             </li>
         </ul>
-        <div class="relative overflow-hidden p-4 space-y-4 max-w-md mx-auto">
+        <div class="relative overflow-hidden py-4 sm:p-4 space-y-4 max-w-md mx-auto">
             <transition
             :name="transitionName"
             mode="out-in"

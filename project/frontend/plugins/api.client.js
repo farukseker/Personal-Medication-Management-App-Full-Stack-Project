@@ -15,8 +15,8 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   const api = $fetch.create({
     baseURL: config.public.API_HOST,
-retryStatusCodes: [401],
-  retry: 1,
+    retryStatusCodes: [401],
+    retry: 1,
     async onRequest({ options }) {
       if (accessToken.value) {
         options.headers = {
@@ -36,19 +36,8 @@ retryStatusCodes: [401],
               refresh: refreshToken.value
             }
           })
-
-          // Yeni access token'ı cookie'ye yaz
           accessToken.value = tokens.access
-          // options.headers.set('Authorization', `Bearer ${tokens.access}`)
           options.headers['Authorization'] = `Bearer ${tokens.access}`
-          // Yeni header'la tekrar dene
-          // return await $fetch.raw(request, {
-          //   ...options,
-          //   headers: {
-          //     ...options.headers,
-          //     Authorization: `Bearer ${tokens.access}`
-          //   }
-          // })
         } catch (err) {
           console.error('Token refresh failed', err)
           // throw err

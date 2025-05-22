@@ -1,8 +1,6 @@
 <template>
 <UNotifications />
-<div class="absolute bottom-10 right-2 z-10">
-<ThemeSwitch />
-</div>
+
 <div class="font-[Roboto] flex flex-1 flex-col w-full">
     <div class="pb-20">
       <slot />
