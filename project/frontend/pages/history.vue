@@ -16,7 +16,7 @@
           <h2 class="text-lg font-semibold mb-2 w-full">Bugün, 13 Mayıs. Aldığın ilaçlar</h2>
         </div>
         <div class="card bg-base-100 sm:shadow mb-3">
-            <div class="sm:card-body flex flex-row gap-2 w-full justify-between">
+            <div class="card-body flex flex-row gap-2 p-0 sm:p-5 w-full justify-between">
                 <button class="btn btn-sm"
                 :class="filter_type === 'today' ? 'btn-primary': 'btn-outline'"
                 @click="filter_type='today'">Bugün</button>
