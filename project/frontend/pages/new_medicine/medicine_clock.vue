@@ -15,7 +15,7 @@
                 <option class="text-gray-600" disabled selected>Ölçek</option>
                 <option v-for="(dose_unit, index) in new_mdc_store.dose_unit_list" :key="index + 'dose_unit' " class="text-gray-600" :value="dose_unit.param">{{dose_unit.value}}</option>
             </select>
-          <button @click.prevent="removeDoseTime" class="btn btn-error col-span-1">✕</button>
+          <button @click.prevent="removeDoseTime(index)" class="btn btn-error col-span-1">✕</button>
         </div>
         <button @click.prevent="addDoseTime" class="btn btn-outline w-full">+ Saat Ekle</button>
       </div>

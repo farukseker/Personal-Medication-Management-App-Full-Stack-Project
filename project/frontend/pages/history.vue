@@ -4,8 +4,10 @@
       <div class="flex flex-col gap-4 flex-1">
         <div class="flex justify-between items-center">
             <h1 class="text-xl font-bold">İlaç Takibi</h1>
-            <button class="btn btn-ghost text-2xl">
-              pp
+            <button 
+              @click="$router.push('/settings')"
+              class="btn btn-ghost text-2xl p-0">
+                <img class="w-[36px] h-[36px] object-cover rounded-full shadow-md" src="/pp.jpg" alt="">
             </button>
             </div>
         </div>
@@ -13,8 +15,8 @@
         <div class="flex w-full">
           <h2 class="text-lg font-semibold mb-2 w-full">Bugün, 13 Mayıs. Aldığın ilaçlar</h2>
         </div>
-        <div class="card bg-base-100 shadow mb-3">
-            <div class="card-body flex flex-row gap-2 w-full justify-between">
+        <div class="card bg-base-100 sm:shadow mb-3">
+            <div class="sm:card-body flex flex-row gap-2 w-full justify-between">
                 <button class="btn btn-sm"
                 :class="filter_type === 'today' ? 'btn-primary': 'btn-outline'"
                 @click="filter_type='today'">Bugün</button>
