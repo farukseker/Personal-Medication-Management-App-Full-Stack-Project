@@ -5,7 +5,6 @@
           <input type="checkbox" class="input checkbox checkbox-primary" checked>
           Hatırlatıcı Zamanla
         </legend>
-    
     <div>
       <div class="space-y-2 w-full">
         <div v-for="(dose, index) in new_mdc_store.dose_times" :key="index" class="grid grid-cols-5 grid-flow-dense items-center gap-2 w-full">

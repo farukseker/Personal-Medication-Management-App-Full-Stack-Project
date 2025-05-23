@@ -1,118 +1,87 @@
 <template>
-  <form class="p-4 space-y-4">
-    <!-- İlaç Seçimi -->
-    <div>
-      <label class="label font-bold">İlaç</label>
-      <select v-model="form.medication" class="select select-bordered w-full">
-        <option disabled value="">İlaç seçin</option>
-        <option v-for="med in medications" :key="med.id" :value="med.id">{{ med.name }}</option>
-      </select>
-    </div>
-
-    <!-- Başlangıç & Bitiş Tarihi -->
-    <div class="grid grid-cols-2 gap-2">
+  <!-- Modal Toggle Button -->
+  <button class="btn btn-primary" @click="openNewModal">+ Yeni Plan Ekle</button>
+  <div v-if="schedules.length" class="mt-6 space-y-4">
+    <div v-for="(schedule, index) in sortedSchedules" :key="index" class="p-4 bg-base-200 rounded-xl shadow flex justify-between">
       <div>
-        <label class="label">Başlangıç Tarihi</label>
-        <input v-model="form.start_date" type="date" class="input input-bordered w-full" />
+        <h3 class="font-bold text-lg">{{ schedule.frequency.toUpperCase() }} Planı</h3>
+        <p>{{ schedule.start_date }} - {{ schedule.end_date || 'Süresiz' }}</p>
       </div>
-      <div>
-        <label class="label">Bitiş Tarihi (Opsiyonel)</label>
-        <input v-model="form.end_date" type="date" class="input input-bordered w-full" />
-      </div>
-    </div>
-
-    <!-- Tekrar Sıklığı -->
-    <div>
-      <label class="label">Tekrar Sıklığı</label>
-      <select v-model="form.frequency" class="select select-bordered w-full">
-        <option value="daily">Günlük</option>
-        <option value="weekly">Haftalık</option>
-        <option value="monthly">Aylık</option>
-        <option value="custom">Özel</option>
-      </select>
-    </div>
-
-    <!-- Günler (Haftalık için) -->
-    <div v-if="form.frequency === 'weekly'">
-      <label class="label">Hangi Günler?</label>
-      <div class="flex flex-wrap gap-2">
-        <label v-for="day in weekDays" :key="day.id" class="badge cursor-pointer">
-          <input type="checkbox" v-model="form.days_of_week" :value="day.id" class="hidden" />
-          <span>{{ day.name }}</span>
-        </label>
+      <div class="flex gap-2">
+        <button class="btn btn-sm btn-outline" @click="openEditModal(index)">Düzenle</button>
+        <button class="btn btn-sm btn-error" @click="removeSchedule(index)">Sil</button>
       </div>
     </div>
+  </div>
 
-    <!-- Ayın Günü (Aylık için) -->
-    <div v-if="form.frequency === 'monthly'">
-      <label class="label">Ayın Kaçıncı Günü?</label>
-      <input v-model="form.day_of_month" type="number" min="1" max="31" class="input input-bordered w-full" />
-    </div>
+  <!-- Modal -->
+  <dialog ref="modalRef" class="modal">
+    <div class="modal-box max-w-2xl">
+      <h3 class="font-bold text-lg">{{ editIndex === null ? 'Yeni Plan Ekle' : 'Planı Düzenle' }}</h3>
 
-    <!-- Özel Tekrar Aralığı -->
-    <div v-if="form.frequency === 'custom'">
-      <label class="label">Kaç Günde Bir?</label>
-      <input v-model="form.interval" type="number" min="1" class="input input-bordered w-full" />
-    </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <!-- Başlangıç / Bitiş Tarihi -->
+        <input type="date" v-model="currentSchedule.start_date" class="input input-bordered w-full" />
+        <input type="date" v-model="currentSchedule.end_date" class="input input-bordered w-full" />
 
-    <!-- Günlük Saatler -->
-    <div>
-      <label class="label font-bold">Günün Saatleri</label>
-      <div class="space-y-2">
-        <div v-for="(dose, index) in form.dose_times" :key="index" class="flex items-center gap-2">
-          <input v-model="dose.time" type="time" class="input input-bordered w-1/3" />
-          <input v-model="dose.dose_amount" type="number" step="0.01" class="input input-bordered w-1/3" placeholder="Doz" />
-          <input v-model="dose.dose_unit" type="text" class="input input-bordered w-1/3" placeholder="Birim" />
-          <button @click.prevent="removeDoseTime(index)" class="btn btn-xs btn-error">✕</button>
+        <!-- Sıklık -->
+        <select v-model="currentSchedule.frequency" class="select select-bordered w-full">
+          <option value="daily">Günlük</option>
+          <option value="weekly">Haftalık</option>
+          <option value="monthly">Aylık</option>
+          <option value="custom">Özel</option>
+        </select>
+
+        <!-- Özel / Haftalık / Aylık Koşulları -->
+        <div v-if="currentSchedule.frequency === 'custom'" class="col-span-2">
+          <input type="number" v-model="currentSchedule.interval" placeholder="Kaç günde bir?" class="input input-bordered w-full" />
         </div>
-        <button @click.prevent="addDoseTime" class="btn btn-sm btn-outline w-full">+ Saat Ekle</button>
+
+        <div v-if="currentSchedule.frequency === 'weekly'" class="col-span-2">
+          <div class="flex gap-2 flex-wrap">
+            <label
+              v-for="day in weekDays"
+              :key="day.value"
+              class="btn btn-sm"
+              :class="{ 'btn-primary': currentSchedule.days_of_week.includes(day.value), 'btn-outline': !currentSchedule.days_of_week.includes(day.value) }"
+            >
+              <input type="checkbox" class="hidden" :value="day.value" v-model="currentSchedule.days_of_week" />
+              {{ day.label }}
+            </label>
+          </div>
+        </div>
+
+        <div v-if="currentSchedule.frequency === 'monthly'" class="col-span-2">
+          <input type="number" v-model="currentSchedule.day_of_month" placeholder="Ayın Kaçıncı Günü" class="input input-bordered w-full" min="1" max="31" />
+        </div>
+
+        <!-- Doz Bilgileri -->
+        <input type="number" v-model="currentSchedule.doses_per_period" placeholder="Doz / Periyot" class="input input-bordered w-full" />
+        <input type="number" v-model="currentSchedule.dose_amount" placeholder="Doz Miktarı" class="input input-bordered w-full" />
+        <input type="text" v-model="currentSchedule.dose_unit" placeholder="Birim" class="input input-bordered w-full" />
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-action">
+        <form method="dialog" class="flex gap-2">
+          <button class="btn">İptal</button>
+          <button class="btn btn-primary" @click.prevent="saveSchedule">
+            {{ editIndex === null ? 'Ekle' : 'Güncelle' }}
+          </button>
+        </form>
       </div>
     </div>
-
-    <!-- Periyot başına doz -->
-    <div class="grid grid-cols-2 gap-2">
-      <div>
-        <label class="label">Periyot başına doz</label>
-        <input v-model="form.doses_per_period" type="number" min="1" class="input input-bordered w-full" />
-      </div>
-      <div>
-        <label class="label">Toplam Doz Miktarı</label>
-        <input v-model="form.dose_amount" type="number" step="0.01" class="input input-bordered w-full" />
-      </div>
-    </div>
-
-    <div>
-      <label class="label">Birim</label>
-      <input v-model="form.dose_unit" type="text" class="input input-bordered w-full" />
-    </div>
-
-    <!-- Kaydet Butonu -->
-    <div class="pt-4">
-      <button type="submit" class="btn btn-primary w-full">Kaydet</button>
-    </div>
-  </form>
+  </dialog>
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
 
-const medications = [
-  { id: 1, name: 'Parol' },
-  { id: 2, name: 'Augmentin' },
-]
+const schedules = ref([])
+const modalRef = ref()
+const editIndex = ref(null)
 
-const weekDays = [
-  { id: 1, name: 'Pzt' },
-  { id: 2, name: 'Sal' },
-  { id: 3, name: 'Çar' },
-  { id: 4, name: 'Per' },
-  { id: 5, name: 'Cum' },
-  { id: 6, name: 'Cmt' },
-  { id: 7, name: 'Paz' },
-]
-
-const form = reactive({
-  medication: '',
+const blankSchedule = () => ({
   start_date: '',
   end_date: '',
   frequency: 'daily',
@@ -120,27 +89,99 @@ const form = reactive({
   days_of_week: [],
   day_of_month: null,
   doses_per_period: 1,
-  dose_amount: 1.0,
-  dose_unit: 'tablet',
-  dose_times: [
-    { time: '08:00', dose_amount: 1.0, dose_unit: 'tablet' },
-  ],
+  dose_amount: '',
+  dose_unit: ''
 })
 
-function addDoseTime() {
-  form.dose_times.push({ time: '', dose_amount: 1.0, dose_unit: '' })
+function frequencyLabel(value) {
+  const labels = {
+    daily: 'Günlük',
+    weekly: 'Haftalık',
+    monthly: 'Aylık',
+    custom: 'Özel'
+  }
+  return labels[value] || value
 }
 
-function removeDoseTime(index) {
-  form.dose_times.splice(index, 1)
-}
-</script>
 
-<style scoped>
-/* Mobilde daha iyi görünüm için */
-@media (max-width: 640px) {
-  form {
-    padding: 1rem;
+const currentSchedule = reactive(blankSchedule())
+
+const weekDays = [
+  { value: 1, label: 'Pzt' },
+  { value: 2, label: 'Sal' },
+  { value: 3, label: 'Çar' },
+  { value: 4, label: 'Per' },
+  { value: 5, label: 'Cum' },
+  { value: 6, label: 'Cmt' },
+  { value: 7, label: 'Paz' }
+]
+
+
+function openNewModal() {
+  Object.assign(currentSchedule, blankSchedule())
+  editIndex.value = null
+  modalRef.value.showModal()
+}
+
+function openEditModal(index) {
+  Object.assign(currentSchedule, JSON.parse(JSON.stringify(schedules.value[index])))
+  editIndex.value = index
+  modalRef.value.showModal()
+}
+
+function editSchedule(schedule) {
+  const index = schedules.value.indexOf(schedule)
+  if (index !== -1) {
+    editIndex.value = index
+    currentSchedule = JSON.parse(JSON.stringify(schedule))
+    modalRef.value.showModal()
   }
 }
-</style>
+
+function deleteSchedule(schedule) {
+  const index = schedules.value.indexOf(schedule)
+  if (index !== -1) schedules.value.splice(index, 1)
+}
+const sortedSchedules = computed(() =>
+  [...schedules.value].sort((a, b) => new Date(a.start_date) - new Date(b.start_date))
+)
+
+function saveSchedule() {
+  if (isOverlapping(currentSchedule, schedules.value)) {
+    alert("Aynı tarihlerde başka bir plan zaten var. Lütfen tarihleri değiştir.")
+    return
+  }
+
+  const newItem = JSON.parse(JSON.stringify(currentSchedule))
+  if (editIndex.value === null) {
+    schedules.value.push(newItem)
+  } else {
+    schedules.value[editIndex.value] = newItem
+  }
+  modalRef.value.close()
+}
+
+function removeSchedule(index) {
+  schedules.value.splice(index, 1)
+}
+
+function isOverlapping(newSchedule, schedules) {
+  const startA = new Date(newSchedule.start_date)
+  const endA = newSchedule.end_date ? new Date(newSchedule.end_date) : null
+
+  return schedules.some((s, i) => {
+    // Edit moddaysa aynı index'i atla
+    if (editIndex.value !== null && i === editIndex.value) return false
+
+    const startB = new Date(s.start_date)
+    const endB = s.end_date ? new Date(s.end_date) : null
+
+    // Bitiş tarihi yoksa hep açık say → sonsuza kadar geçerli gibi davran
+    const rangeA_end = endA || new Date('9999-12-31')
+    const rangeB_end = endB || new Date('9999-12-31')
+
+    // Çakışma kontrolü (A ∩ B ≠ ∅)
+    return startA <= rangeB_end && startB <= rangeA_end
+  })
+}
+</script>
