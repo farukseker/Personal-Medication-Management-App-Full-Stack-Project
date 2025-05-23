@@ -68,7 +68,7 @@ onMounted(load_medication_today_list)
 
 onMounted(()=>{
 
-    today.value = dayjs().format('mm. MMMM')
+    today.value = dayjs().format('DD MMMM')
 })
 
 useSeoMeta({
