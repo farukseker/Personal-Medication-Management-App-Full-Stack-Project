@@ -18,33 +18,47 @@
           @click="go_new_medicine_form"
           >+ ilaç ekle</button>
         </div>
-        <div class="space-y-3 max-h-[40vh] overflow-y-auto" >
+        <div class="space-y-3 max-h-[40vh] overflow-y-auto mt-4" >
           <MedicationPillReminder
+          v-if="medication_today_list.length > 0"
           v-for="medication_today in medication_today_list"
           :key="medication_today.id" 
           :medication="medication_today" 
           @load_medication="async () => await load_medication_today_list()"
-
           />
+          <div v-else role="alert" class="alert alert-success shadow">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>Bu gün almanız gereken ilaç bulunmamaktadır!</span>
+          </div>
         </div>
       </div>
-      <!--div class="grid grid-cols-3 gap-4">
-        <div class="rounded shadow-md bg-base-200 p-2 grid grid-cols-3 bg-fuchsia-800">
-          <div class="col-span-2">Abdest</div>
-          <div class="col-span-1">1</div>
-        </div>
-        <div class="rounded shadow bg-base-200 p-2">Count: 0</div>
-        <div class="rounded shadow bg-base-200 p-2">Count: 0</div>
-      </div-->
         <!-- Haftalık Durum -->
-        <!--div class="card bg-base-100 shadow-md">
-          <div class="card-body">
-            <h3 class="text-md font-medium">Bu Gün</h3>
-            <progress class="progress progress-primary w-full" value="60" max="100"></progress>
-            <p class="text-sm text-gray-500 mt-1">6 / 10 doz alındı</p>
+      <div class="card bg-base-100 shadow-md">
+        <div class="card-body">
+          <h3 class="text-md font-medium">Bu Gün</h3>
+          <progress class="progress progress-primary w-full" :value="stats?.taken_percentage" max="100"></progress>
+          <p class="text-sm text-gray-500 mt-1">{{ stats?.taken_count }} / {{ stats?.be_taken_count }} doz alındı</p>
+        </div>
+      </div>
+  
+      <fieldset class="w-full bg-base-200 fieldset border-b-2 shadow card border-base-300 rounded-box p-4">
+        <legend class="fieldset-legend font-bold">Sayaçlar</legend>
+          <div class="grid grid-cols-3 gap-4">
+            <div class="rounded shadow-md bg-base-200 p-2 grid grid-cols-3 bg-fuchsia-800">
+              <div class="col-span-2">Abdest</div>
+              <div class="col-span-1">1</div>
+            </div>
+            <div class="rounded shadow bg-base-200 p-2">Count: 0</div>
+            <!-- Add a counter -->
+            <div class="rounded shadow bg-base-200 border-2 border-dashed border-gray-400 text-gray-600 p-2 flex cursor-pointer">
+              <span class="my-auto">Sayaç Ekle</span>
+            </div>
           </div>
-        </div-->
-   </div>
+      </fieldset>
+  
+  </div>
 </template>
   
 <script setup>
@@ -60,16 +74,37 @@ const { $api } = useNuxtApp()
 const router = useRouter()
 const medication_today_list = ref([])
 const today = ref()
+const stats = ref()
 
 const load_medication_today_list = async () => {
   const data = await $api('/medication/today/')
   medication_today_list.value = data
+  await get_stats()
   return true // Burada önemli olan bir değer döndürmen
 }
-onMounted(load_medication_today_list)
 
 onMounted(()=>{
     today.value = dayjs().format('DD MMMM')
+})
+
+const get_stats = async () => {
+  if (medication_today_list.value){
+    const h_r = await $api(`/medication/medication-logs/?date=today`)
+    const taken = h_r.length;
+    const total = medication_today_list.value.length + taken;
+
+    const percentage = total === 0 ? 0 : (taken / total) * 100;
+
+    stats.value = {
+      taken_count: taken,
+      be_taken_count: total,
+      taken_percentage: percentage.toFixed(2)  // virgülden sonra 2 basamak tutar
+    };
+  }
+}
+
+onMounted(async () => {
+  await load_medication_today_list()
 })
 
 const go_new_medicine_form = () => {
