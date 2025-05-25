@@ -1,10 +1,14 @@
 <template>
 <section class="flex flex-col gap-4">
     <fieldset class="w-full fieldset border-b-2 shadow card border-base-300 rounded-box p-4">
-        <legend class="fieldset-legend font-bold">İlaç plan</legend>
+        <!-- <legend class="fieldset-legend font-bold">İlaç plan</legend> -->
         
-        <ScheduleList @edit="openEditModal" @remove="removeSchedule" />
-        <button class="btn btn-primary mt-4" @click="$router.push('/new_medicine/medicine_plan_form')">+ Yeni Plan Ekle</button>
+        <ScheduleList @remove="removeSchedule" />
+        <button
+          class="btn btn-primary mt-4"
+          @click="$router.push('/new_medicine/medicine_plan_form')"
+          :disabled="!is_last_date_unlimted()"
+          >+ Yeni Plan Ekle</button>
 
     </fieldset>
     <fieldset class="w-full fieldset border-b-2 shadow card border-base-300 rounded-box p-4">
@@ -13,7 +17,7 @@
                 <button class="btn btn-secondary w-full" @click="go_previous_page">Geri</button>
             </div>
             <div class="w-full">
-                <button class="btn btn-primary w-full" @click="go_next_page">Devam et</button>
+                <button class="btn btn-success w-full" @click="scheduleStore.save_diff">Kaydet</button>
             </div>
         </div>
     </fieldset>
@@ -44,17 +48,7 @@ const blankSchedule = () => ({
 
 const currentSchedule = reactive(blankSchedule())
 
-function openNewModal() {
-  Object.assign(currentSchedule, blankSchedule())
-  editIndex.value = null
-  isModalVisible.value = true
-}
-
-function openEditModal(index) {
-  Object.assign(currentSchedule, JSON.parse(JSON.stringify(schedules.value[index])))
-  editIndex.value = index
-  isModalVisible.value = true
-}
+const is_last_date_unlimted = () =>  scheduleStore.schedules.length > 0 ? (scheduleStore.sortedSchedules[scheduleStore.schedules.length - 1].end_date !== '') : true
 
 function saveSchedule(updatedSchedule) {
   if (scheduleStore.isOverlapping(updatedSchedule, editIndex.value)) {

@@ -1,6 +1,6 @@
 <template>
 
-<header class="flex bg-base-300 p-4 sticky top-0 z-10 rounded-b-md shdow">
+<header class="flex bg-base-300 p-4 sticky top-0 z-10 rounded-b-md shdow max-w-md mx-auto">
     <div 
     @click="router.push('/new_medicine/medicine_plan')"
     class="w-[36px] my-auto">
@@ -8,10 +8,10 @@
     </div>
     <div class="w-full my-auto">Plan adı ve sırası </div>
     <div class="w-fit">
-        <button class="btn btn-sm btn-primary text-white">Kaydet</button>
+        <button class="btn btn-sm btn-primary text-white" @click="saveSchedule" :disabled="!form_is_vaild()">Kaydet</button>
     </div>
 </header>
-<fieldset class="fieldset  rounded-box w-xs p-4">
+<fieldset class="fieldset  rounded-box w-xs p-4 max-w-md mx-auto">
     <legend class="fieldset-legend text-xl">Plan 1.</legend>
     <article class="flex flex-col gap-4">
         <fieldset class="w-full bg-base-200 fieldset border-b-2 shadow card border-base-300 rounded-box p-4">
@@ -63,18 +63,24 @@
             </div>
         </fieldset>
 
-    <fieldset class="w-full fieldset border-b-2 shadow card border-base-300 rounded-box p-4">
+    <fieldset class="w-full bg-base-200 fieldset border-b-2 shadow card border-base-300 rounded-box p-4">
         <legend class="fieldset-legend font-bold">Kullanım</legend>
         <article class="flex mt-2 gap-2">
-            <input class="input w-2/3" type="number" v-model="schedule.dose_amount" placeholder="İlaç tek ünite değeri">
-            <select v-model="scheduleStore.dose_unit" class="input w-1/3">
-                <option class="text-gray-600" disabled selected>Ölçek</option>
-                <option v-for="(dose_unit, index) in scheduleStore.dose_unit_list" :key="index + 'dose_unit' " class="text-gray-600" :value="dose_unit.param">{{dose_unit.value}}</option>
-            </select>
+            <div class="w-2/3 flex flex-col">
+                <label class="label">Miktar</label>
+                <input class="input w-full" type="number" v-model="schedule.dose_amount" placeholder="İlaç tek ünite değeri">
+            </div>
+            <div class="w-1/3 flex flex-col">
+                <label class="label opacity-0">Miktar</label>
+                <select v-model="scheduleStore.dose_unit" class="input w-full">
+                    <option class="text-gray-600" disabled selected>Ölçek</option>
+                    <option v-for="(dose_unit, index) in scheduleStore.dose_unit_list" :key="index + 'dose_unit' " class="text-gray-600" :value="dose_unit.param">{{dose_unit.value}}</option>
+                </select>
+            </div>
         </article>
     </fieldset>
 
-    <fieldset class="w-full fieldset border-b-2 shadow card border-base-300 rounded-box p-4">
+    <fieldset class="w-full bg-base-200 fieldset border-b-2 shadow card border-base-300 rounded-box p-4">
         <legend class="fieldset-legend font-bold">
           <input type="checkbox" class="input checkbox checkbox-primary" checked>
           Hatırlatıcı Zamanla
@@ -95,8 +101,11 @@
         </div>
     </fieldset>
 
-    <div >
-        <button class="btn btn-primary w-full" @click="saveSchedule">Kaydet</button>
+    <div class="w-full flex gap-2">
+        <button class="btn btn-secondary w-1/2" 
+        @click="router.push('/new_medicine/medicine_plan')"
+        >İptal</button>
+        <button class="btn btn-primary w-1/2" @click="saveSchedule" :disabled="!form_is_vaild()">Kaydet</button>
     </div>
 
 </article>
@@ -116,13 +125,13 @@ const scheduleStore = useNewMdcStore()
 
 const schedule = ref({
   start_date: '',
-  end_date: '',
+  end_date: null,
   frequency: 'daily',
   interval: 1,
   days_of_week: [],
   day_of_month: null,
   doses_per_period: 1,
-  dose_amount: '',
+  dose_amount: 1,
   dose_unit: '',
   dose_times: []
 })
@@ -138,6 +147,10 @@ const weekDays = [
   { value: 7, label: 'Paz' },
 ]
 
+const form_is_vaild = () => {
+    return schedule.value.start_date && schedule.value.dose_amount
+}
+
 onMounted(() => {
     if (schedule_index && scheduleStore.schedules.length > 0 && scheduleStore.schedules[schedule_index]){
         Object.assign(schedule.value, scheduleStore.schedules[schedule_index])
@@ -146,8 +159,8 @@ onMounted(() => {
 
 // dose_times
 
-const saveSchedule = (updatedSchedule) => {
-  if (scheduleStore.isOverlapping(updatedSchedule, schedule_index)) {
+const saveSchedule = () => {
+  if (scheduleStore.isOverlapping(schedule.value, schedule_index)) {
     alert("Aynı tarihlerde başka bir plan zaten var. Lütfen tarihleri değiştir.")
     return
   }
@@ -165,12 +178,14 @@ const removeSchedule = (index) => {
 }
 
 const addDoseTime = () => {
-  schedule.value.dose_times.push({ time: '', dose_amount: 1.0, dose_unit: '' })
+    let default_dose_unit = schedule.value.dose_times.length > 0 ? schedule.value.dose_times[schedule.value.dose_times.length - 1].dose_unit : scheduleStore.dose_unit
+    schedule.value.dose_times.push({ time: '', dose_amount: 1.0, dose_unit: default_dose_unit })
 }
 
 onMounted(() => {
   if (schedule.value.dose_times.length === 0) {
-    schedule.value.dose_times.push({ time: '10:30', dose_amount: 1.0, dose_unit: schedule.value.dose_unit})
+    let default_dose_unit = scheduleStore.dose_unit
+    schedule.value.dose_times.push({ time: '10:30', dose_amount: 1.0, dose_unit: default_dose_unit})
   }
 })
 

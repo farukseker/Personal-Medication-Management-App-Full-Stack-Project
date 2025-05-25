@@ -11,10 +11,19 @@
         </div>
     </div>
     <div class="pb-14"> 
-        <div class="flex w-full">
-          <h2 class="text-lg font-semibold mb-2 w-full">İlaç Ekle/Düzenle</h2>
+        <div class="flex w-full shadow-sm rounded">
+            <div class="radial-progress progress-primary" style="--value:35;" aria-valuenow="2" role="progressbar">
+              3 / 1
+            </div>
+            <div class="w-fit ms-4 mt-2 text-xl font-semibold">
+              <p>
+                İlaç Düzenle
+                <span class="label block w-full text-sm">Sonraki adım: planlama</span>
+              </p>
+            </div>
         </div>
-        <ul class="steps mx-auto w-full">
+
+        <!--ul class="steps mx-auto w-full">
             <li
             @click="$router.push('/new_medicine/medicine_name'); new_mdc_store.form_index = 0"
             class="step"
@@ -51,7 +60,7 @@
                     <font-awesome :icon="faClock" />
                 </span>
             </li>
-        </ul>
+        </ul-->
         <div class="relative overflow-hidden py-4 sm:p-4 space-y-4 max-w-md mx-auto">
             <transition
             :name="transitionName"

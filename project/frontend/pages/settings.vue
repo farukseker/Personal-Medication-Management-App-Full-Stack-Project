@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4 space-y-4 max-w-md mx-auto h-screen flex flex-col">
+    <div class="p-4 space-y-4 max-w-md mx-auto flex flex-col">
       <div class="flex flex-col gap-4 flex-1 max-h-fit">
         <div class="flex justify-between items-center">
             <h1 class="text-xl font-bold">Ayarlar</h1>

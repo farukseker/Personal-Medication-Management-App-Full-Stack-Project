@@ -26,8 +26,12 @@ class Medication(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)  # İlaç kaydının sahibi kullanıcı
     name = models.CharField(max_length=200)  # İlaç adı
     is_active = models.BooleanField(default=True)  # Aktif olup olmadığı (silindiğinde False yapılır)
-    default_dose_amount = models.DecimalField(max_digits=5, decimal_places=2, null=True,
-                                              blank=True)  # Varsayılan doz miktarı
+    default_dose_amount = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        null=True,
+        blank=True
+    )  # Varsayılan doz miktarı
     default_dose_unit = models.CharField(max_length=50, blank=True)  # Doz birimi (örn. 'mg', 'tablet')
     created_at = models.DateTimeField(auto_now_add=True)  # Oluşturulma zamanı
     updated_at = models.DateTimeField(auto_now=True)  # Güncellenme zamanı
@@ -67,15 +71,15 @@ class MedicationSchedule(models.Model):
 
 class MedicationDoseTime(models.Model):
     # Her doz zamanı için kayıt (örn. sabah 08:00'de 1 tablet)
-    medication = models.ForeignKey(Medication, on_delete=models.CASCADE, related_name='dose_times')  # İlaç kaydı
-    # schedule = models.ForeignKey(MedicationSchedule, on_delete=models.CASCADE, related_name='schedule')
+    # medication = models.ForeignKey(Medication, on_delete=models.CASCADE, related_name='dose_times')  # İlaç kaydı
+    schedule = models.ForeignKey(MedicationSchedule, on_delete=models.CASCADE, related_name='schedule')
     time = models.TimeField()           # Örneğin sabah 08:00
     dose_amount = models.FloatField()  # Örneğin 1.0
     dose_unit = models.CharField(max_length=20)  # Örneğin 'tablet'
 
     class Meta:
-        # unique_together = ('schedule', 'time')  # Aynı programda aynı saati tekrar girilmesin
-        unique_together = ('medication', 'time')  # Aynı programda aynı saati tekrar girilmesin
+        unique_together = ('schedule', 'time')  # Aynı programda aynı saati tekrar girilmesin
+        # unique_together = ('medication', 'time')  # Aynı programda aynı saati tekrar girilmesin
 
 class MedicationLog(models.Model):
     """
