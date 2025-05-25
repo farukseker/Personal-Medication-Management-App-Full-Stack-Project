@@ -17,7 +17,7 @@ export default {
   },
   plugins: [require('daisyui')],
   daisyui: {
-    themes: ["light", "dark"], // sadece light ve dark aktif
+    themes: ["light", "dark", "forest"], // sadece light ve dark aktif
   },
 }
 

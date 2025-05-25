@@ -14,7 +14,7 @@ class Command(BaseCommand):
 
         WeekDay.objects.bulk_create([
             WeekDay(**{
-                "id": index,
+                "id": index + 1,
                 "name": day
             })
             for index, day in enumerate(day_list)

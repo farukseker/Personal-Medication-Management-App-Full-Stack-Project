@@ -6,15 +6,14 @@ export const useNewMdcStore = defineStore('new_mdc_store', {
     medicine_notes: '',
     start_date: '',
     end_date: '',
-    // temp values
-    // weeky dose START
     weekly_dose_plans: [],
-    // weeky dose END
+    medicine_dose_unit: 'miligram',
+    medicine_dose_amount: 1,
+    dose_amount: 1,
+    dose_unit: 'miligram',
+    frequency: 'daily',
 
-    // DoseTime-START
     dose_times:[],
-    // DoseTime-END 
-
     // is vaild form START
     vaild_form_1: false, 
     vaild_form_2: false, 
@@ -43,6 +42,21 @@ export const useNewMdcStore = defineStore('new_mdc_store', {
     },
   },
   actions: {
+    async save_diff() {
+        const { $api } = useNuxtApp()
+        await $api('/medication/medications/create/', {
+        method: 'POST',
+        body: {
+            name: this.medicine_name,
+            default_dose_amount: this.medicine_dose_amount,
+            default_dose_unit: this.medicine_dose_unit, 
+            // days_of_week: get_day_index_from_list(this.days_of_week),
+                    //             "start_date": dayjs(this.start_date).format('YYYY-MM-DD'),
+                    // "end_date": dayjs(this.end_date).format('YYYY-MM-DD'),
+            "schedules": this.sortedSchedules,
+        }
+    })
+    },
     resetForm() {
         this.medicine_name = '';
         this.medicine_notes = '';

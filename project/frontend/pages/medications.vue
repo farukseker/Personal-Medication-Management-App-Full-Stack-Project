@@ -12,10 +12,10 @@
         </div>
       <div>
         <div class="flex w-full">
-          <h2 class="text-lg font-semibold mb-2 w-full">Bugün, 13 Mayıs</h2>
+          <h2 class="text-lg font-semibold mb-2 w-full">Bugün, {{ today }}</h2>
           <button 
           class="btn btn-primary btn-sm"
-          @click="$router.push('/new_medicine/medicine_name')"
+          @click="go_new_medicine_form"
           >+ ilaç ekle</button>
         </div>
         <div class="space-y-3">
@@ -27,10 +27,22 @@
 
 <script setup>
 const { $api } = useNuxtApp()
+const scheduleStore = useNewMdcStore()
+import dayjs from 'dayjs'
 
 const my_medication_list = ref([])
+const router = useRouter()
+const today = ref()
 
 // const load_my_medication_list = async () => my_medication_list.value = await $api('/medication/medications/')
 const load_my_medication_list = async () => my_medication_list.value = await $api('/medication/medications/')
 onMounted(load_my_medication_list)
+onMounted(()=>{
+    today.value = dayjs().format('DD MMMM')
+})
+
+const go_new_medicine_form = () => {
+  scheduleStore.resetForm()
+  router.push('/new_medicine/medicine_name')
+}
 </script>

@@ -6,7 +6,7 @@
             <h1 class="text-xl font-bold">İlaç Takibi</h1>
             <button 
               @click="$router.push('/settings')"
-              class="btn btn-ghost text-2xl p-0">
+              class="btn btn-ghost btn-circle text-2xl p-0">
                 <img class="w-[36px] h-[36px] object-cover rounded-full shadow-md" src="/pp.jpg" alt="">
             </button>
             </div>
@@ -15,7 +15,7 @@
         <div class="flex w-full">
           <h2 class="text-lg font-semibold mb-2 w-full">Bugün, {{ today }}</h2>
           <button class="btn btn-primary btn-sm"
-          @click="$router.push('/new_medicine/medicine_name')"
+          @click="go_new_medicine_form"
           >+ ilaç ekle</button>
         </div>
         <div class="space-y-3 max-h-[40vh] overflow-y-auto" >
@@ -48,17 +48,19 @@
 </template>
   
 <script setup>
-import { useMyMedicationStore } from '@/stores/my_medication_store.js'
-import { NavNavigationShortcut } from '#components'
 import { faTablets, faPills, faPlus, faGear, faCalendar, faHome, faUserGroup } from '@fortawesome/free-solid-svg-icons'
 import dayjs from 'dayjs'
+import { useNewMdcStore } from '@/stores/new_mdc_store.js'
+
+const scheduleStore = useNewMdcStore()
 
 // const my_medication_store = useMyMedicationStore()
 // onMounted(my_medication_store.getMedicationList)
 const { $api } = useNuxtApp()
-
+const router = useRouter()
 const medication_today_list = ref([])
 const today = ref()
+
 const load_medication_today_list = async () => {
   const data = await $api('/medication/today/')
   medication_today_list.value = data
@@ -67,9 +69,13 @@ const load_medication_today_list = async () => {
 onMounted(load_medication_today_list)
 
 onMounted(()=>{
-
     today.value = dayjs().format('DD MMMM')
 })
+
+const go_new_medicine_form = () => {
+  scheduleStore.resetForm()
+  router.push('/new_medicine/medicine_name')
+}
 
 useSeoMeta({
       title: 'İlaç Takip',
