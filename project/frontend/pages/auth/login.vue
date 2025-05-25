@@ -17,24 +17,39 @@
                 <label class="label">Şifre</label>
                 <input v-model="password" type="password" required class="input w-full" placeholder="Password" />
 
-                <div class="flex">
-                    <input type="checkbox" name="pw" id="pwf">
-                    <label class="label" for="pwf">Şifremi unuttum</label>
+                <div class="flex py-2 gap-2">
+                    <input type="checkbox" name="pw" id="pwf" class="checkbox checkbox-sm checkbox-primary my-auto" checked>
+                    <label class="label my-auto" for="pwf">Beni Hatırla</label>
                 </div>
                 <button type="submit" class="btn btn-primary w-full">
                     Giriş yap
                 </button>
-                <div class="py-20">
-
+                <div class="py-10 md:py-20">
+                    <div class="divider">Şifremi unuttum</div>
                 </div>
-                <button type="button" class="btn btn-warning text-white w-full mx-auto">
-                    Google ile giriş
-                </button> 
+                <div class="flex flex-col gap-4">
+                    <button type="button" class="btn btn-secondary text-white w-full mx-auto" @click="$router.push('/auth/register')">
+                        Kayıt ol
+                    </button> 
+                    <div class="flex gap-8 justify-center">
+                        <button type="button" class="btn btn-outline">
+                            <font-awesome :icon="faGoogle" />
+                        </button>
+                        <button type="button" class="btn btn-outline">
+                            <font-awesome :icon="faMeta" />
+                        </button>
+                        <button type="button" class="btn btn-outline">
+                            <font-awesome :icon="faGithub" />
+                        </button>
+                    </div>
+                </div>
             </form>
         </div>
     </section>
 </template>
 <script setup>
+import { faGoogle, faMeta, faGithub } from '@fortawesome/free-brands-svg-icons'
+
 const accessToken = useCookie('access_token')
 const refreshToken = useCookie('refresh_token')
 

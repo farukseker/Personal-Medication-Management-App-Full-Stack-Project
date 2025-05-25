@@ -26,10 +26,11 @@
             <button class="btn btn-primary w-full mt-4">
                 Kayıt ol
             </button>
-            <div class="py-20">
+            <div class="py-5 sm:py-10 md:py-20">
+                <div class="divider">Bir Hesabın mı Var ?</div>
             </div>
-            <button class="btn btn-warning text-white w-full mx-auto">
-                Google ile giriş
+            <button type="button" class="btn btn-secondary text-white w-full mx-auto" @click="$router.push('/auth/login')">
+                Giriş Yap
             </button> 
         </form>
     </div>
