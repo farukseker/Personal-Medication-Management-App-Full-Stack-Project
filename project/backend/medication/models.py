@@ -71,15 +71,13 @@ class MedicationSchedule(models.Model):
 
 class MedicationDoseTime(models.Model):
     # Her doz zamanı için kayıt (örn. sabah 08:00'de 1 tablet)
-    # medication = models.ForeignKey(Medication, on_delete=models.CASCADE, related_name='dose_times')  # İlaç kaydı
-    schedule = models.ForeignKey(MedicationSchedule, on_delete=models.CASCADE, related_name='schedule')
+    schedule = models.ForeignKey(MedicationSchedule, on_delete=models.CASCADE, related_name='dose_times')
     time = models.TimeField()           # Örneğin sabah 08:00
     dose_amount = models.FloatField()  # Örneğin 1.0
     dose_unit = models.CharField(max_length=20)  # Örneğin 'tablet'
 
     class Meta:
         unique_together = ('schedule', 'time')  # Aynı programda aynı saati tekrar girilmesin
-        # unique_together = ('medication', 'time')  # Aynı programda aynı saati tekrar girilmesin
 
 class MedicationLog(models.Model):
     """
@@ -128,17 +126,6 @@ class DailyNote(models.Model):
 
     def __str__(self):
         return f"Note for {self.user.username} on {self.date}"
-
-class WeeklyDosePlan(models.Model):
-    schedule = models.ForeignKey(MedicationSchedule, on_delete=models.CASCADE, related_name='weekly_plans')
-    week_number = models.PositiveIntegerField()  # 1. hafta, 2. hafta, vs.
-    dose_amount = models.DecimalField(max_digits=5, decimal_places=2)
-    dose_unit = models.CharField(max_length=20)
-    note = models.TextField(blank=True, null=True)  # Opsiyonel açıklama (örn. "doktor önerisiyle doz arttı")
-    reminder_times = models.JSONField(default=list)  # ["08:00", "20:00"]
-
-    class Meta:
-        unique_together = ('schedule', 'week_number')
 
 
 class MedicationAutoCompilationModel(models.Model):

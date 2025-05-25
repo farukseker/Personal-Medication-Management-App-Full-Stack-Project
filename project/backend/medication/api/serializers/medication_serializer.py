@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from medication.models import Medication, MedicationSchedule, MedicationDoseTime
 from .medication_schedule_serializer import MedicationScheduleSerializer, MedicationCreateScheduleSerializer
-from .medication_dose_time_serializer import MedicationDoseTimeSerializer
 
 
 class MedicationSerializer(serializers.ModelSerializer):

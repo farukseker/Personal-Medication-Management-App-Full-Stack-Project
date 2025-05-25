@@ -14,5 +14,4 @@ class SimpleMedicationScheduleSerializer(serializers.Serializer):
 
     class Meta:
         ordering = 'time',
-
         # 12: 57
