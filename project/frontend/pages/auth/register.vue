@@ -12,16 +12,16 @@
         </article>
         <form @submit.prevent="register" class="w-full">
             <label class="label">Adınız</label>
-            <input v-model="first_name" type="text" class="input bg-base-200 border-b-gray-600 w-full" placeholder="Kullanıcı adınız" />
+            <input v-model="first_name" type="text" class="input bg-base-200 border-b-gray-600 w-full" placeholder="Kullanıcı adınız" autocomplete="given-name" />
 
             <label class="label">Soyadınız</label>
-            <input v-model="last_name" type="text" class="input bg-base-200 border-b-gray-600 w-full" placeholder="Kullanıcı adınız" />
+            <input v-model="last_name" type="text" class="input bg-base-200 border-b-gray-600 w-full" placeholder="Kullanıcı adınız" autocomplete="family-name" />
             
             <label class="label">E-posta</label>
-            <input v-model="email" type="email" class="input bg-base-200 border-b-gray-600 w-full" placeholder="Email" />
+            <input v-model="email" type="email" class="input bg-base-200 border-b-gray-600 w-full" placeholder="Email" autocomplete="off" />
 
             <label class="label">Şifre</label>
-            <input v-model="password" type="password" class="input bg-base-200 border-b-gray-600 w-full" placeholder="Password" />
+            <input v-model="password" type="password" class="input bg-base-200 border-b-gray-600 w-full" placeholder="Password" autocomplete="new-password" />
 
             <button class="btn btn-primary w-full mt-4">
                 Kayıt ol

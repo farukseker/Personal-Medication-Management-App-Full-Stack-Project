@@ -12,10 +12,10 @@
             </article>
             <form @submit.prevent="login" class="w-full">
                 <label class="label">E-posta</label>
-                <input v-model="email" type="email" required class="input w-full" placeholder="Email" />
+                <input v-model="email" type="email" required class="input w-full" placeholder="Email" autocomplete="email" />
 
                 <label class="label">Şifre</label>
-                <input v-model="password" type="password" required class="input w-full" placeholder="Password" />
+                <input v-model="password" type="password" required class="input w-full" placeholder="Password" autocomplete="current-password" />
 
                 <div class="flex py-2 gap-2">
                     <input type="checkbox" name="pw" id="pwf" class="checkbox checkbox-sm checkbox-primary my-auto" checked>
