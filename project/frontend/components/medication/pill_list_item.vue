@@ -1,13 +1,17 @@
 <template>
 <div class="card bg-base-100 shadow">
     <div class="card-body p-3">
+        <div  class="absolute -top-1 -left-1 text-gray-300 text-md">
+        </div>
         <div class="flex justify-between items-center">
             <div>
-                <p class="font-semibold">{{ medication.name}}</p>
+
+                <p class="font-semibold">
+                    <span v-if="medication.schedules?.length > 0" class="text-gray-300 tooltip" data-tip="Planlı">
+                        <font-awesome :icon="faStopwatch" />
+                    </span>
+                    {{ medication.name}}</p>
                 <p class="text-sm text-gray-500">{{ medication.default_dose_amount }} {{ medication.default_dose_unit }}</p>
-            </div>
-            <div>
-                {{ medication.schedules?.length > 0 ? 'Planlandı':''  }}
             </div>
             <div class="flex gap-2">
                 <button v-if="medication.schedules?.length === 0" class="btn btn-primary btn-sm">Planla</button>
@@ -21,6 +25,8 @@
 </template>
 
 <script setup>
+import { faStopwatch, faTimeline, faTimes } from '@fortawesome/free-solid-svg-icons'
+
 const props = defineProps(['medication'])
 const { $api } = useNuxtApp()
 const emit = defineEmits(['load_medication_list'])
