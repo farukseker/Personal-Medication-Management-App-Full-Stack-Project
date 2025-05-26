@@ -10,6 +10,8 @@ from .views import (
     MedicationListView, MedicationCreateView
 )
 
+app_name = "medication"
+
 urlpatterns = [
     path('medications/', MedicationListView.as_view()),
     path('medications/create/', MedicationCreateView.as_view()),
@@ -27,5 +29,3 @@ urlpatterns = [
     path('daily-notes/<int:pk>/', DailyNoteDetailView.as_view()),
     path('today/', TodayMedicationAPIView.as_view()),
 ]
-# path counter lazım aga
-app_name = "medication"

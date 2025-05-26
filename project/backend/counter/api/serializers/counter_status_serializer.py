@@ -5,6 +5,7 @@ from counter.models import Counter, CounterEntry
 class CounterStatusCreateSerializer(serializers.ModelSerializer):
     # count = serializers.SerializerMethodField(required=False)
     count = serializers.IntegerField(read_only=True)
+    id = serializers.IntegerField(read_only=True)
 
     # @staticmethod
     # def get_count(i) -> int:
@@ -15,6 +16,6 @@ class CounterStatusCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Counter
-        fields: tuple[str] =  'name', 'unit', 'count'
+        fields: tuple[str] =  'name', 'unit', 'count', 'id'
         # exclude: tuple[str] = 'user',
 

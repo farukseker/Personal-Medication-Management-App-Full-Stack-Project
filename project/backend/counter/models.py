@@ -7,7 +7,6 @@ User = get_user_model()
 
 class Counter(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-
     name = models.CharField(max_length=255)  # örn: Tuvalet, Sigara, Su İçme
     unit = models.CharField(max_length=50, blank=True, null=True)  # isteğe bağlı: 'kez', 'adet'
     created_at = models.DateTimeField(auto_now_add=True)
