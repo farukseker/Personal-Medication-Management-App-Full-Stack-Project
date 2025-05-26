@@ -3,7 +3,8 @@ from rest_framework.generics import ListCreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from counter.api.serializers import CounterStatusCreateSerializer
 from counter.models import Counter
-from django.db.models import Sum, Value
+from django.db.models import Sum, Value, Q
+from datetime import date
 
 
 class CounterListCreateView(ListCreateAPIView):
@@ -11,8 +12,10 @@ class CounterListCreateView(ListCreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
+        today = date.today()
         return Counter.objects.filter(user=self.request.user).annotate(
-            count=Coalesce(Sum('entries__value'), Value(0))
+            count=Coalesce(Sum('entries__value'), Value(0)),
+            today_count=Coalesce(Sum('entries__value', filter=Q(entries__timestamp__date=today)), Value(0))
         )
 
     def perform_create(self, serializer):
