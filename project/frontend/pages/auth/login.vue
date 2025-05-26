@@ -18,7 +18,7 @@
                 <input v-model="password" type="password" required class="input w-full" placeholder="Password" autocomplete="current-password" />
 
                 <div class="flex py-2 gap-2">
-                    <input type="checkbox" name="pw" id="pwf" class="checkbox checkbox-sm checkbox-primary my-auto" checked>
+                    <input type="checkbox" name="pw" id="pwf" v-model="rember_me" class="checkbox checkbox-sm checkbox-primary my-auto" checked>
                     <label class="label my-auto" for="pwf">Beni Hatırla</label>
                 </div>
                 <button type="submit" class="btn btn-primary w-full">
@@ -50,8 +50,7 @@
 <script setup>
 import { faGoogle, faMeta, faGithub } from '@fortawesome/free-brands-svg-icons'
 
-const accessToken = useCookie('access_token')
-const refreshToken = useCookie('refresh_token')
+
 
 
 const { $api } = useNuxtApp()
@@ -60,6 +59,7 @@ const router = useRouter()
 
 const email = ref('')
 const password = ref('')
+const rember_me = ref(true)
 
 const login = async () => {
     try{
@@ -70,6 +70,16 @@ const login = async () => {
                 password: password.value
             }
         })
+        
+        const token_options = !rember_me.value ? {}:{
+            maxAge: 60 * 60 * 24 * 30 * 6, // 6 ay mesela
+            sameSite: 'lax',
+            secure:  true,
+            path:    '/',
+        }
+
+        const accessToken = useCookie('access_token', token_options)
+        const refreshToken = useCookie('refresh_token', token_options)
         accessToken.value = tokens.access
         refreshToken.value = tokens.refresh
         toast.add({
