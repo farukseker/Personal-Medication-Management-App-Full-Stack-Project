@@ -6,6 +6,7 @@ from .views import (
     DailyNoteListCreateView, DailyNoteDetailView,
     TodayMedicationAPIView, MedicationLogCreateView,
     MedicationScheduleCreateView,
+    MedicationLogListView,
     MedicationListView, MedicationCreateView
 )
 
@@ -18,6 +19,7 @@ urlpatterns = [
     path('medication-schedules/<int:pk>/', MedicationScheduleDetailView.as_view()),
 
     path('medication-logs/', MedicationLogListCreateView.as_view()),
+    path('medication-logs/split/', MedicationLogListView.as_view()),
     path('medication-logs/create/', MedicationLogCreateView.as_view()),
     path('medication-logs/<int:pk>/', MedicationLogDetailView.as_view()),
 

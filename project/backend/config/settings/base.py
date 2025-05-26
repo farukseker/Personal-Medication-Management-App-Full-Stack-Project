@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     # third party app
     'rest_framework',
     'rest_framework_simplejwt',
+    'django_filters',
     "allauth",
     "allauth.account",
     "allauth.mfa",

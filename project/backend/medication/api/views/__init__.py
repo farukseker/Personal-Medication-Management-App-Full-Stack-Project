@@ -5,7 +5,7 @@ from .medication_schedule_list_create_view import MedicationScheduleListCreateVi
 from .medication_schedule_detail_view import MedicationScheduleDetailView
 from .medication_log_create_view import MedicationLogCreateView
 from .today_medication_api_view import TodayMedicationAPIView
-from .medication_log_list_create_view import MedicationLogListCreateView
+from .medication_log_list_create_view import MedicationLogListCreateView, MedicationLogListView
 from .medication_log_detail_view import MedicationLogDetailView
 from .daily_note_detail_view import DailyNoteDetailView
 from .daily_note_list_create_view import DailyNoteListCreateView

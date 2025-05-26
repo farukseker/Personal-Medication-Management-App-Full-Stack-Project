@@ -15,3 +15,8 @@ class MedicationLogListSerializer(serializers.ModelSerializer):
     class Meta:
         model = MedicationLog
         fields = '__all__'
+
+
+class MedicationLogSplitListSerializer(serializers.Serializer):
+    medication_logs = MedicationLogListSerializer(many=True, read_only=True)
+    date = serializers.DateField()

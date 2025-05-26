@@ -22,6 +22,7 @@ notebook = "^7.4.2"
 ipython = "^9.2.0"
 jupyterlab = "^4.4.2"
 django-allauth = "^65.8.0"
+django-filter = "^25.1"
 
 
 [build-system]
