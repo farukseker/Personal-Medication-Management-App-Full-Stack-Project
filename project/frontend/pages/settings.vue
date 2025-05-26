@@ -11,55 +11,79 @@
             </div>
         </div>
       <div>
-    <ul class="menu bg-base-200 rounded-box w-full text-lg mx-auto">
-  <li>
-    <a>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-5 w-5"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor">
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-      </svg>
-      Item 2 
-    </a>
-  </li>
-  <li>
-    <a
-      @click="toggleTheme"
-    >
-      <span v-if="theme === 'light'">
-        <font-awesome :icon="faSun" /> 
-        
-      </span>
-      <span v-else>
-        <font-awesome :icon="faMoon" /> 
-        
-      </span>
-      {{ theme !== 'light' ? 'Karanlık' : 'Aydınlık' }}
-    </a>
-  </li>
-  <li>
-    <a
-    class="text-red-400"
-     @click="logout"
-    >
-      <font-awesome :icon="faUser" />
-      Çıkış yap
-    </a>
-  </li>
-</ul>
-      </div>
-      </div>
+
+    <section class="flex flex-col gap-4">
+    <fieldset class="w-full fieldset border-b-2 shadow card border-base-300 rounded-box p-4 gap-4">
+        <legend class="fieldset-legend font-bold">Kullanıcı</legend>
+        <div class="flex gap-4">
+          <div class="min-w-[46px] min-h-[46px] max-w-[46px] max-h-[46px] bg-gray-600 rounded-full"></div>
+          <div class="my-auto w-full">
+            ali veli
+            <br>
+            email
+          </div>
+        </div>
+      </fieldset>
+    
+    <fieldset class="w-full fieldset border-b-2 shadow card border-base-300 rounded-box p-4 gap-4">
+        <legend class="fieldset-legend font-bold">Kullanıcı bilgileri</legend>
+        <div class="flex gap-2">
+          <div>
+            <label>Adınız</label>
+            <input class="input w-full" type="text" placeholder="Ad">
+          </div>
+            <div>
+            <label>Soy Adınız</label>
+            <input class="input w-full" type="text" placeholder="Soy Ad">
+          </div>
+        </div>
+        <div>
+          <label>E-Mail</label>
+          <input class="input w-full" type="email" placeholder="Email">
+        </div>
+    </fieldset>
+    
+    <fieldset class="w-full fieldset border-b-2 shadow card border-base-300 rounded-box p-4 gap-4">
+        <legend class="fieldset-legend font-bold">Şifre değiştir</legend>
+        <label>
+          <span>Eski Şifreniz</span>
+          <font-awesome :icon="faCircle" class="scale-50 mx-1 text-gray-200" />
+          <a>Şifrenizi mi unuttunuz ?</a></label>
+        <input class="input w-full" type="password" autocomplete="password" placeholder="Şifreniz">
+        <label>Yeni Şifreniz</label>
+        <input class="input w-full" type="password" autocomplete="new-password" placeholder="Yeni Şifreniz">
+    </fieldset>
+
+    <fieldset class="w-full fieldset border-b-2 shadow card border-base-300 rounded-box p-4">
+        <legend class="fieldset-legend font-bold">Tema Ayarları</legend>
+        <button
+          class="btn"
+          :class="theme === 'light' ? 'btn-block': 'btn-outline'"
+              @click="toggleTheme"
+            >
+              <span v-if="theme === 'light'">
+                <font-awesome :icon="faSun" /> 
+              </span>
+              <span v-else>
+                <font-awesome :icon="faMoon" /> 
+              </span>
+              {{ theme !== 'light' ? 'Karanlık' : 'Aydınlık' }}
+            </button>
+    </fieldset>
+
+    <fieldset class="w-full fieldset border-b-2 shadow card border-base-300 rounded-box p-4">
+        <button class="btn btn-error" @click="logout">
+          <font-awesome :icon="faUser" />
+          Çıkış yap
+        </button>
+      </fieldset>
+    </section>
+    </div>
+    </div>
 </template>
 
 <script setup>
-import { faUser, faMoon, faSun, faArrowLeft, faCalendar, faHome, faUserGroup } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faMoon, faSun, faArrowLeft, faCircle, faHome, faUserGroup } from '@fortawesome/free-solid-svg-icons'
 
 
 const theme = ref('light')
