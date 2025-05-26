@@ -62,7 +62,7 @@ import dayjs from 'dayjs'
 
 const medication_history_list = ref([])
 const split_medication_history_list = ref([])
-const filter_type = ref('month') //today 
+const filter_type = ref('today') //today 
 
 const is_revresed_list = ref(false) 
 
