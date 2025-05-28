@@ -19,7 +19,7 @@
           >+ ilaç ekle</button>
         </div>
         
-      <div role="tablist" class="tabs tabs-lift  tabs-lg">
+      <div role="tablist" class="tabs tabs-lift  tabs-md">
         <a role="tab" @click="tab_index=0" class="tab flex gap-2" :class="tab_index === 0 ? 'tab-active text-primary':''"><font-awesome :icon="faPills"/> İlaçlar</a>
         <a role="tab" @click="tab_index=1" class="tab flex gap-2" :class="tab_index === 1 ? 'tab-active text-primary':''"><font-awesome :icon="faPlus"/> Sayaçlar</a>
         <a role="tab" @click="tab_index=2" class="tab flex gap-2" :class="tab_index === 2 ? 'tab-active text-primary':''"><font-awesome :icon="faGlassWater"/> Su Tüketimi</a>
