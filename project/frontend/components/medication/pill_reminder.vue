@@ -4,8 +4,8 @@
         <div class="flex justify-between items-center">
             <div>
             <p class="font-semibold">
-                {{ medication.medication_name }} 
-                <span class="text-gray-500">{{ medication.taken_status === 'taken' ? 'Alındı':'Pas' }}</span>
+                {{ medication.medication_name }}
+                <span v-if="medication.taken_status" class="text-gray-500">{{ medication.taken_status === 'taken' ? 'Alındı':'Pas' }}</span>
             </p>
             <p class="text-sm text-gray-500">Saat {{ medication.time.slice(0, 5) }}  - {{ medication.dose }}{{ medication.unit }}</p>
             </div>

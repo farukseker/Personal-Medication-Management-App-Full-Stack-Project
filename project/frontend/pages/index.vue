@@ -19,7 +19,7 @@
           >+ ilaç ekle</button>
         </div>
         
-      <div role="tablist" class="tabs tabs-lift">
+      <div role="tablist" class="tabs tabs-lift tabs-md tabs-top">
         <a role="tab" @click="tab_index=0" class="tab flex gap-2" :class="tab_index === 0 ? 'tab-active text-primary':''"><font-awesome :icon="faPills"/> İlaçlar</a>
         <a role="tab" @click="tab_index=1" class="tab flex gap-2" :class="tab_index === 1 ? 'tab-active text-primary':''"><font-awesome :icon="faPlus"/> Sayaçlar</a>
         <a role="tab" @click="tab_index=2" class="tab flex gap-2" :class="tab_index === 2 ? 'tab-active text-primary':''"><font-awesome :icon="faGlassWater"/> Su Tüketimi</a>
@@ -73,7 +73,7 @@
                 :key="index" 
                 @click="() => counter_tick(index)"
                 class="rounded shadow-md bg-base-200 p-2 grid grid-cols-5 text-white"
-                :class="counter.is_progress ? 'bg-fuchsia-400':'cursor-pointer bg-fuchsia-800'"
+                :class="counter.is_progress ? 'bg-fuchsia-700':'cursor-pointer bg-fuchsia-800'"
                 >
                 <div v-if="!counter.is_progress" class="col-span-2 full my-auto">{{ counter.name }}</div>
                 <div v-if="!counter.is_progress" class="col-span-2 min-w-fit my-auto flex gap-2">{{ counter.count }} <p class="text-xs scale-90" v-if="counter.unit">{{ counter.unit }}</p></div>

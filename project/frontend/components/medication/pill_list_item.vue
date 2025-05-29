@@ -15,7 +15,7 @@
             </div>
             <div class="flex gap-2">
                 <button v-if="medication.schedules?.length === 0" class="btn btn-primary btn-sm">Planla</button>
-                <button v-if="medication.schedules?.length === 0" class="btn btn-secondary btn-sm" @click="take_mdicine">Al</button>
+                <button class="btn btn-secondary btn-sm" @click="take_mdicine">Al</button>
                 <button class="btn btn-success btn-sm">Düzenle</button>
                 <button class="btn btn-outline btn-sm" @click="delete_mdicine(medication.id)">Sil</button>
             </div>
