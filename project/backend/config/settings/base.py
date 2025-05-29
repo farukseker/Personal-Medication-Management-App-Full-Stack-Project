@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'django_filters',
+    'django_celery_beat',
     "allauth",
     "allauth.account",
     "allauth.mfa",
@@ -142,3 +143,28 @@ AUTH_USER_MODEL = "custom_auth.User"
 # LOGIN_URL = "account_login"
 
 DJANGO_ADMIN_FORCE_ALLAUTH = env.bool("DJANGO_ADMIN_FORCE_ALLAUTH", default=False)
+
+# Redis broker ayarları
+CELERY_BROKER_URL: str = env('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND: str = env('CELERY_RESULT_BACKEND', default='django-db')
+
+CELERY_TIMEZONE: str = TIME_ZONE  # or your timezone
+
+CELERY_ACCEPT_CONTENT: list = ['json']
+CELERY_TASK_SERIALIZER: str = 'json'
+CELERY_RESULT_SERIALIZER: str = 'json'
+CELERY_BEAT_SCHEDULER: str = 'celery.beat.PersistentScheduler'
+CELERY_ENABLE_UTC = True
+
+# from celery.schedules import crontab
+
+# CELERY_BEAT_SCHEDULE: dict = {
+#     'Get Asset Information Every Weekday At 15 Minute Intervals'.lower().replace(' ', '-'): {
+#         'task': 'asset.tasks.asset_scraper_task.regular_asset_data_acquisition',
+#         'schedule': crontab(minute='15', hour='8-18', day_of_week='1-5'),
+#     },
+#     'Get Public Asset Information Every Weekday At 10 Am'.lower().replace(' ', '-'): {
+#         'task': 'asset.tasks.public_asset_scraper_task.regular_public_asset_data_acquisition',
+#         'schedule': crontab(hour='10', day_of_week='1-5'),
+#     },
+# }
