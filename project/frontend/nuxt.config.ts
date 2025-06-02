@@ -130,9 +130,9 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
-    API_HOST: "http://192.168.123.97:1000/api", // process.env.NUXT_API_PATH,
+    API_HOST: process.env.NUXT_API_PATH,
     public: {
-      API_HOST:"http://192.168.123.97:1000/api", // process.env.NUXT_API_PATH,
+      API_HOST: process.env.NUXT_API_PATH,
     }
   },
 
