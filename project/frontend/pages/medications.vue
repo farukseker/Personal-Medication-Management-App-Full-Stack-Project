@@ -18,7 +18,7 @@
           @click="go_new_medicine_form"
           >+ ilaç ekle</button>
         </div>
-        <div class="space-y-3">
+        <div class="space-y-3 pt-2">
           <MedicationPillListItem
           v-for="medication in my_medication_list" 
           :key="medication.id + 'medication_lcl'" 

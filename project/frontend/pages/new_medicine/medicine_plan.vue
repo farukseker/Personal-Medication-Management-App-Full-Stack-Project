@@ -51,11 +51,12 @@ const currentSchedule = reactive(blankSchedule())
 const is_last_date_unlimted = () =>  scheduleStore.schedules.length > 0 ? (scheduleStore.sortedSchedules[scheduleStore.schedules.length - 1].end_date !== '') : true
 
 function saveSchedule(updatedSchedule) {
-  if (scheduleStore.isOverlapping(updatedSchedule, editIndex.value)) {
-    alert("Aynı tarihlerde başka bir plan zaten var. Lütfen tarihleri değiştir.")
-    return
-  }
+
   if (editIndex.value === null) {
+    if (scheduleStore.isOverlapping(updatedSchedule, editIndex.value)) {
+      alert("Aynı tarihlerde başka bir plan zaten var. Lütfen tarihleri değiştir.")
+      return
+    }
     scheduleStore.addSchedule(updatedSchedule)
   } else {
     scheduleStore.updateSchedule(editIndex.value, updatedSchedule)

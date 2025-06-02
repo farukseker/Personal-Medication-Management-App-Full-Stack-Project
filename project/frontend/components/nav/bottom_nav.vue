@@ -7,15 +7,7 @@
         <font-awesome :icon="faHome" class="size-[1.2em]" />
         <span class="dock-label">Home</span>
       </button>
-      
-      <button
-        @click="$router.push('/medications')"
-        :class="$route.name === 'medications' ? 'dock-active':''"
-        >
-        <font-awesome :icon="faPills" class="size-[1.2em]" />
-        <span class="dock-label">İlaçlarım</span>
-      </button>
-        
+
       <button 
         @click="$router.push('/history')"
         :class="$route.name === 'history' ? 'dock-active':''"
@@ -24,6 +16,14 @@
         <span class="dock-label">Geçmiş</span>
       </button>
       
+      <button
+        @click="$router.push('/medications')"
+        :class="$route.name === 'medications' ? 'dock-active':''"
+        >
+        <font-awesome :icon="faPills" class="size-[1.2em]" />
+        <span class="dock-label">İlaçlarım</span>
+      </button>
+
       <button
         @click="$router.push('/settings')"
         :class="$route.name === 'settings' ? 'dock-active':''"

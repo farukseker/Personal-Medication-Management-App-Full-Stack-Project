@@ -50,7 +50,10 @@ class MedicationCreateSerializer(serializers.ModelSerializer):
 
             for schedule_data in schedules_data:
                 dose_times_data = schedule_data.pop('dose_times', [])
+                days_of_week_data = schedule_data.pop("days_of_week", [])
+
                 schedule = MedicationSchedule.objects.create(medication=instance, **schedule_data)
+                schedule.days_of_week.set(days_of_week_data)
                 for dose_data in dose_times_data:
                     MedicationDoseTime.objects.create(schedule=schedule, **dose_data)
 

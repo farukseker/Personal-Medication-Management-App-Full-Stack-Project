@@ -76,6 +76,7 @@ export const useNewMdcStore = defineStore('new_mdc_store', {
         this.end_date = '';
         this.weekly_dose_plans = [];
         this.dose_times = [];
+        this.schedules = [],
         this.dose_amount = 1;
         this.medicine_dose_unit = 'miligram';
         this.medicine_dose_amount = 1;
