@@ -19,7 +19,14 @@
           >+ ilaç ekle</button>
         </div>
         <div class="space-y-3">
-          <MedicationPillListItem v-for="medication in my_medication_list" :key="medication.id + 'medication_lcl'" :medication="medication" @load_medication_list="load_my_medication_list" />
+          <MedicationPillListItem
+          v-for="medication in my_medication_list" 
+          :key="medication.id + 'medication_lcl'" 
+          :medication="medication"
+          @do_plan_exist_medication="action_switch_to_plan"
+          @update_exist_medication="action_switch_to_update"
+          @load_medication_list="load_my_medication_list" 
+          />
         </div>
       </div>
    </div>
@@ -27,8 +34,10 @@
 
 <script setup>
 const { $api } = useNuxtApp()
-const scheduleStore = useNewMdcStore()
 import dayjs from 'dayjs'
+import { useNewMdcStore } from '@/stores/new_mdc_store.js'
+
+const scheduleStore = useNewMdcStore()
 
 const my_medication_list = ref([])
 const router = useRouter()
@@ -44,5 +53,17 @@ onMounted(()=>{
 const go_new_medicine_form = () => {
   scheduleStore.resetForm()
   router.push('/new_medicine/medicine_name')
+}
+
+const action_switch_to_update = async (medication_id) => {
+  const be_updated_medication = await $api(`/medication/medications/${medication_id}/`)
+  scheduleStore.refull_self(be_updated_medication)
+  router.push('/new_medicine/medicine_name')
+}
+
+const action_switch_to_plan = async (medication_id) => {
+  const be_updated_medication = await $api(`/medication/medications/${medication_id}/`)
+  scheduleStore.refull_self(be_updated_medication)
+  router.push('/new_medicine/medicine_plan')
 }
 </script>

@@ -26,6 +26,8 @@ django-filter = "^25.1"
 celery = "^5.5.2"
 redis = "^6.2.0"
 django-celery-beat = "^2.8.1"
+pywebpush = "^2.0.3"
+django-sslserver = "^0.22"
 
 
 [build-system]

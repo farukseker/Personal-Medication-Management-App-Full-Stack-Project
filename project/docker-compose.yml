@@ -13,7 +13,13 @@ services:
     networks:
       - my_network
     ports:
-      - 2000:5432
+      - 5001:5432
+  redis:
+    image: redis:alpine
+    ports:
+      - 5002:6379
+    networks:
+      - my_network
 
   backend:
     build:

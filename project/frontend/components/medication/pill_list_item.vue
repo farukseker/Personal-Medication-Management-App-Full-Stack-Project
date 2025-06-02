@@ -14,9 +14,13 @@
                 <p class="text-sm text-gray-500">{{ medication.default_dose_amount }} {{ medication.default_dose_unit }}</p>
             </div>
             <div class="flex gap-2">
-                <button v-if="medication.schedules?.length === 0" class="btn btn-primary btn-sm">Planla</button>
+                <button 
+                v-if="medication.schedules?.length === 0" 
+                @click="$emit('do_plan_exist_medication', medication.id)"
+                class="btn btn-primary btn-sm"
+                >Planla</button>
                 <button class="btn btn-secondary btn-sm" @click="take_mdicine">Al</button>
-                <button class="btn btn-success btn-sm">Düzenle</button>
+                <button class="btn btn-success btn-sm" @click="$emit('update_exist_medication', medication.id)">Düzenle</button>
                 <button class="btn btn-outline btn-sm" @click="delete_mdicine(medication.id)">Sil</button>
             </div>
         </div>

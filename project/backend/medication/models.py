@@ -114,6 +114,20 @@ class MedicationLog(models.Model):
     def __str__(self):
         return f"{self.medication_name} on {self.date}"
 
+    def save(self, *args, **kwargs):
+        is_new = self.pk is None  # Yeni kayıt mı kontrolü
+
+        super().save(*args, **kwargs)  # Önce kaydediyoruz ki ID oluşsun
+
+        if is_new and self.taken_status == 'taken' and self.medication and self.dose_taken:
+            try:
+                stock = self.medication.stock
+                stock.quantity = max(stock.quantity - self.dose_taken, 0)
+                stock.save()
+            except MedicationStock.DoesNotExist:
+                pass  # Stok bilgisi yoksa sessizce geç
+
+
 class DailyNote(models.Model):
     """Kullanıcının belirli bir gün için eklediği not."""
     user = models.ForeignKey(User, on_delete=models.CASCADE)  # Notu ekleyen kullanıcı
@@ -133,3 +147,28 @@ class MedicationAutoCompilationModel(models.Model):
     barcode = models.CharField(max_length=30, blank=True)
     value = models.CharField(max_length=30, blank=True)
     unit = models.CharField(max_length=30, blank=True)
+
+
+class MedicationStock(models.Model):
+    """İlaç stok takibini sağlar."""
+    medication = models.OneToOneField(Medication, on_delete=models.CASCADE, related_name='stock')
+    quantity = models.DecimalField(max_digits=7, decimal_places=2, default=0)  # Mevcut stok miktarı
+    unit = models.CharField(max_length=50)  # 'tablet', 'ml' vs.
+    min_threshold = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
+    # Uyarı için minimum stok seviyesi
+    last_updated = models.DateTimeField(auto_now=True)
+
+    def is_below_threshold(self):
+        if self.min_threshold is not None:
+            return self.quantity < self.min_threshold
+        return False
+
+    def __str__(self):
+        return f"{self.medication.name} - {self.quantity} {self.unit}"
+
+class PushSubscription(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    endpoint = models.TextField()
+    p256dh = models.CharField(max_length=255)
+    auth = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)

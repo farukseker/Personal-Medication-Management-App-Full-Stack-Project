@@ -12,7 +12,6 @@ class SimpleMedicationScheduleSerializer(serializers.Serializer):
     dose_time_id = serializers.IntegerField()
     time = serializers.TimeField()
 
-
     class Meta:
         ordering = 'time',
         # 12: 57

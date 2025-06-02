@@ -2,7 +2,10 @@ celerybeat-schedule.bak
 celerybeat-schedule.dat
 celerybeat-schedule.dir
 
-
+.ssl
+/.ssl/
+/.ssl
+.ssl/
 # Created by https://www.toptal.com/developers/gitignore/api/django,python,pycharm+all,jetbrains+all
 # Edit at https://www.toptal.com/developers/gitignore?templates=django,python,pycharm+all,jetbrains+all
 

@@ -12,8 +12,8 @@
     </div>
     <div class="pb-14"> 
         <div class="flex w-full shadow-sm rounded">
-            <div class="radial-progress progress-primary" style="--value:35;" aria-valuenow="2" role="progressbar">
-              3 / 1
+            <div class="radial-progress progress-primary" :style="`--value:${(new_mdc_store.form_index + 1) * 50}; `" aria-valuenow="2" role="progressbar">
+              2 / {{ new_mdc_store.form_index + 1 }}
             </div>
             <div class="w-fit ms-4 mt-2 text-xl font-semibold">
               <p>

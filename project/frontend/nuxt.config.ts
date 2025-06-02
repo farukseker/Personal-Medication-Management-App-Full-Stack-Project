@@ -1,6 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
+  devServer: {
+    // https: {
+    //   key: './.ssl/localhost-key.pem',
+    //   cert: './.ssl/localhost.pem',
+    // },
+    host: 'localhost',
+    // port: 6020,
+  },
   devtools: {
     enabled: true,
 
@@ -122,9 +130,9 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
-    API_HOST: process.env.NUXT_API_PATH,
+    API_HOST: "http://192.168.123.97:1000/api", // process.env.NUXT_API_PATH,
     public: {
-      API_HOST: process.env.NUXT_API_PATH,
+      API_HOST:"http://192.168.123.97:1000/api", // process.env.NUXT_API_PATH,
     }
   },
 

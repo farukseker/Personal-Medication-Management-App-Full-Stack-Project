@@ -10,3 +10,4 @@ from .medication_log_detail_view import MedicationLogDetailView
 from .daily_note_detail_view import DailyNoteDetailView
 from .daily_note_list_create_view import DailyNoteListCreateView
 from .medication_schedule_custom_create_view import MedicationScheduleCreateView
+from .medication_notification_subscribe_view import SubscribeView

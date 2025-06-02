@@ -18,11 +18,14 @@
           @click="go_new_medicine_form"
           >+ ilaç ekle</button>
         </div>
-        
+    <!--button @click="handleSubscribe" class="px-4 py-2 bg-blue-600 text-white rounded">
+      Bildirim Aboneliği Başlat
+    </button-->
       <div role="tablist" class="tabs tabs-lift tabs-md tabs-top">
         <a role="tab" @click="tab_index=0" class="tab flex gap-2" :class="tab_index === 0 ? 'tab-active text-primary':''"><font-awesome :icon="faPills"/> İlaçlar</a>
         <a role="tab" @click="tab_index=1" class="tab flex gap-2" :class="tab_index === 1 ? 'tab-active text-primary':''"><font-awesome :icon="faPlus"/> Sayaçlar</a>
         <a role="tab" @click="tab_index=2" class="tab flex gap-2" :class="tab_index === 2 ? 'tab-active text-primary':''"><font-awesome :icon="faGlassWater"/> Su Tüketimi</a>
+        <a role="tab" @click="tab_index=3" class="tab flex gap-2" :class="tab_index === 3 ? 'tab-active text-primary':''"><font-awesome :icon="faGlassWater"/> Kilo</a>
       </div>
     
     <div v-if="on_loading" class="w-full flex">
@@ -31,13 +34,12 @@
     <section v-else>
       <article name="medication list" v-if="tab_index === 0">
         <div class="space-y-3 max-h-[40vh] overflow-y-auto mt-4" >
-
           <MedicationPillReminder
-          v-if="medication_today_list.length > 0"
-          v-for="medication_today in medication_today_list"
-          :key="medication_today.id" 
-          :medication="medication_today" 
-          @load_medication="async () => await load_medication_today_list()"
+            v-if="medication_today_list.length > 0"
+            v-for="medication_today in medication_today_list"
+            :key="medication_today.id" 
+            :medication="medication_today" 
+            @load_medication="async () => await load_medication_today_list()"
           />
         
           <div v-else-if="stats?.taken_percentage == 100" role="alert" class="alert alert-success shadow text-white my-2">
@@ -65,8 +67,7 @@
         </div>
       </article>
       <article name="counters view" v-if="tab_index === 1">
-        <fieldset class="w-full bg-base-200 fieldset border-b-2 shadow card border-base-300 rounded-box p-4">
-          <legend class="fieldset-legend font-bold">Sayaçlar</legend>
+        <fieldset class="w-full fieldset card rounded-box ">
             <div class="grid grid-cols-3 gap-4">
               <div
                 v-for="(counter, index) in counters_list"
@@ -101,6 +102,15 @@
 </template>
   
 <script setup>
+import { usePushNotification } from '~/composables/usePushNotification';
+
+const { subscribe } = usePushNotification();
+
+const handleSubscribe = () => {
+  subscribe();
+};
+
+
 import { faPills, faPlus, faGlassWater } from '@fortawesome/free-solid-svg-icons'
 import dayjs from 'dayjs'
 import { useNewMdcStore } from '@/stores/new_mdc_store.js'

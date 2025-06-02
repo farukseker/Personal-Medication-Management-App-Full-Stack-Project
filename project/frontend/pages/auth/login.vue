@@ -74,7 +74,6 @@ const login = async () => {
             secure:  true,
             path:    '/',
         }
-        console.log(token_options)
         const accessToken = useCookie('access_token', token_options)
         const refreshToken = useCookie('refresh_token', token_options)
         accessToken.value = tokens.access

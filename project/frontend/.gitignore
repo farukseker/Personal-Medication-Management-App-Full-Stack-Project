@@ -25,3 +25,9 @@ logs
 
 .playground
 playground
+
+# local ssl files
+.ssl
+/.ssl
+.ssl/
+/.ssl/

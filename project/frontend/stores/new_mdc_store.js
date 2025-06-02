@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 
 export const useNewMdcStore = defineStore('new_mdc_store', {
   state: () => ({
+    id: null,
     medicine_name: '',
     medicine_notes: '',
     start_date: '',
@@ -44,8 +45,9 @@ export const useNewMdcStore = defineStore('new_mdc_store', {
   actions: {
     async save_diff() {
         const { $api } = useNuxtApp()
-        await $api('/medication/medications/create/', {
-        method: 'POST',
+        await $api(this.id !== null ? `/medication/medications/${this.id}/`:'/medication/medications/create/'
+        ,{
+        method: this.id !== null ? 'PUT':'POST',
         body: {
             name: this.medicine_name,
             default_dose_amount: this.medicine_dose_amount,
@@ -57,7 +59,17 @@ export const useNewMdcStore = defineStore('new_mdc_store', {
         }
     })
     },
+    refull_self(exist_medication){
+      this.id = exist_medication.id
+      this.medicine_name = exist_medication.name
+      this.schedules = exist_medication.schedules
+      this.medicine_dose_unit = exist_medication.default_dose_unit
+      this.medicine_dose_amount = exist_medication.default_dose_amount
+
+      // Object.assign(this, JSON.parse(JSON.stringify(exist_medication)))
+    },
     resetForm() {
+        this.id = null,
         this.medicine_name = '';
         this.medicine_notes = '';
         this.start_date = '';
