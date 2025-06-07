@@ -33,7 +33,7 @@
     </div>
     <section v-else>
       <article name="medication list" v-if="tab_index === 0">
-        <div class="space-y-3 max-h-[40vh] overflow-y-auto mt-4" >
+        <div class="space-y-3 max-h-[40vh] overflow-y-auto my-4" >
           <MedicationPillReminder
             v-if="medication_today_list.length > 0"
             v-for="medication_today in medication_today_list"
@@ -61,7 +61,7 @@
         <div class="card card-sm bg-base-100 shadow-md">
           <div class="card-body">
             <h3 class="text-md font-medium">Bu Gün</h3>
-            <progress class="progress progress-primary rounded-e-none  w-full" :value="stats?.taken_percentage" max="100"></progress>
+            <progress class="progress progress-primary w-full" :value="stats?.taken_percentage" max="100"></progress>
             <p class="text-sm text-gray-500 mt-1">{{ stats?.taken_count }} / {{ stats?.be_taken_count }} doz alındı</p>
           </div>
         </div>
