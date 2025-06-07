@@ -42,14 +42,14 @@
             @load_medication="async () => await load_medication_today_list()"
           />
         
-          <div v-else-if="stats?.taken_percentage == 100" role="alert" class="alert alert-success shadow text-white my-2">
+          <div v-else-if="stats?.taken_percentage == 100" role="alert" class="alert alert-success shadow-md text-white my-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <span>Bu gün almanız gereken tüm ilaçları Aldınız!</span>
           </div>
         
-          <div v-else role="alert" class="alert alert-info shadow my-2 text-white">
+          <div v-else role="alert" class="alert alert-info shadow-md my-2 text-white">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -58,7 +58,7 @@
 
         </div>
         <!-- Haftalık Durum -->
-        <div class="card bg-base-100 shadow-md">
+        <div class="card card-sm bg-base-100 shadow-md">
           <div class="card-body">
             <h3 class="text-md font-medium">Bu Gün</h3>
             <progress class="progress progress-primary rounded-e-none  w-full" :value="stats?.taken_percentage" max="100"></progress>
