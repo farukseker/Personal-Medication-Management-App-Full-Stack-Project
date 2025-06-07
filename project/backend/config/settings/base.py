@@ -169,3 +169,10 @@ CELERY_ENABLE_UTC = True
 #         'schedule': crontab(hour='10', day_of_week='1-5'),
 #     },
 # }
+
+VAPID_PUBLIC_KEY = env('VAPID_PUBLIC_KEY')
+VAPID_PRIVATE_KEY = env('VAPID_PRIVATE_KEY')
+print(
+VAPID_PUBLIC_KEY,
+VAPID_PRIVATE_KEY
+)

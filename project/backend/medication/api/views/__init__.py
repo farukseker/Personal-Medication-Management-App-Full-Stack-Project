@@ -11,3 +11,4 @@ from .daily_note_detail_view import DailyNoteDetailView
 from .daily_note_list_create_view import DailyNoteListCreateView
 from .medication_schedule_custom_create_view import MedicationScheduleCreateView
 from .medication_notification_subscribe_view import SubscribeView
+from .be_deleted_send_ntf_test import SendNotificationView

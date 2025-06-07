@@ -7,7 +7,8 @@ from .views import (
     TodayMedicationAPIView, MedicationLogCreateView,
     MedicationScheduleCreateView,
     MedicationLogListView, SubscribeView,
-    MedicationListView, MedicationCreateView
+    MedicationListView, MedicationCreateView,
+    SendNotificationView
 )
 
 app_name = "medication"
@@ -28,5 +29,6 @@ urlpatterns = [
     path('daily-notes/', DailyNoteListCreateView.as_view()),
     path('daily-notes/<int:pk>/', DailyNoteDetailView.as_view()),
     path('today/', TodayMedicationAPIView.as_view()),
-    path('subscribe/', SubscribeView.as_view())
+    path('subscribe/', SubscribeView.as_view()),
+    path('send-test', SendNotificationView.as_view())
 ]

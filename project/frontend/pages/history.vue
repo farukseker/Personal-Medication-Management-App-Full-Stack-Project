@@ -48,7 +48,14 @@
               <span class="min-w-fit my-auto">{{ get_readable_date(split_medication_history.date) }}</span>
               <hr class="w-full my-auto">
             </div>
-            <MedicationPillReminder v-for="medication_today in split_medication_history.medication_logs" :key="medication_today.id + 3" :medication="medication_today" @load_medication='load_medication_history_list' />
+            <div class="flex flex-col gap-2">
+              <MedicationPillReminder
+                v-for="medication_today in split_medication_history.medication_logs"
+                :key="medication_today.id + 3"
+                :medication="medication_today"
+                @load_medication='load_medication_history_list'
+              />
+            </div>
           </div>
         </div>
       </div>
