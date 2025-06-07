@@ -45,7 +45,7 @@ export const useNewMdcStore = defineStore('new_mdc_store', {
   actions: {
     async save_diff() {
         const { $api } = useNuxtApp()
-        await $api(this.id !== null ? `/medication/medications/${this.id}/`:'/medication/medications/create/'
+        const dif = await $api(this.id !== null ? `/medication/medications/${this.id}/`:'/medication/medications/create/'
         ,{
         method: this.id !== null ? 'PUT':'POST',
         body: {
@@ -56,8 +56,9 @@ export const useNewMdcStore = defineStore('new_mdc_store', {
                     //             "start_date": dayjs(this.start_date).format('YYYY-MM-DD'),
                     // "end_date": dayjs(this.end_date).format('YYYY-MM-DD'),
             "schedules": this.sortedSchedules,
-        }
-    })
+          }
+        })
+        return dif
     },
     refull_self(exist_medication){
       this.id = exist_medication.id

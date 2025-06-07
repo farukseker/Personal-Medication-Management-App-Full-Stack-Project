@@ -1,5 +1,6 @@
 <template>
-<div class="card bg-base-100 shadow">
+<div class="card bg-base-100 shadow peer" :id="medication.id">
+    <div class="text-red-400 hidden peer-target:block">text</div>
     <div class="card-body p-3">
         <div  class="absolute -top-1 -left-1 text-gray-300 text-md">
         </div>
@@ -79,3 +80,15 @@ const delete_mdicine = async (medication_id) => {
 }
 
 </script>
+<style>
+@keyframes ping-once {
+  75%, 100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.ping-once {
+  animation: ping-once 0.6s cubic-bezier(0, 0, 0.2, 1) 1;
+}
+</style>

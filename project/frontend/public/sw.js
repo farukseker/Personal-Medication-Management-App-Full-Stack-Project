@@ -4,6 +4,7 @@ self.addEventListener('push', function (event) {
   if (event.data) {
     try {
       data = event.data.json();
+      console.log(data)
     } catch(e) {
       // JSON parse hatası varsa fallback kullan
       data.body = event.data.text();

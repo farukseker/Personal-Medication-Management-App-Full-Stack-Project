@@ -25,6 +25,9 @@ bun install
 Start the development server on `http://localhost:3000`:
 
 ```bash
+# with ssl via NUXT
+npx nuxt dev --https --ssl-cert .ssl/localhost.pem --ssl-key .ssl/localhost-key.pem
+
 # npm
 npm run dev
 

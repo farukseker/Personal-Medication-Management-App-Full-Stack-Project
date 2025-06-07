@@ -18,9 +18,9 @@
           @click="go_new_medicine_form"
           >+ ilaç ekle</button>
         </div>
-    <!--button @click="handleSubscribe" class="px-4 py-2 bg-blue-600 text-white rounded">
+    <button @click="handleSubscribe" class="px-4 py-2 bg-blue-600 text-white rounded">
       Bildirim Aboneliği Başlat
-    </button-->
+    </button>
       <div role="tablist" class="tabs tabs-lift tabs-md tabs-top">
         <a role="tab" @click="tab_index=0" class="tab flex gap-2" :class="tab_index === 0 ? 'tab-active text-primary':''"><font-awesome :icon="faPills"/> İlaçlar</a>
         <a role="tab" @click="tab_index=1" class="tab flex gap-2" :class="tab_index === 1 ? 'tab-active text-primary':''"><font-awesome :icon="faPlus"/> Sayaçlar</a>

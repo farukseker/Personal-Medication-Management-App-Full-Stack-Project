@@ -17,7 +17,7 @@
                 <button class="btn btn-secondary w-full" @click="go_previous_page">Geri</button>
             </div>
             <div class="w-full">
-                <button class="btn btn-success w-full" @click="scheduleStore.save_diff">Kaydet</button>
+                <button class="btn btn-success w-full" @click="save_dif">Kaydet</button>
             </div>
         </div>
     </fieldset>
@@ -45,6 +45,12 @@ const blankSchedule = () => ({
   dose_amount: '',
   dose_unit: ''
 })
+
+const save_dif = async () => {
+  const dif_response = await scheduleStore.save_diff()
+  router.push(`/medications#${dif_response.id}`)
+  console.log(dif_response)
+}
 
 const currentSchedule = reactive(blankSchedule())
 
