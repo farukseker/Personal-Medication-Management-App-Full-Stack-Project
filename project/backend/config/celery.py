@@ -10,7 +10,6 @@ env('DJANGO_SETTINGS_MODULE')
 app = Celery('config')
 
 app.config_from_object('django.conf:settings', namespace='CELERY')
-print(app.conf)
 app.autodiscover_tasks()
 
 
@@ -24,7 +23,7 @@ from celery.schedules import crontab
 
 app.conf.beat_schedule = {
     'daily-push-scheduler-every-minute': {
-        'task': 'medication.tasks.notification_dispatcher',
+        'task': 'medication.tasks.medication_notification_task.notification_dispatcher',
         'schedule': crontab(minute='*'),  # her dakika
     },
 }

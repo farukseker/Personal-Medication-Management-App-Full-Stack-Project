@@ -172,3 +172,13 @@ class PushSubscription(models.Model):
     p256dh = models.CharField(max_length=255)
     auth = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def subscription_info(self) -> dict:
+        return {
+                "endpoint": self.endpoint,
+                "keys": {
+                    "p256dh": self.p256dh,
+                    "auth": self.auth,
+                }
+            }

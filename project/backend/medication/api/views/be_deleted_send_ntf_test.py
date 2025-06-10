@@ -11,17 +11,9 @@ class SendNotificationView(APIView):
         errors = []
 
         for sub in PushSubscription.objects.all():
-            subscription_info = {
-                "endpoint": sub.endpoint,
-                "keys": {
-                    "p256dh": sub.p256dh,
-                    "auth": sub.auth,
-                }
-            }
-            success, error = send_push(subscription_info, payload)
+            success, error = send_push(sub.subscription_info, payload)
             if not success:
                 errors.append({"endpoint": sub.endpoint, "error": error})
-
         if errors:
             return Response({"message": "Bazı bildirimler gönderilemedi", "errors": errors}, status=207)
 
