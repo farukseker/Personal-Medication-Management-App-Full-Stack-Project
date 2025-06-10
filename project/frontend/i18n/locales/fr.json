@@ -1,0 +1,54 @@
+{
+  "auth": {
+    "login": "Connexion",
+    "be_login": "Connexion",
+    "register": "S'inscrire",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "rember_me": "Se souvenir de moi",
+    "forget_password": "Mot de passe oublié",
+    "login_message_title": "Connexion en cours",
+    "login_message_description": "Redirection vers la page d'accueil"
+  },
+  "index": {
+    "title": "Suivi des médicaments",
+    "today": "Aujourd'hui",
+    "add_medication": "Ajouter un médicament",
+    "medications": "Médicaments",
+    "counter": "Compteurs",
+    "water_tracking": "Eau",
+    "weight_tracking": "Poids"
+  },
+  "pill_reminder": {
+    "hour": "Heure",
+    "take": "Prendre",
+    "pass": "Passer",
+    "delete": "Suppr.",
+    "taken": "Pris",
+    "passed": "Passé"
+  },
+  "alert": {
+    "taken_all_pills_message": "Vous avez pris tous les médicaments que vous deviez prendre aujourd'hui !",
+    "pills_not_found_message": "Il n'y a aucun médicament à prendre aujourd'hui !"
+  },
+  "status": {
+    "today": "Aujourd'hui",
+    "dos_taken": "Doses prises"
+  },
+  "counter": {
+    "add_counter": "Ajouter un compteur"
+  },
+  "bottom_navigation": {
+    "home": "Accueil",
+    "history": "Historique",
+    "medications": "Médicaments",
+    "settings": "Paramètres"
+  },
+  "medication_item": {
+    "plan": "Plan",
+    "planned": "Planifié",
+    "take": "Prendre",
+    "edit": "Modifier",
+    "del": "Suppr."
+  }
+}

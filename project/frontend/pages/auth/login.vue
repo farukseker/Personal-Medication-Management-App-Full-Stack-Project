@@ -8,28 +8,28 @@
         <div class="m-auto w-full sm:w-8/12 lg:w-4/12 px-4">
             <article class="w-fit mx-auto">
                 <img src="/pill.svg" alt="">
-                <h1 class="text-4xl font-bold text-center">Giriş</h1>
+                <h1 class="text-4xl font-bold text-center">{{ $t('auth.login') }}</h1>
             </article>
             <form @submit.prevent="login" class="w-full">
-                <label class="label">E-posta</label>
-                <input v-model="email" type="email" required class="input w-full" placeholder="Email" autocomplete="email" />
+                <label class="label">{{ $t('auth.email') }}</label>
+                <input v-model="email" type="email" required class="input w-full" :placeholder="$t('auth.email')" autocomplete="email" />
 
-                <label class="label">Şifre</label>
-                <input v-model="password" type="password" required class="input w-full" placeholder="Password" autocomplete="current-password" />
+                <label class="label">{{ $t('auth.password') }}</label>
+                <input v-model="password" type="password" required class="input w-full" :placeholder="$t('auth.password')" autocomplete="current-password" />
 
                 <div class="flex py-2 gap-2">
                     <input type="checkbox" name="pw" id="pwf" v-model="rember_me" class="checkbox checkbox-sm checkbox-primary my-auto" checked>
-                    <label class="label my-auto" for="pwf">Beni Hatırla</label>
+                    <label class="label my-auto" for="pwf">{{ $t('auth.rember_me') }}</label>
                 </div>
                 <button type="submit" class="btn btn-primary w-full">
-                    Giriş yap
+                    {{ $t('auth.be_login') }}
                 </button>
                 <div class="py-10 md:py-20">
-                    <div class="divider">Şifremi unuttum</div>
+                    <div class="divider">{{ $t('auth.forget_password') }}</div>
                 </div>
                 <div class="flex flex-col gap-4">
                     <button type="button" class="btn btn-secondary text-white w-full mx-auto" @click="$router.push('/auth/register')">
-                        Kayıt ol
+                        {{ $t('auth.register') }}
                     </button> 
                     <div class="flex gap-8 justify-center">
                         <button type="button" class="btn btn-outline">
@@ -49,6 +49,8 @@
 </template>
 <script setup>
 import { faGoogle, faMeta, faGithub } from '@fortawesome/free-brands-svg-icons'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 const { $api } = useNuxtApp()
 const toast = useToast()
@@ -71,7 +73,7 @@ const login = async () => {
         const token_options = !rember_me.value ? {}:{
             maxAge: 60 * 60 * 24 * 30 * 6, // 6 ay mesela
             sameSite: 'lax',
-            secure:  true,
+            //secure:  true,
             path:    '/',
         }
         const accessToken = useCookie('access_token', token_options)
@@ -79,8 +81,8 @@ const login = async () => {
         accessToken.value = tokens.access
         refreshToken.value = tokens.refresh
         toast.add({
-            title:'Giriş Yapıldı',
-            description: 'Ana sayfaya yönlendirliyorusunz'
+            title: t('auth.login_message_title'),
+            description: t('auth.login_message_description')
         })
         router.push('/')
     } catch (e) {

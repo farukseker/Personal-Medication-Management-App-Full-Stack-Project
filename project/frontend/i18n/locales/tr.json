@@ -1,0 +1,54 @@
+{
+    "auth": {
+        "login": "Giriş",
+        "be_login": "Giriş yap",
+        "register": "Kayıt",
+        "email": "E-Post",
+        "password": "Şifre",
+        "rember_me": "Beni hatırla",
+        "forget_password": "Şifremi unuttum",
+        "login_message_title": "Giriş yapıldı",
+        "login_message_description": "Anasayfaya yönlendiriliyorsunuz"
+    },
+    "index": {
+        "title": "İlaç Takibi",
+        "today": "Bu gün",
+        "add_medication": "İlaç Ekle",
+        "medications": "İlaçlar",
+        "counter": "Sayaçlar",
+        "water_tracking": "Su",
+        "weight_tracking": "Kilo"
+    },
+    "pill_reminder": {
+        "hour": "Saat",
+        "take": "Al",
+        "pass": "pas",
+        "delete": "Sil",
+        "taken": "Alındı",
+        "passed": "Pas geçildi"
+    },
+    "alert":{
+        "taken_all_pills_message": "Bugün almanız gereken tüm ilacı aldınız!",
+        "pills_not_found_message": "Bugün almanız gereken hiçbir ilaç yok!"
+    },
+    "status": {
+        "today": "Bu gün",
+        "dos_taken": "Alındı"
+    },
+    "counter": {
+        "add_counter": "Sayaç ekle"
+    },
+    "bottom_navigation": {
+        "home": "Ana Sayfa",
+        "history": "Geçmiş",
+        "medications": "İlaçlar",
+        "settings": "Ayarlar"
+    },
+    "medication_item": {
+        "plan": "Planla",
+        "planned": "Planlı",
+        "take": "Al",
+        "edit": "Düzenle",
+        "del": "Sil"
+    }
+}

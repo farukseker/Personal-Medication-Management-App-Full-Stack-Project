@@ -6,9 +6,8 @@
         </div>
         <div class="flex justify-between items-center">
             <div>
-
                 <p class="font-semibold">
-                    <span v-if="medication.schedules?.length > 0" class="text-gray-300 tooltip" data-tip="Planlı">
+                    <span v-if="medication.schedules?.length > 0" class="text-gray-300 tooltip" :data-tip="$t('medication_item.planned')">
                         <font-awesome :icon="faStopwatch" />
                     </span>
                     {{ medication.name}}</p>
@@ -19,10 +18,10 @@
                 v-if="medication.schedules?.length === 0" 
                 @click="$emit('do_plan_exist_medication', medication.id)"
                 class="btn btn-primary btn-sm"
-                >Planla</button>
-                <button class="btn btn-secondary btn-sm" @click="take_mdicine">Al</button>
-                <button class="btn btn-success btn-sm" @click="$emit('update_exist_medication', medication.id)">Düzenle</button>
-                <button class="btn btn-outline btn-sm" @click="delete_mdicine(medication.id)">Sil</button>
+                >{{ $t('medication_item.plan') }}</button>
+                <button class="btn btn-secondary btn-sm" @click="take_mdicine">{{ $t('medication_item.take') }}</button>
+                <button class="btn btn-success btn-sm" @click="$emit('update_exist_medication', medication.id)">{{ $t('medication_item.edit') }}</button>
+                <button class="btn btn-outline btn-sm" @click="delete_mdicine(medication.id)">{{ $t('medication_item.del') }}</button>
             </div>
         </div>
     </div>

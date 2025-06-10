@@ -62,6 +62,12 @@
           </div>
       </fieldset>
     </form>
+    <fieldset class="w-full fieldset border-b-2 shadow card border-base-300 rounded-box p-4">
+      <legend class="fieldset-legend font-bold">Dil Ayarları</legend>
+        <NuxtLink v-for="locale in availableLocales" :key="locale.code" :to="switchLocalePath(locale.code)">
+          {{ locale.name }}
+        </NuxtLink>
+    </fieldset>
 
     <fieldset class="w-full fieldset border-b-2 shadow card border-base-300 rounded-box p-4">
         <legend class="fieldset-legend font-bold">Tema Ayarları</legend>
@@ -94,6 +100,13 @@
 <script setup>
 import { faUser, faMoon, faSun, faArrowLeft, faCircle, faHome, faImage } from '@fortawesome/free-solid-svg-icons'
 const { $api } = useNuxtApp()
+const { locale, locales } = useI18n()
+
+const switchLocalePath = useSwitchLocalePath()
+const availableLocales = computed(() => {
+  // return locales.value.filter(i => i.code !== locale.value)
+  return locales.value
+})
 
 const user_info = ref(null)
 

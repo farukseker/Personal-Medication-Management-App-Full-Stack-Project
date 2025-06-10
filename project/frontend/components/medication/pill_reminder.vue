@@ -5,21 +5,21 @@
             <div>
             <p class="font-semibold">
                 {{ medication.medication_name }}
-                <span v-if="medication.taken_status" class="text-gray-500">{{ medication.taken_status === 'taken' ? 'Alındı':'Pas' }}</span>
+                <span v-if="medication.taken_status" class="text-gray-500">{{ medication.taken_status === 'taken' ? $t('pill_reminder.taken'): $t('pill_reminder.passed') }}</span>
             </p>
-            <p class="text-sm text-gray-500">Saat {{ medication.time.slice(0, 5) }}  - {{ medication.dose }}{{ medication.unit }}</p>
+            <p class="text-sm text-gray-500">{{ $t('pill_reminder.hour') }} {{ medication.time.slice(0, 5) }}  - {{ medication.dose }}{{ medication.unit }}</p>
             </div>
             <div class="flex gap-2">
             <button :disabled="on_progress" v-if="medication.taken_status ? !['taken', 'pass'].includes(medication.taken_status) : true" class="btn btn-success btn-sm" @click="take_pill('taken')">
-                <span v-if="!on_progress">Aldım</span>
+                <span v-if="!on_progress">{{ $t('pill_reminder.take') }}</span>
                 <span v-else class="loading loading-spinner loading-sm"></span>
             </button>
             <button :disabled="on_progress" v-if="medication.taken_status ? !['taken', 'pass'].includes(medication.taken_status) : true" class="btn btn-outline btn-sm" @click="take_pill('pass')">
-                <span v-if="!on_progress">Atla</span>
+                <span v-if="!on_progress">{{ $t('pill_reminder.pass') }}</span>
                 <span v-else class="loading loading-spinner loading-sm"></span>
             </button>
             <button :disabled="on_progress" v-else class="btn btn-error btn-sm" @click="delete_pill">
-                <span v-if="!on_progress">Sil</span>
+                <span v-if="!on_progress">{{ $t('pill_reminder.delete') }}</span>
                 <span v-else class="loading loading-spinner loading-sm"></span>
             </button>
             </div>

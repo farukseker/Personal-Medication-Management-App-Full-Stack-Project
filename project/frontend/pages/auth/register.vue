@@ -8,7 +8,7 @@
     <div class="m-auto w-full sm:w-8/12 lg:w-4/12 px-4">
         <article class="w-fit mx-auto">
             <img src="/pill.svg" alt="">
-            <h1 class="text-4xl font-bold text-center">Kayıt Ol</h1>
+            <h1 class="text-4xl font-bold text-center">{{ $t('auth.register') }}</h1>
         </article>
         <form @submit.prevent="register" class="w-full">
             <label class="label">Adınız</label>

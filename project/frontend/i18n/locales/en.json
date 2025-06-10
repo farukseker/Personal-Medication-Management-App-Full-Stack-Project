@@ -1,5 +1,55 @@
 {
-  "save": "Savex",
-  "cancel": "Cancel",
-  "delete": "Delete"
+    "auth": {
+        "login": "Login",
+        "be_login": "Login",
+        "register": "Register",
+        "email": "E-Mail",
+        "password": "Password",
+        "rember_me": "Rember me",
+        "forget_password": "Forget password",
+        "login_message_title": "Be login",
+        "login_message_description": "Route to home page"
+    },
+    "index": {
+        "title": "Medication Tracker",
+        "today": "Today",
+        "add_medication": "Add a pill",
+        "medications": "Medications",
+        "counter": "Counters",
+        "water_tracking": "Water",
+        "weight_tracking": "Weight"
+    },
+    "pill_reminder": {
+        "hour": "Hour",
+        "take": "Take",
+        "pass": "Pass",
+        "delete": "Del",
+        "taken": "Taken",
+        "passed": "Passed"
+    },
+    "alert":{
+        "taken_all_pills_message": "You've taken all the medication you need to take today!",
+        "pills_not_found_message": "There is no medication you need to take today!"
+    },
+    "status": {
+        "today": "Today",
+        "dos_taken": "Dos Taken"
+    },
+    "counter": {
+        "add_counter": "Add a counter"
+    },
+    "bottom_navigation": {
+        "home": "Home",
+        "history": "History",
+        "medications": "Medications",
+        "settings": "Settings"
+    },
+    "medication_item": {
+        "plan": "Plan",
+        "planned": "Planned",
+        "take": "Take",
+        "edit": "Edit",
+        "del": "Del"
+    }
+
 }

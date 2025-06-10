@@ -5,7 +5,7 @@
     :class="$route.name === 'index' ? 'dock-active':''"
       >
         <font-awesome :icon="faHome" class="size-[1.2em]" />
-        <span class="dock-label">Home</span>
+        <span class="dock-label">{{ $t('bottom_navigation.home') }}</span>
       </button>
 
       <button 
@@ -13,7 +13,7 @@
         :class="$route.name === 'history' ? 'dock-active':''"
         >
         <font-awesome :icon="faCalendar" class="size-[1.2em]" />
-        <span class="dock-label">Geçmiş</span>
+        <span class="dock-label">{{ $t('bottom_navigation.history') }}</span>
       </button>
       
       <button
@@ -21,7 +21,7 @@
         :class="$route.name === 'medications' ? 'dock-active':''"
         >
         <font-awesome :icon="faPills" class="size-[1.2em]" />
-        <span class="dock-label">İlaçlarım</span>
+        <span class="dock-label">{{ $t('bottom_navigation.medications') }}</span>
       </button>
 
       <button
@@ -29,10 +29,10 @@
         :class="$route.name === 'settings' ? 'dock-active':''"
         >
         <font-awesome :icon="faGear" />
-        <span class="dock-label">Settings</span>
+        <span class="dock-label">{{ $t('bottom_navigation.settings') }}</span>
       </button>
     </div>
 </template>
 <script setup>
-import { faTablets, faPills, faPlus, faGear, faCalendar, faHome, faUserGroup } from '@fortawesome/free-solid-svg-icons'
+import { faPills, faGear, faCalendar, faHome } from '@fortawesome/free-solid-svg-icons'
 </script>

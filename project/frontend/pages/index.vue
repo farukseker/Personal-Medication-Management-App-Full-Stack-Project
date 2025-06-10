@@ -3,8 +3,7 @@
    <div class="p-4 space-y-4 max-w-md mx-auto">
       <div class="flex flex-col gap-4 flex-1">
         <div class="flex justify-between items-center">
-            <h1 class="text-xl font-bold">İlaç Takibi</h1>
-            <h2 class="text-xl text-fuchsia-400"> {{ $t('save') }}</h2>
+            <h1 class="text-xl font-bold">{{ $t('index.title') }}</h1>
             <button 
               @click="$router.push('/settings')"
               class="btn btn-ghost btn-circle text-2xl p-0">
@@ -14,19 +13,19 @@
         </div>
 
         <div class="flex w-full">
-          <h2 class="text-lg font-semibold mb-2 w-full">Bugün, {{ today }}</h2>
+          <h2 class="text-lg font-semibold mb-2 w-full">{{ $t('index.today') }}, {{ today }}</h2>
           <button class="btn btn-primary btn-sm"
           @click="go_new_medicine_form"
-          >+ ilaç ekle</button>
+          >+ {{ $t('index.add_medication') }}</button>
         </div>
     <button @click="handleSubscribe" class="px-4 py-2 bg-blue-600 text-white rounded">
       Bildirim Aboneliği Başlat
     </button>
       <div role="tablist" class="tabs tabs-lift tabs-md tabs-top">
-        <a role="tab" @click="tab_index=0" class="tab hover:text-green-500 flex gap-2" :class="tab_index === 0 ? 'tab-active text-primary':''"><font-awesome :icon="faPills"/> İlaçlar</a>
-        <a role="tab" @click="tab_index=1" class="tab hover:text-green-500 flex gap-2" :class="tab_index === 1 ? 'tab-active text-primary':''"><font-awesome :icon="faPlus"/> Sayaçlar</a>
-        <a role="tab" @click="tab_index=2" class="tab hover:text-green-500 flex gap-2" :class="tab_index === 2 ? 'tab-active text-primary':''"><font-awesome :icon="faGlassWater"/> Su Tüketimi</a>
-        <a role="tab" @click="tab_index=3" class="tab hover:text-green-500 flex gap-2" :class="tab_index === 3 ? 'tab-active text-primary':''"><font-awesome :icon="faGlassWater"/> Kilo</a>
+        <a role="tab" @click="tab_index=0" class="tab hover:text-green-500 flex gap-2" :class="tab_index === 0 ? 'tab-active text-primary':''"><font-awesome :icon="faPills"/> {{ $t('index.medications') }}</a>
+        <a role="tab" @click="tab_index=1" class="tab hover:text-green-500 flex gap-2" :class="tab_index === 1 ? 'tab-active text-primary':''"><font-awesome :icon="faPlus"/> {{ $t('index.counter') }}</a>
+        <a role="tab" @click="tab_index=2" class="tab hover:text-green-500 flex gap-2" :class="tab_index === 2 ? 'tab-active text-primary':''"><font-awesome :icon="faGlassWater"/> {{ $t('index.water_tracking') }}</a>
+        <a role="tab" @click="tab_index=3" class="tab hover:text-green-500 flex gap-2" :class="tab_index === 3 ? 'tab-active text-primary':''"><font-awesome :icon="faGlassWater"/> {{ $t('index.weight_tracking') }}</a>
       </div>
     
     <div v-if="on_loading" class="w-full flex">
@@ -42,188 +41,30 @@
             :medication="medication_today" 
             @load_medication="async () => await load_medication_today_list()"
           />
-        
-          <div v-else-if="stats?.taken_percentage == 100" role="alert" class="alert alert-success shadow-md text-white my-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span>Bu gün almanız gereken tüm ilaçları Aldınız!</span>
-          </div>
-        
-          <div v-else role="alert" class="alert alert-info shadow-md my-2 text-white">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span>Bu gün almanız gereken ilaç bulunmamaktadır!</span>
-          </div>
-
+          <AlertsTakedAllPills v-else-if="stats?.taken_percentage == 100" />
+          <AlertsPillsNotfound v-else />
         </div>
-        <!-- Haftalık Durum -->
-        <div class="card card-sm bg-base-100 shadow-md">
-          <div class="card-body">
-            <h3 class="text-md font-medium">Bu Gün</h3>
-            <progress class="progress progress-primary w-full" :value="stats?.taken_percentage" max="100"></progress>
-            <p class="text-sm text-gray-500 mt-1">{{ stats?.taken_count }} / {{ stats?.be_taken_count }} doz alındı</p>
-          </div>
-        </div>
-
+        <StatusWeeklyStatus :stats="stats" />
       </article>
       <article name="counters view" v-if="tab_index === 1">
         <fieldset class="w-full fieldset card rounded-box ">
             <div class="grid grid-cols-3 gap-4">
-              <div
-                v-for="(counter, index) in counters_list"
-                :key="index" 
-                @click="() => counter_tick(index)"
-                class="rounded shadow-md bg-base-200 p-2 grid grid-cols-5 text-white"
-                :class="counter.is_progress ? 'bg-fuchsia-700':'cursor-pointer bg-fuchsia-800'"
-                >
-                <div v-if="!counter.is_progress" class="col-span-2 full my-auto">{{ counter.name }}</div>
-                <div v-if="!counter.is_progress" class="col-span-2 min-w-fit my-auto flex gap-2">{{ counter.count }} <p class="text-xs scale-90" v-if="counter.unit">{{ counter.unit }}</p></div>
-                <div v-if="!counter.is_progress" class="col-span-1 text-center ">
-                  <font-awesome :icon="faPlus" />
-                </div>
-                <div v-else class="col-span-5 flex">
-                    <span class="loading loading-spinner loading-xs m-auto"></span>
-                </div>
-              </div>
-              <!-- Add a counter -->
-              <div 
-              @click="$router.push('/new_counter')"
-              class="rounded shadow bg-base-200 border-2 border-dashed border-gray-400 text-gray-600 p-2 flex cursor-pointer">
-                <span class="my-auto">Sayaç Ekle</span>
-              </div>
+              <CountersCounterList :counters_list="counters_list" />
+              <CountersAddCounterLink />
             </div>
         </fieldset>
       </article>
       <article v-if="tab_index === 2">
-         <div class="min-h-screen bg-blue-100 p-4 flex flex-col items-center">
-    <h1 class="text-3xl font-bold text-blue-800 mb-4">Su Takibi</h1>
-
-    <div class="radial-progress text-blue-600 mb-4" :style="{ '--value': progress }" role="progressbar">
-      {{ total }} / {{ goal }} ml
-    </div>
-
-    <input
-      v-model.number="input"
-      type="number"
-      placeholder="Ne kadar su içtin? (ml)"
-      class="input input-bordered input-info w-full max-w-xs mb-4"
-    />
-
-    <button @click="addWater" class="btn btn-primary w-full max-w-xs mb-4">
-      Ekle
-    </button>
-
-    <ul class="w-full max-w-xs space-y-2">
-      <li
-        v-for="(entry, index) in history"
-        :key="index"
-        class="bg-white rounded-lg shadow p-2 text-sm flex justify-between"
-      >
-        <span>{{ entry.amount }} ml</span>
-        <span class="text-gray-500">{{ entry.time }}</span>
-      </li>
-    </ul>
-  </div>
+        <TrackersWaterTracker />
       </article>
       <article v-if="tab_index === 3">
- <div class="min-h-screen bg-base-200 p-4 flex flex-col items-center">
-    <h1 class="text-3xl font-bold text-primary mb-4">Kilo Takibi</h1>
-
-    <div class="w-full max-w-xs bg-white shadow rounded-xl p-4 mb-4 text-center">
-      <p class="text-lg font-semibold">Son Kilo:</p>
-      <p class="text-3xl text-primary">
-        {{ latestWeight }} kg
-      </p>
-      <p v-if="weightHistory.length > 1" class="mt-2 text-sm text-gray-500">
-        Değişim: 
-        <span :class="weightChange >= 0 ? 'text-red-500' : 'text-green-500'">
-          {{ weightChange >= 0 ? '+' : '' }}{{ weightChange }} kg
-        </span>
-      </p>
-    </div>
-
-    <input
-      v-model.number="newWeight"
-      type="number"
-      step="0.1"
-      placeholder="Kilonu gir (kg)"
-      class="input input-bordered input-primary w-full max-w-xs mb-4"
-    />
-
-    <button @click="addWeight" class="btn btn-primary w-full max-w-xs mb-4">
-      Ekle
-    </button>
-
-    <ul class="w-full max-w-xs space-y-2">
-      <li
-        v-for="(entry, index) in weightHistory"
-        :key="index"
-        class="bg-white rounded-lg shadow p-3 text-sm flex justify-between"
-      >
-        <span>{{ entry.weight }} kg</span>
-        <span class="text-gray-500">{{ entry.date }}</span>
-      </li>
-    </ul>
-  </div>
+        <TrackersWeightTracker />
       </article>
     </section>
   </div>
 </template>
   
 <script setup>
-
-const newWeight = ref(null)
-const weightHistory = ref([])
-
-const addWeight = () => {
-  if (!newWeight.value || newWeight.value <= 0) return
-
-  const now = new Date()
-  weightHistory.value.unshift({
-    weight: newWeight.value,
-    date: now.toLocaleDateString('tr-TR'),
-  })
-
-  newWeight.value = null
-}
-
-const latestWeight = computed(() => {
-  return weightHistory.value[0]?.weight || '-'
-})
-
-const weightChange = computed(() => {
-  if (weightHistory.value.length < 2) return 0
-  return (weightHistory.value[0].weight - weightHistory.value[1].weight).toFixed(1)
-})
-// ------ su 
-const goal = 2000 // Günlük hedef (ml)
-const total = ref(0)
-const input = ref(null)
-const history = ref([])
-
-const addWater = () => {
-  if (!input.value || input.value <= 0) return
-
-  total.value += input.value
-  history.value.unshift({
-    amount: input.value,
-    time: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }),
-  })
-  input.value = null
-}
-
-const progress = computed(() => Math.min(Math.round((total.value / goal) * 100), 100))
-import { usePushNotification } from '~/composables/usePushNotification';
-
-const { subscribe } = usePushNotification();
-
-const handleSubscribe = () => {
-  subscribe();
-};
-
-
 import { faPills, faPlus, faGlassWater } from '@fortawesome/free-solid-svg-icons'
 import dayjs from 'dayjs'
 import { useNewMdcStore } from '@/stores/new_mdc_store.js'
@@ -265,35 +106,7 @@ const get_counters_list = async () => {
     }))
 }
 
-const counter_tick = async (counter_index) => {
-  try {
-    let counter_id = counters_list.value[counter_index].id
-    counters_list.value[counter_index].is_progress = true
-    await $api('/counter/tick/', {
-      method: 'POST',
-      body: {
-        counter: counter_id,
-        value: 1
-      }
-    })
-    ++counters_list.value[counter_index].count
 
-  } catch (e) {
-    console.error(e)
-  } finally {
-    counters_list.value[counter_index].is_progress = false
-  }
-
-  /*
-  counter_id = 1
-  response = client.post(f'/counter/tick/', json={
-      "counter": counter_id,
-      "unit": "Kez",
-      "name": "İhtiyaç",
-      "value": -1 # terse >
-  })
-  */
-}
 
 const load_medication_today_list = async () => {
   const data = await $api('/medication/today/')

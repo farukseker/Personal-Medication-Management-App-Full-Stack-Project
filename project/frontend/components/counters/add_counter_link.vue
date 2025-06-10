@@ -1,0 +1,8 @@
+<template>
+<!-- Add a counter -->
+<div 
+    @click="$router.push('/new_counter')"
+    class="rounded shadow bg-base-200 border-2 border-dashed border-gray-400 text-gray-600 p-2 flex cursor-pointer">
+    <span class="my-auto">{{ $t('counter.add_counter') }}</span>
+</div>
+</template>
