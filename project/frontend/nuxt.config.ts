@@ -47,9 +47,18 @@ export default defineNuxtConfig({
     'vue3-carousel-nuxt',
     '@vueuse/motion/nuxt',
     '@vite-pwa/nuxt',
-    '@nuxtjs/color-mode'
+    '@nuxtjs/color-mode',
+    '@nuxtjs/i18n',
   ],
-    colorMode: {
+i18n: {
+  locales: [
+    { code: 'en', language: 'en-US', file: 'en.json' },
+  ],
+  lazy: true,
+  langDir: './locales/',
+  defaultLocale: 'en'
+},
+  colorMode: {
     classSuffix: '',
     preference: 'light',
     fallback: 'light',
@@ -93,7 +102,7 @@ export default defineNuxtConfig({
     components: {
       map: {
         carousel: 'Carousel',
-        custom: 'CustomField', // `[custom][/custom]` için özel bir bileşen tanımlayın,
+        custom: 'CustomField', 
         moni: 'Moni'
       },
     },
@@ -118,7 +127,7 @@ export default defineNuxtConfig({
   },
   // vue: {
   //   compilerOptions: {
-  //     isCustomElement: (tag) => tag === 'MDC', // Özel MDC öğesini belirtin
+  //     isCustomElement: (tag) => tag === 'MDC',
   //   },
   // },
   googleFonts: {

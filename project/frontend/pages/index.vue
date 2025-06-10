@@ -4,6 +4,7 @@
       <div class="flex flex-col gap-4 flex-1">
         <div class="flex justify-between items-center">
             <h1 class="text-xl font-bold">İlaç Takibi</h1>
+            <h2 class="text-xl text-fuchsia-400"> {{ $t('save') }}</h2>
             <button 
               @click="$router.push('/settings')"
               class="btn btn-ghost btn-circle text-2xl p-0">
@@ -22,10 +23,10 @@
       Bildirim Aboneliği Başlat
     </button>
       <div role="tablist" class="tabs tabs-lift tabs-md tabs-top">
-        <a role="tab" @click="tab_index=0" class="tab flex gap-2" :class="tab_index === 0 ? 'tab-active text-primary':''"><font-awesome :icon="faPills"/> İlaçlar</a>
-        <a role="tab" @click="tab_index=1" class="tab flex gap-2" :class="tab_index === 1 ? 'tab-active text-primary':''"><font-awesome :icon="faPlus"/> Sayaçlar</a>
-        <a role="tab" @click="tab_index=2" class="tab flex gap-2" :class="tab_index === 2 ? 'tab-active text-primary':''"><font-awesome :icon="faGlassWater"/> Su Tüketimi</a>
-        <a role="tab" @click="tab_index=3" class="tab flex gap-2" :class="tab_index === 3 ? 'tab-active text-primary':''"><font-awesome :icon="faGlassWater"/> Kilo</a>
+        <a role="tab" @click="tab_index=0" class="tab hover:text-green-500 flex gap-2" :class="tab_index === 0 ? 'tab-active text-primary':''"><font-awesome :icon="faPills"/> İlaçlar</a>
+        <a role="tab" @click="tab_index=1" class="tab hover:text-green-500 flex gap-2" :class="tab_index === 1 ? 'tab-active text-primary':''"><font-awesome :icon="faPlus"/> Sayaçlar</a>
+        <a role="tab" @click="tab_index=2" class="tab hover:text-green-500 flex gap-2" :class="tab_index === 2 ? 'tab-active text-primary':''"><font-awesome :icon="faGlassWater"/> Su Tüketimi</a>
+        <a role="tab" @click="tab_index=3" class="tab hover:text-green-500 flex gap-2" :class="tab_index === 3 ? 'tab-active text-primary':''"><font-awesome :icon="faGlassWater"/> Kilo</a>
       </div>
     
     <div v-if="on_loading" class="w-full flex">
@@ -33,7 +34,7 @@
     </div>
     <section v-else>
       <article name="medication list" v-if="tab_index === 0">
-        <div class="space-y-3 max-h-[40vh] overflow-y-auto my-4" >
+        <div class="space-y-3 max-h-[40vh] overflow-y-auto py-4" >
           <MedicationPillReminder
             v-if="medication_today_list.length > 0"
             v-for="medication_today in medication_today_list"
@@ -65,6 +66,7 @@
             <p class="text-sm text-gray-500 mt-1">{{ stats?.taken_count }} / {{ stats?.be_taken_count }} doz alındı</p>
           </div>
         </div>
+
       </article>
       <article name="counters view" v-if="tab_index === 1">
         <fieldset class="w-full fieldset card rounded-box ">
@@ -95,13 +97,124 @@
         </fieldset>
       </article>
       <article v-if="tab_index === 2">
-        eklenicek
+         <div class="min-h-screen bg-blue-100 p-4 flex flex-col items-center">
+    <h1 class="text-3xl font-bold text-blue-800 mb-4">Su Takibi</h1>
+
+    <div class="radial-progress text-blue-600 mb-4" :style="{ '--value': progress }" role="progressbar">
+      {{ total }} / {{ goal }} ml
+    </div>
+
+    <input
+      v-model.number="input"
+      type="number"
+      placeholder="Ne kadar su içtin? (ml)"
+      class="input input-bordered input-info w-full max-w-xs mb-4"
+    />
+
+    <button @click="addWater" class="btn btn-primary w-full max-w-xs mb-4">
+      Ekle
+    </button>
+
+    <ul class="w-full max-w-xs space-y-2">
+      <li
+        v-for="(entry, index) in history"
+        :key="index"
+        class="bg-white rounded-lg shadow p-2 text-sm flex justify-between"
+      >
+        <span>{{ entry.amount }} ml</span>
+        <span class="text-gray-500">{{ entry.time }}</span>
+      </li>
+    </ul>
+  </div>
+      </article>
+      <article v-if="tab_index === 3">
+ <div class="min-h-screen bg-base-200 p-4 flex flex-col items-center">
+    <h1 class="text-3xl font-bold text-primary mb-4">Kilo Takibi</h1>
+
+    <div class="w-full max-w-xs bg-white shadow rounded-xl p-4 mb-4 text-center">
+      <p class="text-lg font-semibold">Son Kilo:</p>
+      <p class="text-3xl text-primary">
+        {{ latestWeight }} kg
+      </p>
+      <p v-if="weightHistory.length > 1" class="mt-2 text-sm text-gray-500">
+        Değişim: 
+        <span :class="weightChange >= 0 ? 'text-red-500' : 'text-green-500'">
+          {{ weightChange >= 0 ? '+' : '' }}{{ weightChange }} kg
+        </span>
+      </p>
+    </div>
+
+    <input
+      v-model.number="newWeight"
+      type="number"
+      step="0.1"
+      placeholder="Kilonu gir (kg)"
+      class="input input-bordered input-primary w-full max-w-xs mb-4"
+    />
+
+    <button @click="addWeight" class="btn btn-primary w-full max-w-xs mb-4">
+      Ekle
+    </button>
+
+    <ul class="w-full max-w-xs space-y-2">
+      <li
+        v-for="(entry, index) in weightHistory"
+        :key="index"
+        class="bg-white rounded-lg shadow p-3 text-sm flex justify-between"
+      >
+        <span>{{ entry.weight }} kg</span>
+        <span class="text-gray-500">{{ entry.date }}</span>
+      </li>
+    </ul>
+  </div>
       </article>
     </section>
   </div>
 </template>
   
 <script setup>
+
+const newWeight = ref(null)
+const weightHistory = ref([])
+
+const addWeight = () => {
+  if (!newWeight.value || newWeight.value <= 0) return
+
+  const now = new Date()
+  weightHistory.value.unshift({
+    weight: newWeight.value,
+    date: now.toLocaleDateString('tr-TR'),
+  })
+
+  newWeight.value = null
+}
+
+const latestWeight = computed(() => {
+  return weightHistory.value[0]?.weight || '-'
+})
+
+const weightChange = computed(() => {
+  if (weightHistory.value.length < 2) return 0
+  return (weightHistory.value[0].weight - weightHistory.value[1].weight).toFixed(1)
+})
+// ------ su 
+const goal = 2000 // Günlük hedef (ml)
+const total = ref(0)
+const input = ref(null)
+const history = ref([])
+
+const addWater = () => {
+  if (!input.value || input.value <= 0) return
+
+  total.value += input.value
+  history.value.unshift({
+    amount: input.value,
+    time: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }),
+  })
+  input.value = null
+}
+
+const progress = computed(() => Math.min(Math.round((total.value / goal) * 100), 100))
 import { usePushNotification } from '~/composables/usePushNotification';
 
 const { subscribe } = usePushNotification();
