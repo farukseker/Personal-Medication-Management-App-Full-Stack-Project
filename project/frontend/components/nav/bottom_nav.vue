@@ -2,7 +2,7 @@
     <div class="dock max-w-md mx-auto">
       <button
       @click="$router.push('/')"
-    :class="$route.name === 'index' ? 'dock-active':''"
+    :class="$route.path === '/' ? 'dock-active':''"
       >
         <font-awesome :icon="faHome" class="size-[1.2em]" />
         <span class="dock-label">{{ $t('bottom_navigation.home') }}</span>
@@ -10,7 +10,7 @@
 
       <button 
         @click="$router.push('/history')"
-        :class="$route.name === 'history' ? 'dock-active':''"
+        :class="$route.path === '/history' ? 'dock-active':''"
         >
         <font-awesome :icon="faCalendar" class="size-[1.2em]" />
         <span class="dock-label">{{ $t('bottom_navigation.history') }}</span>
@@ -18,7 +18,7 @@
       
       <button
         @click="$router.push('/medications')"
-        :class="$route.name === 'medications' ? 'dock-active':''"
+        :class="$route.path === '/medications' ? 'dock-active':''"
         >
         <font-awesome :icon="faPills" class="size-[1.2em]" />
         <span class="dock-label">{{ $t('bottom_navigation.medications') }}</span>
@@ -26,7 +26,7 @@
 
       <button
         @click="$router.push('/settings')"
-        :class="$route.name === 'settings' ? 'dock-active':''"
+        :class="$route.path === '/settings' ? 'dock-active':''"
         >
         <font-awesome :icon="faGear" />
         <span class="dock-label">{{ $t('bottom_navigation.settings') }}</span>

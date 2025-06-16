@@ -1,0 +1,14 @@
+[req]
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+prompt = no
+
+[req_distinguished_name]
+CN = 192.168.123.97
+
+[v3_req]
+subjectAltName = @alt_names
+
+[alt_names]
+IP.1 = 192.168.123.97
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout 192.168.123.97-key.pem -out 192.168.123.97.pem -config openssl-san.cnf -extensions v3_req
