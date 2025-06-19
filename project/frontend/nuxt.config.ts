@@ -52,19 +52,19 @@ export default defineNuxtConfig({
   ],
 i18n: {
   locales: [
-    { code: 'en', name: "English", language: 'en-US', file: 'en.json'},
+    { code: 'us', name: "English", language: 'en-US', file: 'en.json'},
     { code: 'tr', name: "Türkçe", language: 'tr-TR', file: 'tr.json'},
     { code: 'fr', name: "Français", language: 'fr-FR', file: 'fr.json'},
   ],
   lazy: true,
   langDir: './locales/',
-  defaultLocale: 'en',
+  defaultLocale: 'us',
   // strategy: 'prefix',
   strategy: 'prefix_and_default',
   detectBrowserLanguage: {
     useCookie: true,
     cookieKey: 'i18n_redirected',
-    fallbackLocale: 'en',
+    fallbackLocale: 'us',
     alwaysRedirect: false,
   },
 },
@@ -122,6 +122,7 @@ i18n: {
   },
   css: [
     '@/assets/css/tailwind.css',
+    'flag-icons/css/flag-icons.min.css'
   ],
   fontawesome: {
     icons: {

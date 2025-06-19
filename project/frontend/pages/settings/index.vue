@@ -9,9 +9,26 @@
     <article>
         <fieldset class="w-full fieldset shadow rounded-box p-2">
             <legend class="fieldset-legend font-bold">Kullanıcı ayarları</legend>
-            <SettingsButton :icon="faUser" title="pars" to="/" />
             <SettingsButton :icon="faUser" title="Kişisel bilgiler" to="/" />
             <SettingsButton :icon="faKey" title="Şifre değiştir" to="/" />
+        </fieldset>
+    </article>
+    <article>
+        <fieldset class="w-full fieldset shadow rounded-box p-2">
+            <legend class="fieldset-legend font-bold">Erişebilirlik ayarları</legend>
+            <SettingsButton 
+             :icon="faLanguage"
+             title="Dil"
+             to="/settings/change_language" 
+             :description="locale.toUpperCase()"
+             />
+            <SettingsButton
+             :icon="theme === 'light' ? faSun:faMoon"
+             title="Tema"
+             @click="toggleTheme"
+             :description="theme"
+             :showEndArrow="false"
+             />
         </fieldset>
     </article>
     <article>
@@ -29,9 +46,29 @@
 import { 
     faHeadset,
     faArrowLeft,
+    faLanguage,
     faUser,
     faKey,
+    faSun,
+    faMoon,
     faScroll,
  } from '@fortawesome/free-solid-svg-icons'
+
+ const { locale } = useI18n()
+
+
+const theme = ref('light')
+
+onMounted(async () => {
+  theme.value = localStorage.getItem('theme') || 'light'
+})
+
+function toggleTheme() {
+    theme.value = localStorage.getItem('theme') || 'light'
+    theme.value = theme.value === 'dark' ? 'light' : 'dark'
+    document.documentElement.setAttribute('class', theme.value)
+    document.documentElement.setAttribute('data-theme', theme.value)
+    localStorage.setItem('theme', theme.value)
+}
 
 </script>

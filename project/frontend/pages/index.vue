@@ -62,7 +62,7 @@ const load_medication_today_list = async () => {
   const data = await $api('/medication/today/')
   medication_today_list.value = data
   await get_stats()
-  return true // Burada önemli olan bir değer döndürmen
+  return true 
 }
 
 onMounted(()=>{
@@ -80,7 +80,7 @@ const get_stats = async () => {
     stats.value = {
       taken_count: taken,
       be_taken_count: total,
-      taken_percentage: percentage.toFixed(2)  // virgülden sonra 2 basamak tutar
+      taken_percentage: percentage.toFixed(2)
     };
   }
 }

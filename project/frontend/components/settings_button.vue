@@ -6,7 +6,7 @@
         <font-awesome :icon="icon" class="my-auto" /> 
         <p class="w-full text-start ps-1 my-auto">{{ title }}</p>
         <p class="text-secondary" v-if="description">{{ description }}</p>
-        <font-awesome :icon="faAngleRight" class="my-auto" /> 
+        <font-awesome v-if="showEndArrow" :icon="faAngleRight" class="my-auto" /> 
     </button>
 </template>
 
@@ -34,6 +34,11 @@ const { to } = defineProps({
     description: {
         type: String,
         required: false,
+    },
+    showEndArrow:{
+        type: Boolean,
+        required: false,  
+        default: true    
     }
 })
 
