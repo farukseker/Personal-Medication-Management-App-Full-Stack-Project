@@ -2,7 +2,7 @@
 
 <header class="flex bg-base-300 p-4 sticky top-0 z-10 rounded-b-md shdow max-w-md mx-auto">
     <div 
-    @click="router.push('/new_medicine/medicine_plan')"
+    @click="go('/new_medicine/medicine_plan')"
     class="w-[36px] my-auto">
         <font-awesome :icon="faArrowLeft" />
     </div>
@@ -103,7 +103,7 @@
 
     <div class="w-full flex gap-2">
         <button class="btn btn-secondary w-1/2" 
-        @click="router.push('/new_medicine/medicine_plan')"
+        @click="go('/new_medicine/medicine_plan')"
         >İptal</button>
         <button class="btn btn-primary w-1/2" @click="saveSchedule" :disabled="!form_is_vaild()">Kaydet</button>
     </div>
@@ -115,9 +115,10 @@
 <script setup>
 import { faCalendar, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { useNewMdcStore } from '@/stores/new_mdc_store.js'
+import { useLocaleRouter } from '~/composables/useLocaleRouter'
 
+const { go } = useLocaleRouter()
 const route = useRoute();
-const router = useRouter()
 
 const schedule_index = route.query.schedule_index || null;
 
@@ -170,7 +171,7 @@ const saveSchedule = () => {
     scheduleStore.updateSchedule(schedule_index, schedule.value)
   }
   // plan a yönlendir
-  router.push('/new_medicine/medicine_plan')
+  go('/new_medicine/medicine_plan')
 }
 
 const removeSchedule = (index) => {

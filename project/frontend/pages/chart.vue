@@ -1,17 +1,31 @@
 <template>
-  <div class="flex flex-col items-center gap-4">
+  <div class="min-h-screen bg-base-200 p-4 flex flex-col items-center">
+    <h1 class="text-3xl font-bold text-primary mb-4">Kilo Takibi</h1>
 
-    <div class="w-full max-w-xl bg-white dark:bg-gray-900 rounded-xl shadow p-2">
-      <h2 class="text-lg font-semibold text-center mb-2">Kilo Değişimi Grafiği</h2>
-      <ApexChart
-        type="line"
-        height="300"
-        :options="chartOptions"
-        :series="chartSeries"
-      />
+    <div class="w-full max-w-xs bg-white shadow rounded-xl p-4 mb-4 text-center">
+      <p class="text-lg font-semibold">Son Kilo:</p>
+      <p class="text-3xl text-primary">{{ latestWeight }} kg</p>
+      <p v-if="weightHistory.length > 1" class="mt-2 text-sm text-gray-500">
+        Değişim:
+        <span :class="weightChange >= 0 ? 'text-red-500' : 'text-green-500'">
+          {{ weightChange >= 0 ? '+' : '' }}{{ weightChange }} kg
+        </span>
+      </p>
     </div>
 
-    <ul class="w-full space-y-2 mb-6">
+    <input
+      v-model.number="newWeight"
+      type="number"
+      step="0.1"
+      placeholder="Kilonu gir (kg)"
+      class="input input-bordered input-primary w-full max-w-xs mb-4"
+    />
+
+    <button @click="addWeight" class="btn btn-primary w-full max-w-xs mb-4">
+      Ekle
+    </button>
+
+    <ul class="w-full max-w-xs space-y-2 mb-6">
       <li
         v-for="(entry, index) in weightHistory"
         :key="index"
@@ -21,6 +35,16 @@
         <span class="text-gray-500">{{ entry.date }}</span>
       </li>
     </ul>
+
+    <div class="w-full max-w-xl bg-white rounded-xl shadow p-4">
+      <h2 class="text-lg font-semibold text-center mb-2">Kilo Değişimi Grafiği</h2>
+      <ApexChart
+        type="line"
+        height="300"
+        :options="chartOptions"
+        :series="chartSeries"
+      />
+    </div>
   </div>
 </template>
 

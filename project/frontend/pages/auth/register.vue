@@ -29,7 +29,7 @@
             <div class="py-5 sm:py-10 md:py-20">
                 <div class="divider">Bir Hesabın mı Var ?</div>
             </div>
-            <button type="button" class="btn btn-secondary text-white w-full mx-auto" @click="$router.push('/auth/login')">
+            <button type="button" class="btn btn-secondary text-white w-full mx-auto" @click="go('/auth/login')">
                 Giriş Yap
             </button> 
         </form>
@@ -42,12 +42,13 @@ const accessToken = useCookie('access_token')
 const refreshToken = useCookie('refresh_token')
 const { $api } = useNuxtApp()
 const toast = useToast()
-const router = useRouter()
+import { useLocaleRouter } from '~/composables/useLocaleRouter'
 
 const first_name = ref('')
 const last_name = ref('')
 const email = ref('')
 const password = ref('')
+const { go } = useLocaleRouter()
 
 const register = async () => {
     try{
@@ -66,7 +67,7 @@ const register = async () => {
             title:'Kayıt Başarılı',
             description: 'Giriş Sayfasına yönlendiriliyorsunuz, e-postanızı onaylamayı unutmayın'
         })
-        router.push('/auth/login')
+        go('/auth/login')
     } catch (e) {
         if (e.status === 406){
             toast.add({

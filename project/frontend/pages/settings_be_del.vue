@@ -4,7 +4,7 @@
         <div class="flex justify-between items-center">
             <h1 class="text-xl font-bold">Ayarlar</h1>
             <button 
-            @click="$router.push('/')"
+            @click="go('/')"
             class="btn btn-ghost text-2xl p-0">
               <font-awesome :icon="faArrowLeft" />
             </button>
@@ -101,6 +101,9 @@
 import { faUser, faMoon, faSun, faArrowLeft, faCircle, faHome, faImage } from '@fortawesome/free-solid-svg-icons'
 const { $api } = useNuxtApp()
 const { locale, locales } = useI18n()
+import { useLocaleRouter } from '~/composables/useLocaleRouter'
+
+const { go } = useLocaleRouter()
 
 const switchLocalePath = useSwitchLocalePath()
 const availableLocales = computed(() => {
@@ -137,6 +140,6 @@ const router = useRouter()
 const logout = () => {
   accessToken.value = ''
   refreshToken.value = ''
-  router.push('/auth/login')
+  go('/auth/login')
 }
 </script>

@@ -2,7 +2,7 @@
     <fieldset class="w-full fieldset flex flex-row bg-base-300 rounded-b-lg md:rounded-b-2xl sticky top-0 border-b border-gray-600">
     <div class="flex md:ps-0 min-w-fit">
         <p class="m-auto py-2 px-4 cursor-pointer"
-        @click="$router.push('/')"
+        @click="go('/')"
         >
             <font-awesome :icon="faArrowLeft" />
         </p>
@@ -17,6 +17,9 @@
 
 <script setup>
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useLocaleRouter } from '~/composables/useLocaleRouter'
+
+const { go } = useLocaleRouter()
 
 defineProps({
     enable: {

@@ -6,7 +6,7 @@
         <ScheduleList @remove="removeSchedule" />
         <button
           class="btn btn-primary mt-4"
-          @click="$router.push('/new_medicine/medicine_plan_form')"
+          @click="go('/new_medicine/medicine_plan_form')"
           :disabled="!is_last_date_unlimted()"
           >+ Yeni Plan Ekle</button>
 
@@ -27,6 +27,9 @@
 <script setup>
 import { useNewMdcStore } from '@/stores/new_mdc_store.js'
 import { ref, reactive, computed } from 'vue'
+import { useLocaleRouter } from '~/composables/useLocaleRouter'
+
+const { go } = useLocaleRouter()
 
 const scheduleStore = useNewMdcStore()
 const schedules = computed(() => scheduleStore.schedules)
@@ -48,7 +51,7 @@ const blankSchedule = () => ({
 
 const save_dif = async () => {
   const dif_response = await scheduleStore.save_diff()
-  router.push(`/medications#${dif_response.id}`)
+  go(`/medications#${dif_response.id}`)
   console.log(dif_response)
 }
 
@@ -79,11 +82,11 @@ const router = useRouter()
 
 const go_next_page = () => {
     new_mdc_store.form_index = 2
-    router.push('/new_medicine/medicine_clock')
+    go('/new_medicine/medicine_clock')
 }
 const go_previous_page = () => {
     new_mdc_store.form_index = 0
-    router.push('/new_medicine/medicine_name')
+    go('/new_medicine/medicine_name')
 }
 
 

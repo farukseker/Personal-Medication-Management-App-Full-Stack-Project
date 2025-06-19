@@ -35,11 +35,12 @@
 </template>
 
 <script setup>
-const dose_times = ref([])
-
-// dose_times
+import { useLocaleRouter } from '~/composables/useLocaleRouter'
 import { useNewMdcStore } from '@/stores/new_mdc_store.js'
+
+
 const new_mdc_store = useNewMdcStore()
+const { go } = useLocaleRouter()
 
 function addDoseTime() {
   new_mdc_store.dose_times.push({ time: '', dose_amount: 1.0, dose_unit: '' })
@@ -59,11 +60,11 @@ const router = useRouter()
 
 const go_next_page = () => {
     new_mdc_store.form_index = 3
-    router.push('/new_medicine/medicine_dose')
+    go('/new_medicine/medicine_dose')
 }
 const go_previous_page = () => {
     new_mdc_store.form_index = 1
-    router.push('/new_medicine/medicine_plan')
+    go('/new_medicine/medicine_plan')
 }
 
 

@@ -4,7 +4,7 @@
         <div class="flex justify-between items-center">
             <h1 class="text-xl font-bold">İlaçlarım</h1>
             <button 
-              @click="$router.push('/settings')"
+              @click="go('/settings')"
               class="btn btn-ghost text-2xl p-0">
                 <img class="w-[36px] h-[36px] object-cover rounded-full shadow-md" src="/pp.jpg" alt="">
             </button>
@@ -36,11 +36,12 @@
 const { $api } = useNuxtApp()
 import dayjs from 'dayjs'
 import { useNewMdcStore } from '@/stores/new_mdc_store.js'
+import { useLocaleRouter } from '~/composables/useLocaleRouter'
+
+const { go } = useLocaleRouter()
 
 const scheduleStore = useNewMdcStore()
-
 const my_medication_list = ref([])
-const router = useRouter()
 const today = ref()
 
 // const load_my_medication_list = async () => my_medication_list.value = await $api('/medication/medications/')
@@ -52,18 +53,18 @@ onMounted(()=>{
 
 const go_new_medicine_form = () => {
   scheduleStore.resetForm()
-  router.push('/new_medicine/medicine_name')
+  go('/new_medicine/medicine_name')
 }
 
 const action_switch_to_update = async (medication_id) => {
   const be_updated_medication = await $api(`/medication/medications/${medication_id}/`)
   scheduleStore.refull_self(be_updated_medication)
-  router.push('/new_medicine/medicine_name')
+  go('/new_medicine/medicine_name')
 }
 
 const action_switch_to_plan = async (medication_id) => {
   const be_updated_medication = await $api(`/medication/medications/${medication_id}/`)
   scheduleStore.refull_self(be_updated_medication)
-  router.push('/new_medicine/medicine_plan')
+  go('/new_medicine/medicine_plan')
 }
 </script>

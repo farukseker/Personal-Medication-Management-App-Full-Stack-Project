@@ -35,7 +35,10 @@
 
 <script setup>
 import { useNewMdcStore } from '@/stores/new_mdc_store.js'
+import { useLocaleRouter } from '~/composables/useLocaleRouter'
+
 const new_mdc_store = useNewMdcStore()
+const { go } = useLocaleRouter()
 const { $api } = useNuxtApp()
 
 const add_new_weekly_dose_plan = () => {
@@ -146,7 +149,7 @@ const router = useRouter()
 
 const go_previous_page = () => {
     new_mdc_store.form_index = 2
-    router.push('/new_medicine/medicine_clock')
+    go('/new_medicine/medicine_clock')
 }
 //new_medicine_form_layout/
 // weekly_dose_plans

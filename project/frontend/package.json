@@ -27,6 +27,7 @@
     "@vesp/nuxt-fontawesome": "^1.1.0",
     "@vite-pwa/nuxt": "^1.0.0",
     "@vueuse/motion": "^2.2.6",
+    "apexcharts": "^4.7.0",
     "axios": "^1.7.9",
     "dayjs": "^1.11.13",
     "debug": "^4.4.0",
@@ -40,6 +41,7 @@
     "vue": "latest",
     "vue-carousel": "^0.18.0",
     "vue-router": "latest",
+    "vue3-apexcharts": "^1.8.0",
     "vue3-carousel-nuxt": "^1.1.5"
   },
   "devDependencies": {

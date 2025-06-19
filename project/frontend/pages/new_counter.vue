@@ -2,12 +2,15 @@
 <div class="p-4 space-y-4 max-w-md mx-auto">
     <div class="flex flex-col gap-4 flex-1">
     <div class="flex justify-between items-center">
-        <button class="btn btn-ghost max-w-fit text-xl">
+        <button 
+            @click="go('/tab/counters')"
+            class="btn btn-ghost max-w-fit text-xl"
+        >
             <font-awesome :icon="faArrowLeft" />
         </button>
         <h1 class="text-xl font-bold w-full">Yeni Sayaç Ekle</h1>
         <button 
-            @click="$router.push('/settings')"
+            @click="go('/settings')"
             class="btn btn-ghost btn-circle text-2xl p-0">
             <img class="w-[36px] h-[36px] object-cover rounded-full shadow-md" src="/pp.jpg" alt="">
         </button>
@@ -28,6 +31,10 @@
 
 <script setup>
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { useLocaleRouter } from '~/composables/useLocaleRouter'
+
+const { go } = useLocaleRouter()
+
 const { $api } = useNuxtApp()
 const router = useRouter()
 
@@ -42,6 +49,6 @@ const save_new_counter = async () => {
             unit: unit.value
         }
     })
-    router.push('/')
+    go('/')
 }
 </script>

@@ -28,7 +28,7 @@
                     <div class="divider">{{ $t('auth.forget_password') }}</div>
                 </div>
                 <div class="flex flex-col gap-4">
-                    <button type="button" class="btn btn-secondary text-white w-full mx-auto" @click="$router.push('/auth/register')">
+                    <button type="button" class="btn btn-secondary text-white w-full mx-auto" @click="go('/auth/register')">
                         {{ $t('auth.register') }}
                     </button> 
                     <div class="flex gap-8 justify-center">
@@ -50,11 +50,12 @@
 <script setup>
 import { faGoogle, faMeta, faGithub } from '@fortawesome/free-brands-svg-icons'
 import { useI18n } from 'vue-i18n'
-const { t } = useI18n()
+import { useLocaleRouter } from '~/composables/useLocaleRouter'
 
+const { t } = useI18n()
+const { go } = useLocaleRouter()
 const { $api } = useNuxtApp()
 const toast = useToast()
-const router = useRouter()
 
 const email = ref('')
 const password = ref('')
@@ -84,7 +85,7 @@ const login = async () => {
             title: t('auth.login_message_title'),
             description: t('auth.login_message_description')
         })
-        router.push('/')
+        go('/')
     } catch (e) {
 console.log(e)
     }

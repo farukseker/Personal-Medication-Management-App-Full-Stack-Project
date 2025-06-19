@@ -60,7 +60,9 @@
 <script setup>
 const on_focus = ref(false)
 import { useNewMdcStore } from '@/stores/new_mdc_store.js'
+import { useLocaleRouter } from '~/composables/useLocaleRouter'
 
+const { go } = useLocaleRouter()
 const new_mdc_store = useNewMdcStore()
 const router = useRouter()
 
@@ -76,7 +78,7 @@ const apply_selected_mdc = (mdc) => {
 
 const go_next_page = () => {
     new_mdc_store.form_index = 1
-    router.push('/new_medicine/medicine_plan')
+    go('/new_medicine/medicine_plan')
 }
 const fetchData = async () => {
   const response = await fetch('/auto_comp.json')

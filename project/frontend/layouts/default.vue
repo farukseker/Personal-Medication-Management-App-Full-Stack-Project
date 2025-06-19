@@ -1,11 +1,10 @@
 <template>
 <UNotifications />
-
 <div class="font-[Roboto] flex flex-1 flex-col w-full">
-    <div class="pb-20">
-      <slot />
-    </div>
-    <NavBottomNav />
+  <div class="pb-20">
+    <slot />
+  </div>
+  <NavBottomNav />
 </div>
 </template>
 

@@ -4,7 +4,7 @@
         <div class="flex justify-between items-center">
             <h1 class="text-xl font-bold">İlaç Takip Formu</h1>
             <button 
-              @click="$router.push('/settings')"
+              @click="go('/settings')"
               class="btn btn-ghost text-2xl p-0">
                 <img class="w-[36px] h-[36px] object-cover rounded-full shadow-md" src="/pp.jpg" alt="">
             </button>
@@ -23,44 +23,6 @@
             </div>
         </div>
 
-        <!--ul class="steps mx-auto w-full">
-            <li
-            @click="$router.push('/new_medicine/medicine_name'); new_mdc_store.form_index = 0"
-            class="step"
-            :class="new_mdc_store.form_index >= 0 ? 'step-primary': ''"
-            >
-                <span class="step-icon">
-                    <font-awesome :icon="faPills" />
-                </span>
-            </li>
-            <li 
-            @click="$router.push('/new_medicine/medicine_plan'); new_mdc_store.form_index = 1"
-            class="step"
-            :class="new_mdc_store.form_index >= 1 ? 'step-primary':''"
-            >
-                <span class="step-icon">
-                    <font-awesome :icon="faCalendar" />
-                </span>
-            </li>
-            <li 
-            @click="$router.push('/new_medicine/medicine_clock'); new_mdc_store.form_index = 2"
-            class="step"
-            :class="new_mdc_store.form_index >= 2 ? 'step-primary':''"
-            >
-                <span class="step-icon">
-                    <font-awesome :icon="faClock" />
-                </span>
-            </li>
-            <li 
-            @click="$router.push('/new_medicine/medicine_dose'); new_mdc_store.form_index = 3"
-            class="step"
-            :class="new_mdc_store.form_index >= 3 ? 'step-primary':''"
-            >
-                <span class="step-icon">
-                    <font-awesome :icon="faClock" />
-                </span>
-            </li>
-        </ul-->
         <div class="relative overflow-hidden py-4 sm:p-4 space-y-4 max-w-md mx-auto">
             <transition
             :name="transitionName"
@@ -76,9 +38,10 @@
 </template>
 
 <script setup>
-import { faTablets, faPills, faPlus, faClock, faCalendar, faHome, faBucket } from '@fortawesome/free-solid-svg-icons'
 import { useNewMdcStore } from '@/stores/new_mdc_store.js'
+import { useLocaleRouter } from '~/composables/useLocaleRouter'
 
+const { go } = useLocaleRouter()
 const new_mdc_store = useNewMdcStore()
 onMounted(() => {
     const theme = localStorage.getItem('theme') || 'light'

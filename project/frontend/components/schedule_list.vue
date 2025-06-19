@@ -11,7 +11,7 @@
           <p>{{ schedule.start_date }} - {{ schedule.end_date || 'Süresiz' }}</p>
         </div>
         <div class="flex gap-2">
-          <button class="btn btn-sm btn-outline" @click="$router.push(`/new_medicine/medicine_plan_form?schedule_index=${index}`)">Düzenle</button>
+          <button class="btn btn-sm btn-outline" @click="go(`/new_medicine/medicine_plan_form?schedule_index=${index}`)">Düzenle</button>
           <button class="btn btn-sm btn-error" @click="store.removeSchedule(index)">Sil</button>
         </div>
       </div>
@@ -23,6 +23,9 @@
 <script setup>
 import { ref } from 'vue'
 import { useNewMdcStore } from '@/stores/new_mdc_store.js'
+import { useLocaleRouter } from '~/composables/useLocaleRouter'
+
+const { go } = useLocaleRouter()
 
 const modalRef = ref()
 const store = useNewMdcStore()

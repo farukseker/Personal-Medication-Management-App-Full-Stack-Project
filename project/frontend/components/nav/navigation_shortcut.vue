@@ -13,7 +13,7 @@
         <Transition>
           <button 
           name="AddNewMedicinePlan"
-          @click="$router.push('/medicine')"
+          @click="go('/medicine')"
           v-if="show_shurtcuts" class="btn btn-circle btn-success text-white text-lg shadow m-auto">
             <font-awesome :icon="faRectangleList" />
           </button>
@@ -35,6 +35,9 @@
 </template>
 <script setup>
 import { faPills, faRectangleList, faCalendar, faGear } from '@fortawesome/free-solid-svg-icons'
+import { useLocaleRouter } from '~/composables/useLocaleRouter'
+
+const { go } = useLocaleRouter()
 const show_shurtcuts = ref(true)
 </script>
 

@@ -1,3 +1,5 @@
+import { useLocaleRouter } from '~/composables/useLocaleRouter'
+
 export default defineNuxtPlugin((nuxtApp) => {
   const config = useRuntimeConfig()
   const accessToken = useCookie('access_token', {
@@ -45,8 +47,8 @@ export default defineNuxtPlugin((nuxtApp) => {
       }
       // refresh tokeni olmaması durumunda auth var sayılamaz
       else if (response.status === 401) {
-        const router = useRouter()
-        router.push('/auth/login')
+        const { go } = useLocaleRouter()
+        go('/auth/login')
       }
       // throw response || new Error('API error')
     }

@@ -5,7 +5,7 @@
         <div class="flex justify-between items-center">
             <h1 class="text-xl font-bold">İlaç Takibi</h1>
             <button 
-              @click="$router.push('/settings')"
+              @click="go('/settings')"
               class="btn btn-ghost text-2xl p-0">
                 <img class="w-[36px] h-[36px] object-cover rounded-full shadow-md" src="/pp.jpg" alt="">
             </button>
@@ -33,7 +33,7 @@
                 <button class="btn btn-sm btn-success">Rapor Al </button>
             </div>
         </div>
-        <div class="space-y-3" v-if="filter_type === 'today'">
+        <div class="space-y-3" v-if="filter_type === 'today' || filter_type === 'yesterday'">
           <MedicationPillReminder v-for="medication_today in medication_history_list" :key="medication_today.id + 3" :medication="medication_today" @load_medication='load_medication_history_list' />
         </div>
         <div class="space-y-3" v-else>
@@ -63,7 +63,9 @@
 </template>
   
 <script setup>
-import { faTablets, faPills, faPlus, faGear, faCalendar, faHome, faUserGroup } from '@fortawesome/free-solid-svg-icons'
+import { useLocaleRouter } from '~/composables/useLocaleRouter'
+
+const { go } = useLocaleRouter()
 const { $api } = useNuxtApp()
 import dayjs from 'dayjs'
 
@@ -74,7 +76,7 @@ const filter_type = ref('today') //today
 const is_revresed_list = ref(false) 
 
 watch(filter_type, async new_filter_type => {
-  if (new_filter_type === 'today') {
+  if (new_filter_type === 'today' || new_filter_type === 'yesterday' ) {
     medication_history_list.value = await $api(`/medication/medication-logs/?date=${new_filter_type}`)
   } else {
       split_medication_history_list.value = await $api(`/medication/medication-logs/split/?date=${new_filter_type}&reverse=${is_revresed_list.value}`)
