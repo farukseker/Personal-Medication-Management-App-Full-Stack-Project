@@ -10,25 +10,25 @@
         <fieldset class="w-full fieldset shadow rounded-box p-2">
             <legend class="fieldset-legend font-bold">Kullanıcı ayarları</legend>
             <SettingsButton :icon="faUser" title="Kişisel bilgiler" to="/" />
-            <SettingsButton :icon="faKey" title="Şifre değiştir" to="/" />
+            <SettingsButton :icon="faKey" title="Şifre değiştir" to="/settings/change_password" />
         </fieldset>
     </article>
     <article>
         <fieldset class="w-full fieldset shadow rounded-box p-2">
             <legend class="fieldset-legend font-bold">Erişebilirlik ayarları</legend>
             <SettingsButton 
-             :icon="faLanguage"
-             title="Dil"
-             to="/settings/change_language" 
-             :description="locale.toUpperCase()"
-             />
+                :icon="faLanguage"
+                title="Dil"
+                to="/settings/change_language" 
+                :description="locale.toUpperCase()"
+            />
             <SettingsButton
-             :icon="theme === 'light' ? faSun:faMoon"
-             title="Tema"
-             @click="toggleTheme"
-             :description="theme"
-             :showEndArrow="false"
-             />
+                :icon="theme === 'light' ? faSun:faMoon"
+                title="Tema"
+                @click="toggleTheme"
+                :description="theme"
+                :showEndArrow="false"
+            />
         </fieldset>
     </article>
     <article>
@@ -36,6 +36,11 @@
             <legend class="fieldset-legend font-bold">Destek ve Hakkında</legend>
             <SettingsButton :icon="faHeadset" title="Destek" to="/" />
             <SettingsButton :icon="faScroll" title="Hakkında" to="/" />
+        </fieldset>
+    </article>
+    <article>
+        <fieldset class="w-full fieldset shadow rounded-box p-2">
+            <SettingsButton @click="logout" btnStyle="btn btn-ghost text-error" :icon="faDoorOpen" title="Çıkış yap" />
         </fieldset>
     </article>
     <p class="text-gray-400 text-sm text-center">Version. PARS | V1.12.8 - f4rukseker</p>
@@ -51,12 +56,13 @@ import {
     faKey,
     faSun,
     faMoon,
+    faDoorOpen,
     faScroll,
  } from '@fortawesome/free-solid-svg-icons'
+import { useLocaleRouter } from '~/composables/useLocaleRouter'
 
- const { locale } = useI18n()
-
-
+const { go } = useLocaleRouter()
+const { locale } = useI18n()
 const theme = ref('light')
 
 onMounted(async () => {
@@ -71,4 +77,12 @@ function toggleTheme() {
     localStorage.setItem('theme', theme.value)
 }
 
+const accessToken = useCookie('access_token')
+const refreshToken = useCookie('refresh_token')
+
+const logout = () => {
+  accessToken.value = ''
+  refreshToken.value = ''
+  go('/auth/login')
+}
 </script>

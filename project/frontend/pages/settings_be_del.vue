@@ -100,7 +100,7 @@
 <script setup>
 import { faUser, faMoon, faSun, faArrowLeft, faCircle, faHome, faImage } from '@fortawesome/free-solid-svg-icons'
 const { $api } = useNuxtApp()
-const { locale, locales } = useI18n()
+const { locales } = useI18n()
 import { useLocaleRouter } from '~/composables/useLocaleRouter'
 
 const { go } = useLocaleRouter()
