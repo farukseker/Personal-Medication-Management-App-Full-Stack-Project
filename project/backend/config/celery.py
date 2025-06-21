@@ -18,7 +18,6 @@ def debug_task(self):
     return 2+5
 
 
-
 from celery.schedules import crontab
 
 app.conf.beat_schedule = {

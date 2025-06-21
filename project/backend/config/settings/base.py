@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     # your apps
     'medication',
     'counter',
-    # 'medication_management',
+    'health_monitoring',
     'custom_auth'
 ]+[
     # third party app
@@ -76,7 +76,6 @@ MIDDLEWARE = [
     # third party middleware
     'corsheaders.middleware.CorsMiddleware',
     "allauth.account.middleware.AccountMiddleware",
-
 ]
 
 REST_FRAMEWORK = {
@@ -157,22 +156,5 @@ CELERY_RESULT_SERIALIZER: str = 'json'
 CELERY_BEAT_SCHEDULER: str = 'celery.beat.PersistentScheduler'
 CELERY_ENABLE_UTC = True
 
-# from celery.schedules import crontab
-
-# CELERY_BEAT_SCHEDULE: dict = {
-#     'Get Asset Information Every Weekday At 15 Minute Intervals'.lower().replace(' ', '-'): {
-#         'task': 'asset.tasks.asset_scraper_task.regular_asset_data_acquisition',
-#         'schedule': crontab(minute='15', hour='8-18', day_of_week='1-5'),
-#     },
-#     'Get Public Asset Information Every Weekday At 10 Am'.lower().replace(' ', '-'): {
-#         'task': 'asset.tasks.public_asset_scraper_task.regular_public_asset_data_acquisition',
-#         'schedule': crontab(hour='10', day_of_week='1-5'),
-#     },
-# }
-
 VAPID_PUBLIC_KEY = env('VAPID_PUBLIC_KEY')
 VAPID_PRIVATE_KEY = env('VAPID_PRIVATE_KEY')
-print(
-VAPID_PUBLIC_KEY,
-VAPID_PRIVATE_KEY
-)

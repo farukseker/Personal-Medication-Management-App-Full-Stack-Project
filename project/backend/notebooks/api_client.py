@@ -1,13 +1,14 @@
 import time
 import requests
 
-
 class AutoJWTClient:
-    def __init__(self, base_url, login_url, email, password):
+    def __init__(self, base_url, login_url, email, password, verify=True):
         self.base_url = base_url.rstrip("/")
         self.login_url = login_url
         self.email = email
         self.password = password
+        self.verify = verify 
+
         self.access_token = None
         self.refresh_token = None
         self.token_expiry = 0  # epoch time
@@ -18,7 +19,8 @@ class AutoJWTClient:
     def _login(self):
         response = self.session.post(
             f"{self.base_url}{self.login_url}",
-            json={"email": self.email, "password": self.password}
+            json={"email": self.email, "password": self.password},
+            verify=self.verify  
         )
         if response.status_code != 200:
             raise Exception("Login failed")
@@ -49,7 +51,8 @@ class AutoJWTClient:
             else:
                 response = self.session.post(
                     f"{self.base_url}/auth/token/refresh/",
-                    json={"refresh": self.refresh_token}
+                    json={"refresh": self.refresh_token},
+                    verify=self.verify  
                 )
                 if response.status_code != 200:
                     self._login()
@@ -64,6 +67,8 @@ class AutoJWTClient:
         headers = kwargs.pop("headers", {})
         headers["Authorization"] = f"Bearer {self.access_token}"
         kwargs["headers"] = headers
+
+        kwargs.setdefault("verify", self.verify) 
 
         url = f"{self.base_url}{path}"
         return self.session.request(method, url, **kwargs)
