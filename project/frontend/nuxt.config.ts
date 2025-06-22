@@ -1,6 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
+  build: {
+    analyze: true,
+  },
   devServer: {
     // https: {
     //   key: './.ssl/localhost-key.pem',
@@ -80,6 +83,17 @@ i18n: {
   },
   // tailwindcss: { exposeConfig: true },
   pwa: {
+    workbox: {
+      globPatterns: [
+        '**/*',  // ya da sadece ihtiyacın olanları yaz
+        // "**/_payload.json", // bunu kaldır
+      ],
+      globIgnores: [
+        '**/node_modules/**/*',
+        'sw.js',
+        'workbox-*.js',
+      ],
+    },
     registerType: 'autoUpdate',
     manifest: {
       name: 'Medicine Tracker',
