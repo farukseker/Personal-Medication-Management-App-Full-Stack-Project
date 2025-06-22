@@ -59,8 +59,6 @@ import {
     faLanguage,
     faUser,
     faKey,
-    faSun,
-    faMoon,
     faDoorOpen,
     faScroll,
     faBell,
