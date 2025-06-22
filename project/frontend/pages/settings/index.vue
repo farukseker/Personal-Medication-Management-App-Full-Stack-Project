@@ -15,6 +15,17 @@
     </article>
     <article>
         <fieldset class="w-full fieldset shadow rounded-box p-2">
+            <legend class="fieldset-legend font-bold">Bildirim ayarları</legend>
+            <SettingsButton 
+                :icon="faBell"
+                title="Bildirim ayarları"
+                to="/settings/notification_settings" 
+                description="Açık"
+            />
+        </fieldset>
+    </article>
+    <article>
+        <fieldset class="w-full fieldset shadow rounded-box p-2">
             <legend class="fieldset-legend font-bold">Erişebilirlik ayarları</legend>
             <SettingsButton 
                 :icon="faLanguage"
@@ -22,13 +33,7 @@
                 to="/settings/change_language" 
                 :description="locale.toUpperCase()"
             />
-            <SettingsButton
-                :icon="theme === 'light' ? faSun:faMoon"
-                title="Tema"
-                @click="toggleTheme"
-                :description="theme"
-                :showEndArrow="false"
-            />
+            <ThemeProvider />
         </fieldset>
     </article>
     <article>
@@ -43,7 +48,7 @@
             <SettingsButton @click="logout" btnStyle="btn btn-ghost text-error" :icon="faDoorOpen" title="Çıkış yap" />
         </fieldset>
     </article>
-    <p class="text-gray-400 text-sm text-center">Version. PARS | V1.12.8 - f4rukseker</p>
+    <p class="text-gray-400 text-xs font-semibold text-center">Version. V1.14.2</p>
 </section>
 </template>
 
@@ -58,24 +63,14 @@ import {
     faMoon,
     faDoorOpen,
     faScroll,
+    faBell,
  } from '@fortawesome/free-solid-svg-icons'
+import ThemeProvider from '~/components/ThemeProvider.vue'
 import { useLocaleRouter } from '~/composables/useLocaleRouter'
 
+//color-scheme
 const { go } = useLocaleRouter()
 const { locale } = useI18n()
-const theme = ref('light')
-
-onMounted(async () => {
-  theme.value = localStorage.getItem('theme') || 'light'
-})
-
-function toggleTheme() {
-    theme.value = localStorage.getItem('theme') || 'light'
-    theme.value = theme.value === 'dark' ? 'light' : 'dark'
-    document.documentElement.setAttribute('class', theme.value)
-    document.documentElement.setAttribute('data-theme', theme.value)
-    localStorage.setItem('theme', theme.value)
-}
 
 const accessToken = useCookie('access_token')
 const refreshToken = useCookie('refresh_token')

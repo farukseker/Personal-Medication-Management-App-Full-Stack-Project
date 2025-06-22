@@ -4,7 +4,7 @@
     <div class="card-body p-3">
         <div  class="absolute -top-1 -left-1 text-gray-300 text-md">
         </div>
-        <div class="flex justify-between items-center">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-1 md:gap-0">
             <div>
                 <p class="font-semibold">
                     <span v-if="medication.schedules?.length > 0" class="text-gray-300 tooltip" :data-tip="$t('medication_item.planned')">

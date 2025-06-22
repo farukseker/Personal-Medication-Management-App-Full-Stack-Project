@@ -18,7 +18,6 @@
 
   <NavTabsNav />
 
-
   <section>
   <article>
     <TrackersWaterTracker />

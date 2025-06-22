@@ -68,11 +68,17 @@ i18n: {
     alwaysRedirect: false,
   },
 },
+  // colorMode: {
+  //   classSuffix: '',
+  //   preference: 'light',
+  //   fallback: 'light',
+  // },
   colorMode: {
+    preference: 'system',
+    dataValue: 'theme', // <html data-theme="">
     classSuffix: '',
-    preference: 'light',
-    fallback: 'light',
   },
+  // tailwindcss: { exposeConfig: true },
   pwa: {
     registerType: 'autoUpdate',
     manifest: {
@@ -133,7 +139,7 @@ i18n: {
   },
   vite: {
     optimizeDeps: {
-      include: ['debug']
+      include: ['debug', 'daisyui']
     }
   },
   // vue: {
