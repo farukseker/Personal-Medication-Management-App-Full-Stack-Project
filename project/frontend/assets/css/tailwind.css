@@ -1,11 +1,13 @@
+@import "tailwindcss";
+
+/* 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@plugin "daisyui";
-/* @plugin "daisyui" {
+ */
+@plugin "daisyui" {
   themes: all;
-} */
+}
 
 *{
     scroll-behavior: smooth;

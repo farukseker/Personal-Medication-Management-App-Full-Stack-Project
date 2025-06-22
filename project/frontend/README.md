@@ -76,3 +76,4 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+npx nuxt dev --host 192.168.123.97 --port 4080 --https --ssl-cert .ssl/192.168.123.97.pem --ssl-key .ssl/192.168.123.97-key.pem

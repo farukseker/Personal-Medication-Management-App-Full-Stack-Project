@@ -1,15 +1,11 @@
-// {
-//   // https://nuxt.com/docs/guide/concepts/typescript
-//   "extends": "./.nuxt/tsconfig.json"
-// }
 {
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "typeRoots": ["./types", "./node_modules/@types"]
   },
   "include": [
-    "types",               // ✅ bu önemli
-    "tailwind.config.ts",  // veya js
+    "types",
+    "tailwind.config.ts",  
     "nuxt.config.ts",
     "components",
     "pages"

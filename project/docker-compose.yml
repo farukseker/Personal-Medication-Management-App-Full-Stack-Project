@@ -13,11 +13,12 @@ services:
     networks:
       - my_network
     ports:
-      - 5001:5432
+      - 2001:5432
+
   redis:
     image: redis:alpine
     ports:
-      - 5002:6379
+      - 2002:6379
     networks:
       - my_network
 
