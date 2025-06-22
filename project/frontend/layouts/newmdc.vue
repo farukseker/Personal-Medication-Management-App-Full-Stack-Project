@@ -57,7 +57,10 @@ watch(() => new_mdc_store.form_index, (newVal, oldVal) => {
 })
 </script>
 
-<style scoped>
+<style>
+@import "tailwindcss";
+
+
 .slide-left-enter-active,
 .slide-right-enter-active {
   @apply transition-all duration-300 ease-in-out;

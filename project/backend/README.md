@@ -2,6 +2,25 @@
 
 ## Installation
 # psql -U postgres -c "CREATE DATABASE \"medication-db\";"
+
+dev durumu mainipilasyon gerekli mevcut django sürümü sslrunserver süsürmünde warp için ek bileşen gerekli
+50. staırdabulunan warp scoketi yorum satırı yap ve enjekte et
+
+```py
+class SecureHTTPServer(ThreadedWSGIServer):
+    def __init__(self, address, handler_cls, certificate, key, ipv6=False):
+        super(SecureHTTPServer, self).__init__(address, handler_cls, ipv6=ipv6)
+        # self.socket = ssl.wrap_socket(self.socket, certfile=certificate,
+        #                               keyfile=key, server_side=True,
+        #                               ssl_version=_ssl_version,
+        #                               cert_reqs=ssl.CERT_NONE)
+        context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+        context.load_cert_chain(certfile=certificate, keyfile=key)
+        self.socket = context.wrap_socket(self.socket, server_side=True)
+```
+
+
+
 1. Create a virtual environment:
 
     ```bash
