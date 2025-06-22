@@ -81,7 +81,7 @@ i18n: {
     dataValue: 'theme', // <html data-theme="">
     classSuffix: '',
   },
-  // tailwindcss: { exposeConfig: true },
+  tailwindcss: { exposeConfig: true },
   pwa: {
     workbox: {
       globPatterns: [

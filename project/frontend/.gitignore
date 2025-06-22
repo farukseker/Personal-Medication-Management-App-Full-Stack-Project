@@ -31,3 +31,6 @@ playground
 /.ssl
 .ssl/
 /.ssl/
+
+# .vscode
+.vscode

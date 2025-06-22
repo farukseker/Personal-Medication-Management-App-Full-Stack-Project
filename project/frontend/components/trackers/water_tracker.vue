@@ -23,7 +23,7 @@
     </div>
 
     <div class="grid grid-cols-2 gap-4 w-full">
-      <div v-for="amount in [100, 250, 300, 400]" :key="amount" class="water-button" @click="() => addWater(amount)">
+      <div v-for="amount in [100, 250, 300, 400]" :key="amount" class="btn btn-ghost flex p-4 min-h-16 max-h-16 flex-col justify-center border rounded-lg text-blue-800 bg-blue-200 shadow cursor-pointer" @click="() => addWater(amount)">
         <p class="my-auto flex flex-col mt-1">
           <font-awesome :icon="getIconFromAmount(amount)" class="my-auto text-lg" />
           <span class="text-lg font-bold text-center">{{ amount }} ml</span>
@@ -123,8 +123,3 @@ onMounted(() => {
 })
 </script>
 
-<style scoped>
-.water-button {
-  @apply btn btn-ghost flex p-4 min-h-16 max-h-16 flex-col justify-center border rounded-lg text-blue-800 bg-blue-200 shadow cursor-pointer;
-}
-</style>
