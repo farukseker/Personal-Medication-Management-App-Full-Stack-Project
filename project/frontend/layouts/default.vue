@@ -14,10 +14,17 @@ definePageMeta({
     name: 'rotate'
   }
 })
+
+const themeStore = useThemeStore()
+
 onMounted(() => {
-    const theme = localStorage.getItem('theme') || 'light'
-    document.documentElement.setAttribute('data-theme', theme)
+  themeStore.setTheme(themeStore.theme)
 })
+
+// onMounted(() => {
+//     const theme = localStorage.getItem('theme') || 'light'
+//     document.documentElement.setAttribute('data-theme', theme)
+// })
 
 // useHead({
 //   script: [

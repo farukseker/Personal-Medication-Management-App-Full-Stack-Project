@@ -1,9 +1,11 @@
 <template>
 <label class="relative w-full inline-block">
-  <font-awesome :icon="currentIcon" class="absolute left-5 top-1/2 -translate-y-1/2 pointer-events-none z-10" />
+  <font-awesome v-if="darkThemes.has(themeStore.theme)" :icon="faMoon" class="absolute left-5 top-1/2 -translate-y-1/2 pointer-events-none z-10" />
+  <font-awesome v-else-if="lightThemes.has(themeStore.theme)" :icon="faSun" class="absolute left-5 top-1/2 -translate-y-1/2 pointer-events-none z-10" />
+  <font-awesome v-else :icon="currentIcon" class="absolute left-5 top-1/2 -translate-y-1/2 pointer-events-none z-10" />
   <select 
     class="select w-full pl-10 font-semibold"
-    v-model="theme"
+    v-model="selectedTheme"
   >
     <option disabled selected>Theme</option>
     <option v-for="theme of themes" :key="theme">{{ theme }}</option>
@@ -17,7 +19,6 @@ import {
     faMoon,
     faCircleHalfStroke
 } from '@fortawesome/free-solid-svg-icons'
-const colorMode = useColorMode()
 const themes = [
   'system',
   'light',
@@ -50,6 +51,19 @@ const themes = [
   'coffee',
   'winter',
 ]
+
+const themeStore = useThemeStore()
+
+onMounted(() => {
+  themeStore.setTheme(themeStore.theme)
+})
+
+
+const selectedTheme = computed({
+  get: () => themeStore.theme,
+  set: val => themeStore.setTheme(val),
+})
+
 
 const darkThemes = new Set([
   'dark',
@@ -85,6 +99,8 @@ const lightThemes = new Set([
   'lemonade',
   'winter',
 ])
+/*
+
 const theme = ref('light')
 
 onMounted(async () => {
@@ -107,11 +123,11 @@ function toggleTheme() {
 watch(theme, (newTheme) => {
   applyTheme(newTheme)
 })
+*/
 
 const currentIcon = computed(() => {
-  if (darkThemes.has(theme.value)) return faMoon
-  if (lightThemes.has(theme.value)) return faSun
+  if (darkThemes.has(themeStore.theme.value)) return faMoon
+  if (lightThemes.has(themeStore.theme.value)) return faSun
   return faCircleHalfStroke // system vs için
 })
-
 </script>

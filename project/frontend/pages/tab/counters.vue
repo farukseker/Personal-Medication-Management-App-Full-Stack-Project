@@ -22,7 +22,6 @@
 
   <NavTabsNav />
 
-
   <article>
     <fieldset class="w-full fieldset card rounded-box">
       <div class="grid grid-cols-3 gap-4">
