@@ -74,7 +74,7 @@ const login = async () => {
         const token_options = !rember_me.value ? {}:{
             maxAge: 60 * 60 * 24 * 30 * 6, // 6 ay mesela
             sameSite: 'lax',
-            //secure:  true,
+            secure:  true,
             path:    '/',
         }
         const accessToken = useCookie('access_token', token_options)

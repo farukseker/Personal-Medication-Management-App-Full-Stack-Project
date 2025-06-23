@@ -4,7 +4,7 @@
     :key="index" 
     @click="() => counter_tick(index)"
     class="rounded shadow-md bg-base-200 p-2 grid grid-cols-5 text-white"
-    :class="counter.is_progress ? 'bg-fuchsia-700':'cursor-pointer bg-fuchsia-800'"
+    :class="counter.is_progress ? 'bg-primary-content':'cursor-pointer bg-primary'"
     >
     <div v-if="!counter.is_progress" class="col-span-2 full my-auto">{{ counter.name }}</div>
     <div v-if="!counter.is_progress" class="col-span-2 min-w-fit my-auto flex gap-2">{{ counter.count }} <p class="text-xs scale-90" v-if="counter.unit">{{ counter.unit }}</p></div>
