@@ -9,13 +9,9 @@ class WeightEntryListCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return WeightEntry.objects.filter(user=self.request.user).order_by('-date')
+        return WeightEntry.objects.filter(
+            user=self.request.user
+        ).all().order_by('-date')
 
     def perform_create(self, serializer):
-        entry, created = WeightEntry.objects.update_or_create(
-            user=self.request.user,
-            date=date.today(),
-            defaults={'weight': serializer.validated_data['weight']}
-        )
-        return entry
-
+        serializer.save(user=self.request.user)
