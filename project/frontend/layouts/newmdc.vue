@@ -11,22 +11,23 @@
         </div>
     </div>
     <div class="pb-14"> 
-        <div class="flex w-full shadow-sm rounded">
+        <div class="flex w-full rounded">
             <div class="radial-progress progress-primary" :style="`--value:${(new_mdc_store.form_index + 1) * 50}; `" aria-valuenow="2" role="progressbar">
               2 / {{ new_mdc_store.form_index + 1 }}
             </div>
             <div class="w-fit ms-4 mt-2 text-xl font-semibold">
               <p>
                 İlaç Düzenle
-                <span class="label block w-full text-sm">Sonraki adım: planlama</span>
+                <span v-if="new_mdc_store.form_index !== 1" class="label block w-full text-sm">Sonraki adım: planlama</span>
               </p>
             </div>
         </div>
 
-        <div class="relative overflow-hidden py-4 sm:p-4 space-y-4 max-w-md mx-auto">
+        <div class="relative overflow-hidden py-4 sm:p-4 mx-auto">
             <transition
             :name="transitionName"
             mode="out-in"
+            class="px-1"
             >
                 <slot />
             </transition>

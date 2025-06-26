@@ -1,21 +1,23 @@
 <template>
 <section class="flex flex-col gap-4">
-    <!--fieldset class="w-full fieldset border-b-2 shadow card border-base-300 rounded-box p-4">
+    <fieldset class="w-full fieldset border-b-2 shadow card border-base-300 rounded-box p-4">
         <legend class="fieldset-legend font-bold">Tara</legend>
-    </fieldset-->
+    </fieldset>
     <fieldset class="w-full fieldset border-b-2 shadow card border-base-300 rounded-box p-4">
         <legend class="fieldset-legend font-bold">İlaç bilgileri</legend>
         <div
-        class="w-full bg-base-200 "
-            >
+            class="w-full"
+        >
         <input 
             type="text"
             class="input w-full"
             v-model="new_mdc_store.medicine_name"
             @focusin="on_focus = true"
-            @focusout="() => setTimeout(() => { on_focus = false }, 200)"
-            placeholder="İlaç adı">
-            <div v-if="on_focus" class="max-h-[40vh]">
+            @focusout="on_focus = false"
+            placeholder="İlaç adı"
+            name="medicine name"
+            >
+            <div v-if="on_focus && results.length > 0" class="max-h-[40vh] overflow-y-auto bg-base-100 border-b rounded rounded-r-none">
                 <ul class="px-3 py-2">
                     <li 
                     class="py-1 text-base cursor-pointer"
@@ -64,7 +66,6 @@ import { useLocaleRouter } from '~/composables/useLocaleRouter'
 
 const { go } = useLocaleRouter()
 const new_mdc_store = useNewMdcStore()
-const router = useRouter()
 
 new_mdc_store.vaild_form_1 = new_mdc_store.medicine_name.length > 0 && new_mdc_store.dose_amount !== '' && new_mdc_store.dose_unit !== ''
 

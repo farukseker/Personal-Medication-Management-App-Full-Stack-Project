@@ -123,19 +123,34 @@ export const useNewMdcStore = defineStore('new_mdc_store', {
     removeDoseTime(index) {
         this.dose_times.splice(index, 1);
     },
-    isOverlapping(newSchedule) {
-      const startA = new Date(newSchedule.start_date)
-      const endA = newSchedule.end_date ? new Date(newSchedule.end_date) : new Date('9999-12-31')
+    isOverlapping(newSchedule, editIndex = null) {
+        const startA = new Date(newSchedule.start_date)
+        const endA = newSchedule.end_date ? new Date(newSchedule.end_date) : new Date('9999-12-31')
 
-      return this.schedules.some((s, i) => {
-        if (this.editIndex !== null && i === this.editIndex) return false
+        return this.schedules.some((s, i) => {
+          if (editIndex !== null && i === editIndex) return false
 
-        const startB = new Date(s.start_date)
-        const endB = s.end_date ? new Date(s.end_date) : new Date('9999-12-31')
+          const startB = new Date(s.start_date)
+          const endB = s.end_date ? new Date(s.end_date) : new Date('9999-12-31')
 
-        return startA <= endB && startB <= endA
-      })
+          return startA <= endB && startB <= endA
+        })
     },
+    saveSchedule(updatedSchedule) {
+        scheduleStore.editIndex = editIndex.value // set etmezsen kendiyle çakışıyor gibi olur
+        if (scheduleStore.editIndex === null) {
+          if (scheduleStore.isOverlapping(updatedSchedule)) {
+            alert("Aynı tarihlerde başka bir plan zaten var. Lütfen tarihleri değiştir.")
+            return
+          }
+          scheduleStore.addSchedule(updatedSchedule)
+        } else {
+          scheduleStore.updateSchedule(scheduleStore.editIndex, updatedSchedule)
+        }
+
+        scheduleStore.resetEditIndex()
+        isModalVisible.value = false
+    }
   },
 });
 

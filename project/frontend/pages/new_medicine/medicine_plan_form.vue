@@ -152,8 +152,10 @@ const form_is_vaild = () => {
     return schedule.value.start_date && schedule.value.dose_amount
 }
 
+
 onMounted(() => {
     if (schedule_index && scheduleStore.schedules.length > 0 && scheduleStore.schedules[schedule_index]){
+        scheduleStore.editIndex = schedule_index
         Object.assign(schedule.value, scheduleStore.schedules[schedule_index])
     }
 })
