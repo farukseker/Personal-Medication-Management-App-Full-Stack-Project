@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-4 items-center">
     <div class="flex w-full m-auto justify-center">
-      <button class="btn btn-ghost">🎯 Yeni hedef belirle</button>
+      <button class="btn btn-ghost" @click="go('/set_new_goal_of_water')">🎯 Yeni hedef belirle</button>
       <button class="btn btn-ghost">🔔 Hatırlatıcı ayarları</button>
     </div>
 
@@ -60,7 +60,10 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { faBucket, faGlassWater, faDroplet, faMugSaucer, faX } from '@fortawesome/free-solid-svg-icons'
+import { useLocaleRouter } from '~/composables/useLocaleRouter'
+
 const { $api } = useNuxtApp()
+const { go } = useLocaleRouter()
 
 const goal = ref(0)
 const history = ref([])

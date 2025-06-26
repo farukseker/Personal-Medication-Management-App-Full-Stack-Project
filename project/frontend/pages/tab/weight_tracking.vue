@@ -88,7 +88,7 @@ const weightChange = computed(() => store.weightChange)
 const chartSeries = computed(() => store.chartSeries)
 
 const chartOptions = computed(() => ({
-  chart: { id: 'weight-chart', toolbar: { show: false } },
+  chart: { id: 'weight-chart' },
   xaxis: { categories: store.chartCategories },
   stroke: { curve: 'smooth' },
   markers: { size: 4 },

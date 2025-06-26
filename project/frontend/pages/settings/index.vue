@@ -9,7 +9,7 @@
     <article>
         <fieldset class="w-full fieldset shadow rounded-box p-2">
             <legend class="fieldset-legend font-bold">Kullanıcı ayarları</legend>
-            <SettingsButton :icon="faUser" title="Kişisel bilgiler" to="/" />
+            <SettingsButton :icon="faUser" title="Kişisel bilgiler" to="/settings/personal_information" />
             <SettingsButton :icon="faKey" title="Şifre değiştir" to="/settings/change_password" />
         </fieldset>
     </article>
@@ -48,7 +48,7 @@
             <SettingsButton @click="logout" btnStyle="btn btn-ghost text-error" :icon="faDoorOpen" title="Çıkış yap" />
         </fieldset>
     </article>
-    <p class="text-gray-400 text-xs font-semibold text-center">Version. V1.14.2</p>
+    <p class="text-gray-400 text-xs font-semibold text-center">Version. V1.14.4</p>
 </section>
 </template>
 

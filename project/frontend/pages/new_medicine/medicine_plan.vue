@@ -1,6 +1,6 @@
 <template>
 <section class="flex flex-col gap-4">
-    <fieldset class="w-full fieldset border-b-2 shadow card border-base-300 rounded-box p-4">
+    <fieldset class="w-full fieldset border-b-2 shadow card border-base-300 rounded-box p-4 mx-0.5">
         <!-- <legend class="fieldset-legend font-bold">İlaç plan</legend> -->
         
         <ScheduleList @remove="removeSchedule" />
@@ -11,7 +11,7 @@
           >+ Yeni Plan Ekle</button>
 
     </fieldset>
-    <fieldset class="w-full fieldset border-b-2 shadow card border-base-300 rounded-box p-4">
+    <fieldset class="w-full fieldset border-b-2 shadow card border-base-300 rounded-box p-4 mx-0.5">
         <div class="flex gap-2 w-full">
             <div class="w-full">
                 <button class="btn btn-secondary w-full" @click="go_previous_page">Geri</button>

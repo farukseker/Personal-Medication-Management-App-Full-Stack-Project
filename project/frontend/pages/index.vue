@@ -28,7 +28,9 @@
         v-for="medication_today in medication_today_list"
         :key="medication_today.id" 
         :medication="medication_today" 
-        @load_medication="async () => await load_medication_today_list()" />
+        @load_medication="async () => await load_medication_today_list()" 
+        class="mx-0.5"
+        />
       <AlertsTakedAllPills v-else-if="stats?.taken_percentage == 100" />
       <AlertsPillsNotfound v-else />
     </div>
@@ -54,9 +56,6 @@ const medication_today_list = ref([])
 const today = ref()
 const stats = ref()
 const on_loading = ref(false)
-const tab_index = ref(0)
-
-const counters_list = ref([])
 
 const load_medication_today_list = async () => {
   const data = await $api('/medication/today/')
