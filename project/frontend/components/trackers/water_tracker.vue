@@ -36,7 +36,7 @@
         <li
           v-for="entry in history"
           :key="entry.id"
-          class="w-full bg-blue-50 dark:bg-blue-900 p-2 rounded grid grid-cols-6"
+          class="w-full bg-blue-400 text-white p-2 rounded grid grid-cols-6"
         >
           <div class="col-span-1 flex">
             <font-awesome :icon="getIconFromAmount(entry.amount)" class="m-auto text-xl" />

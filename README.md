@@ -6,7 +6,6 @@
 Karmaşık senaryoları desteklemek için tasarlandı: farklı dozlar, değişken tedavi süreleri, doktor notları, uyarılar ve daha fazlası.
 
 - Geliştirme süreci : devam ediyor
-- Tamamlanan görev oranı : 63.4%
 
 
 ![Mockup](.previews/Mockup.png)
@@ -55,11 +54,10 @@ Piyasadaki çözümler yetersiz ya da kapalı kaynaklı. Bu proje, sürdürüleb
 ## 📌 Yol Haritası
 
 * [x] Temel hatırlatma sistemi
-* [x] Offline desteği
 * [ ] Kullanıcı rollerine göre senaryolar
-* [ ] Bildirim sisteminde yapay zeka önerileri
+* [x] Bildirim sisteminde yapay zeka önerileri
 * [ ] Doktorlara özel panel
-* [ ] PWA olarak dağıtım
+* [x] PWA olarak dağıtım
 
 ---
 
@@ -81,8 +79,15 @@ Bu proje [GNU AFFERO GENERAL PUBLIC LICENSE Version 3](LICENSE) ile lisanslanmı
 ![yayıncı](.previews/streamer.png)
 ![yayın](.previews/streams.png)
 
-![pwa](.previews/response.png)
-![pwa](.previews/pwa-gui.png)
+| ![pwa](.previews/home.png) | ![pwa](.previews/settings.png) |
+|---|---
+
+| ![pwa](.previews/water_tracking.png) | ![pwa](.previews/weight_tracking.png) |
+|---|---
+
+| ![pwa](.previews/add_weight.png) | ![pwa](.previews/change_language.png) |
+|---|---
+
 ---
 
 ## 📧 İletişim
