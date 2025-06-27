@@ -3,8 +3,8 @@ from celery import shared_task
 
 @shared_task
 def notification_dispatcher():
-    from .send_push_message_task import send_push_notification_message
-    from datetime import timezone, datetime, timedelta
+    from notification_base.tasks.send_push_message_task import send_push_notification_message
+    from datetime import datetime, timedelta
     from django.db.models import Q
     from medication.models import MedicationSchedule
     from medication.services import MedicationTimeService

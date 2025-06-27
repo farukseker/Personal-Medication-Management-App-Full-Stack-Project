@@ -1,2 +1,1 @@
-from .send_push_message_task import send_push_notification_message
 from .medication_notification_task import notification_dispatcher

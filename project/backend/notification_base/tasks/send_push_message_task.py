@@ -1,8 +1,26 @@
 from celery import shared_task
-from pywebpush import webpush, WebPushException
 from medication.models import PushSubscription
-from medication.utils.notifications import send_push
+from pywebpush import webpush, WebPushException
+import json
 
+
+# https://chatgpt.com/share/685e266d-e4b8-8009-b229-f68788a04ac8 |
+# yük artışı için bir not                                        |
+
+
+def send_push(subscription_info, payload):
+    from config.settings.base import VAPID_EMAIL, VAPID_PRIVATE_KEY
+
+    try:
+        webpush(
+            subscription_info=subscription_info,
+            data=json.dumps(payload),
+            vapid_private_key=VAPID_PRIVATE_KEY,
+            vapid_claims={"sub": VAPID_EMAIL}
+        )
+        return True, None
+    except WebPushException as e:
+        return False, str(e)
 
 
 @shared_task
