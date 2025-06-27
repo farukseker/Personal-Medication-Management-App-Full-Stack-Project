@@ -9,6 +9,18 @@
 
     <article class="space-y-4">
       <!-- Kilo Girişi -->
+       <div>
+        <label class="block mb-1 font-semibold">Mevsim seçin</label>
+        <select v-model="selectedSeason" class="select select-bordered w-full">
+          <option value="summer">Yaz</option>
+          <option value="autumn">Sonbahar</option>
+          <option value="winter">Kış</option>
+          <option value="spring">İlkbahar</option>
+        </select>
+        <p class="label text-xs">
+          Yaz ve Kış aylarında tüketmeniz gereken sıvı miktarı farklıdır.
+        </p>
+      </div>
       <div>
         <label class="block mb-1 font-semibold">Kilonuz (kg)</label>
         <input type="number" v-model.number="weight" class="input input-bordered w-full" />
@@ -17,14 +29,16 @@
       <!-- Hesapla Butonu -->
       <button class="btn btn-primary w-full" @click="handleCalculate">Günlük ihtiyacı hesapla</button>
 
-      <!-- Hedef Girişi -->
-      <div>
-        <label class="block mb-1 font-semibold">Günlük hedefiniz (litre)</label>
-        <input ref="targetInput" type="number" v-model.number="target" class="input input-bordered w-full" />
-      </div>
+      <form @submit.prevent="saveTarget">
+        <!-- Hedef Girişi -->
+        <div>
+          <label class="block mb-1 font-semibold">Günlük hedefiniz (mililitre)</label>
+          <input ref="targetInput" type="number" v-model.number="target" class="input input-bordered w-full" />
+        </div>
 
-      <!-- Kaydet Butonu -->
-      <button class="btn btn-success w-full" @click="saveTarget">Kaydet</button>
+        <!-- Kaydet Butonu -->
+        <button class="btn btn-success w-full" @click="saveTarget">Kaydet</button>
+      </form>
     </article>
   </section>
 </template>
@@ -35,10 +49,13 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { useLocaleRouter } from '~/composables/useLocaleRouter'
 
 const { go } = useLocaleRouter()
+const { $api } = useNuxtApp()
 
 const weight = ref(null)
 const target = ref(null)
 const targetInput = ref(null)
+
+const selectedSeason = ref('')
 
 function getSeason(date = new Date()) {
   const month = date.getMonth() + 1
@@ -49,11 +66,11 @@ function getSeason(date = new Date()) {
 }
 
 function calculateWaterIntake(weight) {
-  const season = getSeason()
-  let base = weight * 0.033
-  if (season === 'summer') base += 0.5
-  if (season === 'winter') base -= 0.2
-  return parseFloat(base.toFixed(2))
+  const season = selectedSeason.value || getSeason()
+  let base = weight * 33
+  if (season === 'summer') base += 500
+  if (season === 'winter') base -= 200
+  return Math.round(base)
 }
 
 function handleCalculate() {
@@ -69,24 +86,22 @@ async function saveTarget() {
   }
 
   try {
-    const res = await fetch('/api/water_target/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        // Authorization token gerekiyorsa buraya ekle
-      },
+    const res = await $api('/health/water/goal/', {
+      method: 'PUT',
       body: JSON.stringify({
-        daily_target_liters: target.value
+        daily_goal: target.value
       })
     })
 
-    if (!res.ok) throw new Error('API isteği başarısız')
-
-    alert('Hedef başarıyla kaydedildi!')
+    if (!res.daily_goal) throw new Error('API isteği başarısız')
     go('/tab/water_tracking')
   } catch (e) {
     console.error(e)
-    alert('Bir hata oluştu.')
   }
 }
+
+
+onMounted(() => {
+  selectedSeason.value = getSeason()
+})
 </script>
