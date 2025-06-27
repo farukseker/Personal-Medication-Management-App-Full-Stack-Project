@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'medication',
     'counter',
     'health_monitoring',
-    'custom_auth'
+    'custom_auth',
+    'notification_base'
 ]+[
     # third party app
     'rest_framework',
@@ -158,3 +159,4 @@ CELERY_ENABLE_UTC = True
 
 VAPID_PUBLIC_KEY = env('VAPID_PUBLIC_KEY')
 VAPID_PRIVATE_KEY = env('VAPID_PRIVATE_KEY')
+VAPID_EMAIL = env("VAPID_EMAIL", "mailto:admin@example.com")
