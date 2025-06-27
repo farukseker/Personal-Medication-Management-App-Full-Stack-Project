@@ -57,7 +57,7 @@ const targetInput = ref(null)
 
 const selectedSeason = ref('')
 
-function getSeason(date = new Date()) {
+const getSeason = (date = new Date()) => {
   const month = date.getMonth() + 1
   if ([12, 1, 2].includes(month)) return 'winter'
   if ([3, 4, 5].includes(month)) return 'spring'
@@ -65,7 +65,7 @@ function getSeason(date = new Date()) {
   return 'autumn'
 }
 
-function calculateWaterIntake(weight) {
+const calculateWaterIntake = (weight) => {
   const season = selectedSeason.value || getSeason()
   let base = weight * 33
   if (season === 'summer') base += 500
@@ -73,13 +73,13 @@ function calculateWaterIntake(weight) {
   return Math.round(base)
 }
 
-function handleCalculate() {
+const handleCalculate = () => {
   if (!weight.value) return alert('Lütfen kilonuzu girin')
   target.value = calculateWaterIntake(weight.value)
   targetInput.value?.focus()
 }
 
-async function saveTarget() {
+const saveTarget = async () => {
   if (!target.value) {
     alert('Lütfen bir hedef belirleyin')
     return
@@ -99,8 +99,6 @@ async function saveTarget() {
     console.error(e)
   }
 }
-
-
 onMounted(() => {
   selectedSeason.value = getSeason()
 })
