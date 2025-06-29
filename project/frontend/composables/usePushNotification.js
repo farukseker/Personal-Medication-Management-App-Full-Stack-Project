@@ -1,5 +1,4 @@
 // frontend/composables/usePushNotification.js
-
 export const usePushNotification = () => {
   const vapidPublicKey = "BEY_xESeYvlT7oBJhcktblnG9JKHNEzqg8UgBsydPVh51Wx_OnfaP7EXRXkRrR7PgaX2ivjJYwMZkxZRmQIhJPc";
 
@@ -9,7 +8,7 @@ export const usePushNotification = () => {
     const rawData = atob(base64);
     return Uint8Array.from([...rawData].map(c => c.charCodeAt(0)));
   };
-
+  
   const subscribe = async () => {
     if (!('serviceWorker' in navigator)) {
       console.warn('Tarayıcı service worker desteklemiyor. Abonelik iptal edildi.');
@@ -43,11 +42,11 @@ export const usePushNotification = () => {
       // Backend'e sadece Subscription nesnesini gönderiyoruz.
       try {
         const { $api } = useNuxtApp()
-        const data = await $api('/medication/subscribe/',{
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(newSub)
-        }
+        const data = await $api('/notification/subscribe/',{
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newSub)
+          }
         )
 
         // await $fetch('/medications/subscribe', {
@@ -65,7 +64,53 @@ export const usePushNotification = () => {
     }
   };
 
+  const unsubscribe = async () => {
+    if (!('serviceWorker' in navigator)) {
+      console.warn('Tarayıcı service worker desteklemiyor.');
+      return;
+    }
+
+    try {
+      const registration = await navigator.serviceWorker.getRegistration();
+      if (!registration) {
+        console.warn('Service Worker kaydı bulunamadı.');
+        return;
+      }
+
+      const subscription = await registration.pushManager.getSubscription();
+      if (!subscription) {
+        console.warn('Aktif bir push aboneliği yok.');
+        return;
+      }
+
+      const success = await subscription.unsubscribe();
+      if (success) {
+        console.log('Push aboneliği tarayıcıdan iptal edildi.');
+
+        try {
+          const { $api } = useNuxtApp()
+          await $api('/notification/unsubscribe/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(subscription)
+          });
+
+          console.log('Backend’e abonelik iptali bildirildi.');
+        } catch (backendErr) {
+          console.error('Backend’e iptal bildirimi gönderilirken hata:', backendErr);
+        }
+
+      } else {
+        console.warn('Abonelik iptal edilemedi.');
+      }
+
+    } catch (err) {
+      console.error('Push aboneliğini iptal ederken hata oluştu:', err.name, err.message);
+    }
+  };
+
   return {
-    subscribe
+    subscribe,
+    unsubscribe
   };
 };

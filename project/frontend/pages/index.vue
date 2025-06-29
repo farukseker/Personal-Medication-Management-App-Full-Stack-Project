@@ -22,6 +22,10 @@
   <NavTabsNav />
 
   <section>
+    <article v-if="is_user_allow_notfication" >
+      ss
+    </article>
+
     <div class="space-y-3 max-h-[40vh] overflow-y-auto py-4">
       <MedicationPillReminder
         v-if="medication_today_list.length > 0"
@@ -48,6 +52,9 @@ const route = useRoute()
 const localePath = useLocalePath()
 const scheduleStore = useNewMdcStore()
 const isPathEqual = (path) => route.path === localePath(path) 
+
+const is_user_allow_notfication = ref('')
+onMounted(async () => is_user_allow_notfication.value = Notification.permission === 'granted')
 
 // const my_medication_store = useMyMedicationStore()
 // onMounted(my_medication_store.getMedicationList)

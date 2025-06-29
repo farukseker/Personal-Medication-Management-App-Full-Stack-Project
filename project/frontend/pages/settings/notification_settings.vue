@@ -1,46 +1,157 @@
 <template>
-<section class="px-4 space-y-4 max-w-md mx-auto">
-    <header>
-        <button class="btn btn-ghost ps-0 text-xl">
-            <font-awesome :icon="faArrowLeft" />
-        </button>
-        <h1 class="text-xl font-bold">Bildirim ayarları</h1>
+  <section class="px-4 space-y-6 max-w-md mx-auto">
+    <!-- Header -->
+    <header class="flex items-center gap-4 py-2">
+      <button class="btn btn-ghost p-0 text-xl" @click="go(-1)">
+        <font-awesome :icon="faArrowLeft" />
+      </button>
+      <h1 class="text-xl font-bold">Bildirim Ayarları</h1>
     </header>
-    <article>
-        <fieldset class="w-full fieldset shadow rounded-box p-2">
-            <legend class="fieldset-legend font-bold text-lg">İlaç hatırlatıcısı</legend>
-            <p class="text-lg font-semibold font-sans text-pretty">
-                Sabah <span class="text-primary">08:30</span> dan akşam <span class="text-primary">10:30</span> 'a kadar bildirim alıcaksınız
-            </p>
-            <hr>
-            <fieldset class="fieldset">
-                <legend class="fieldset-legend">What is your name?</legend>
-                <label class="input w-full">
-                    <span class="w-4 h-4 m-auto">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120l0 136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2 280 120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/></svg>
-                    </span>
-                    <input class="grow" type="time">
-                </label>
-                <p class="label">Optional</p>
-            </fieldset>
-        </fieldset>
-        <fieldset class="w-full fieldset shadow rounded-box p-2">
-            <legend class="fieldset-legend font-bold text-lg">Su hatırlatıcısı</legend>
-        </fieldset>
-        <fieldset class="w-full fieldset shadow rounded-box p-2">
-            <legend class="fieldset-legend font-bold text-lg">Kilo takibi hatırlatıcısı</legend>
-        </fieldset>
-    </article>
-</section>
+
+    <div 
+      class="btn btn-ghost shadow text-warning font-semibold p-2"
+      v-if="settings.notifications_enabled && !isUserAllowNotfication"
+      @click="handleSubscribe"
+    >
+      <font-awesome :icon="faWarning" />  
+      Bİldirim alabilmek için, <span class="font-bold underline">izin vermelisiniz</span>
+    </div>
+
+    <!-- General toggle -->
+    <div class="form-control">
+      <label class="label cursor-pointer">
+        <span class="label-text font-semibold">Tüm bildirimler aktif</span>
+        <input type="checkbox" class="toggle toggle-primary" v-model="settings.notifications_enabled" />
+      </label>
+    </div>
+    <span class="label text-error text-sm" v-if="settings.notifications_enabled && !isUserAllowNotfication">
+      Lütfen bildirimlere <span class="underline font-bold cursor-pointer" @click="handleSubscribe">izin veriniz </span>
+    </span>
+    <!-- Time Range Setting -->
+    <fieldset class="fieldset shadow rounded-box p-4 space-y-2">
+      <legend class="font-bold text-lg">Saat Aralığı</legend>
+      <label class="label cursor-pointer">
+        <span class="label-text">Sadece belirli saatlerde bildirim al</span>
+        <input type="checkbox" class="toggle toggle-secondary" v-model="settings.use_time_range" :disabled="!settings.notifications_enabled || onSettingsLoad" />
+      </label>
+      <div class="flex gap-4 items-center">
+        <label class="form-control w-full">
+          <span class="label-text">Başlangıç</span>
+          <input type="time" class="input input-bordered" v-model="settings.start_time" :disabled="!settings.notifications_enabled || !settings.use_time_range" />
+        </label>
+        <label class="form-control w-full">
+          <span class="label-text">Bitiş</span>
+          <input type="time" class="input input-bordered" v-model="settings.end_time" :disabled="!settings.notifications_enabled || !settings.use_time_range" />
+        </label>
+      </div>
+    </fieldset>
+
+    <!-- Notification types -->
+    <fieldset class="fieldset shadow rounded-box p-4 space-y-4">
+      <legend class="font-bold text-lg">Bildirim Türleri</legend>
+
+      <label class="label cursor-pointer justify-between">
+        <span class="label-text">İlaç hatırlatıcısı</span>
+        <input type="checkbox" class="toggle toggle-success" v-model="settings.medication_enabled" :disabled="!settings.notifications_enabled || onSettingsLoad" />
+      </label>
+
+      <label class="label cursor-pointer justify-between">
+        <span class="label-text">Su hatırlatıcısı</span>
+        <input type="checkbox" class="toggle toggle-info" v-model="settings.water_enabled" :disabled="!settings.notifications_enabled || onSettingsLoad" />
+      </label>
+
+      <label class="label cursor-pointer justify-between">
+        <span class="label-text">Kilo takibi hatırlatıcısı</span>
+        <input type="checkbox" class="toggle toggle-warning" v-model="settings.weight_enabled" :disabled="!settings.notifications_enabled || onSettingsLoad" />
+      </label>
+    </fieldset>
+
+    <!-- Save Button -->
+    <div class="text-end">
+      <button
+        class="btn btn-primary"
+        @click="updateUserNotificationSettings"
+        :disabled="onUpdate"
+      >
+      <span v-if="!onUpdate">Kaydet</span>
+      <span v-else class="loading loading-spinner loading-xs"></span>
+    </button>
+    </div>
+  </section>
 </template>
+
 <script setup>
 import { 
     faArrowLeft,
-    faClock,
-    faClockFour,
-    faClockRotateLeft
+    faWarning
  } from '@fortawesome/free-solid-svg-icons'
+import { onMounted } from 'vue';
 import { useLocaleRouter } from '~/composables/useLocaleRouter'
+import { usePushNotification } from '~/composables/usePushNotification';
 
+const { subscribe } = usePushNotification();
 const { go } = useLocaleRouter()
+const { $api } = useNuxtApp()
+
+const onUpdate = ref(false)
+const onSettingsLoad = ref(false)
+const isUserAllowNotfication = ref(false)
+
+onMounted(async () => {
+  try {
+    onSettingsLoad.value = true
+    isUserAllowNotfication.value = Notification.permission === 'granted'
+    await getUserNotificationSettings()
+  } finally {
+    onSettingsLoad.value = false
+  }
+})
+
+const settings = ref({
+    notifications_enabled: true,
+    medication_enabled: true,
+    water_enabled: true,
+    weight_enabled: true,
+    use_time_range: true,
+    start_time: '08:00',
+    end_time: '22:00'
+})
+
+const getUserNotificationSettings = async () => {
+  const response = await $api('notification/settings/')
+  Object.assign(settings.value, response)
+}
+
+const updateUserNotificationSettings = async () => {
+  try {
+      onUpdate.value = true
+      const response = await $api('notification/settings/', {
+        method: 'PUT',
+        body: settings.value
+      })
+      Object.assign(settings.value, response)
+  } finally {
+      onUpdate.value = false
+  }
+}
+
+watch(
+      () => settings.value.notifications_enabled,
+async (enabled) => {
+    if (enabled){
+      await handleSubscribe()
+    }
+})
+
+const handleSubscribe = async () => {
+  try {
+    await subscribe()
+    isUserAllowNotfication.value = Notification.permission === 'granted'
+  } finally {
+    if (Notification.permission === 'granted'){
+        await updateUserNotificationSettings()
+    }
+  }
+}
+
 </script>

@@ -49,6 +49,7 @@
         </fieldset>
     </article>
     <p class="text-gray-400 text-xs font-semibold text-center">Version. V1.14.4</p>
+    <span>bildirim izini {{ is_user_allow_notfication }}</span>
 </section>
 </template>
 
@@ -63,6 +64,7 @@ import {
     faScroll,
     faBell,
  } from '@fortawesome/free-solid-svg-icons'
+import { onMounted } from 'vue'
 import ThemeProvider from '~/components/ThemeProvider.vue'
 import { useLocaleRouter } from '~/composables/useLocaleRouter'
 
@@ -78,4 +80,6 @@ const logout = () => {
   refreshToken.value = ''
   go('/auth/login')
 }
+const is_user_allow_notfication = ref(false)
+onMounted(async () => is_user_allow_notfication.value = Notification.permission)
 </script>
