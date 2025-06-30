@@ -2,7 +2,7 @@
     <div class="dock max-w-md mx-auto">
       <button
         @click="go('/')"
-        :class="isPathEqual('/') ? 'dock-active':''"
+        :class="isPathsInMainPage() ? 'dock-active':''"
       >
         <font-awesome :icon="faHome" class="size-[1.2em]" />
         <span class="dock-label">{{ $t('bottom_navigation.home') }}</span>
@@ -42,4 +42,14 @@ const { go } = useLocaleRouter()
 const localePath = useLocalePath()
 const route = useRoute()
 const isPathEqual = (path) => route.path === localePath(path) 
+
+const isPathsInMainPage = () => {
+  const pathList = [
+    "/",
+    "/tab/counters",
+    "/tab/water_tracking",
+    "/tab/weight_tracking"
+  ]
+  return pathList.some(p => isPathEqual(p))
+}
 </script>

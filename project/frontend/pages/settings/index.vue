@@ -48,8 +48,7 @@
             <SettingsButton @click="logout" btnStyle="btn btn-ghost text-error" :icon="faDoorOpen" title="Çıkış yap" />
         </fieldset>
     </article>
-    <p class="text-gray-400 text-xs font-semibold text-center">Version. V1.14.4</p>
-    <span>bildirim izini {{ is_user_allow_notfication }}</span>
+    <p class="text-gray-400 text-xs font-semibold text-center">Version. V1.14.6</p>
 </section>
 </template>
 
@@ -80,6 +79,5 @@ const logout = () => {
   refreshToken.value = ''
   go('/auth/login')
 }
-const is_user_allow_notfication = ref(false)
-onMounted(async () => is_user_allow_notfication.value = Notification.permission)
+
 </script>

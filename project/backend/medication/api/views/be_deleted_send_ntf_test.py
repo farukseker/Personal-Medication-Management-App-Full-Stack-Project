@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from medication.models import PushSubscription
+from notification_base.models import PushSubscription
 from medication.utils.notifications import send_push
 
 

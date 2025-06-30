@@ -128,15 +128,6 @@ i18n: {
       ]
     },
   },
-  mdc: {
-    components: {
-      map: {
-        carousel: 'Carousel',
-        custom: 'CustomField', 
-        moni: 'Moni'
-      },
-    },
-  },
   image: {
     domains: ['public.blob.vercel-storage.com'],
   },
@@ -156,11 +147,6 @@ i18n: {
       include: ['debug', 'daisyui']
     }
   },
-  // vue: {
-  //   compilerOptions: {
-  //     isCustomElement: (tag) => tag === 'MDC',
-  //   },
-  // },
   googleFonts: {
     families: {
       'Nunito': [400, 500, 600, 700],

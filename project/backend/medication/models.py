@@ -166,19 +166,3 @@ class MedicationStock(models.Model):
     def __str__(self):
         return f"{self.medication.name} - {self.quantity} {self.unit}"
 
-class PushSubscription(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    endpoint = models.TextField()
-    p256dh = models.CharField(max_length=255)
-    auth = models.CharField(max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    @property
-    def subscription_info(self) -> dict:
-        return {
-                "endpoint": self.endpoint,
-                "keys": {
-                    "p256dh": self.p256dh,
-                    "auth": self.auth,
-                }
-            }

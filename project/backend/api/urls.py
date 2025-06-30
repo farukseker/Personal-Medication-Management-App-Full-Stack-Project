@@ -7,4 +7,5 @@ urlpatterns = [
     path('counter/', include('counter.api.urls'), name='counter'),
     path('auth/', include('custom_auth.api.urls'), name='auth'),
     path('health/', include('health_monitoring.api.urls'), name='health_monitoring_api'),
+    path('notification/', include('notification_base.api.urls'), name='notification_api'),
 ]

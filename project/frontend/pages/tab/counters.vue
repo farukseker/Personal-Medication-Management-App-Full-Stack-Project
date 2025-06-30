@@ -24,7 +24,10 @@
 
   <article>
     <fieldset class="w-full fieldset card rounded-box">
-      <div class="grid grid-cols-3 gap-4">
+      <div v-if="on_loading" class="w-full text-center">
+        <span class="loading loading-infinity loading-md"></span>
+      </div>
+      <div v-else class="grid grid-cols-3 gap-4">
         <CountersCounterList :counters_list="counters_list" />
         <CountersAddCounterLink />
       </div>
@@ -40,6 +43,7 @@ const { $api } = useNuxtApp()
 const { go } = useLocaleRouter()
 
 const counters_list = ref([])
+const on_loading = ref(false)
 
 const loadCounters = async () => {
     const data = await $api('/counter/')
@@ -49,7 +53,12 @@ const loadCounters = async () => {
     }))
 }
 
-onMounted(() => {
-  loadCounters()
+onMounted(async () => {
+  try {
+    on_loading.value = true
+    await loadCounters()
+  } catch {} finally {
+    on_loading.value = false
+  }
 })
 </script>

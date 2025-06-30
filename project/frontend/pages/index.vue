@@ -22,11 +22,19 @@
   <NavTabsNav />
 
   <section>
-    <article v-if="is_user_allow_notfication" >
-      ss
+    <article
+      class="btn btn-ghost shadow text-warning font-semibold p-2"
+      @click="handleSubscribe"
+      v-if="!isUserAllowNotfication"
+    >
+        <font-awesome :icon="faWarning" />  
+        Bİldirim alabilmek için, <span class="font-bold underline">izin vermelisiniz</span>
     </article>
 
-    <div class="space-y-3 max-h-[40vh] overflow-y-auto py-4">
+    <div v-if="on_loading" class="w-full text-center">
+      <span class="loading loading-infinity loading-md"></span>
+    </div>
+    <div v-else class="space-y-3 max-h-[40vh] overflow-y-auto py-4">
       <MedicationPillReminder
         v-if="medication_today_list.length > 0"
         v-for="medication_today in medication_today_list"
@@ -38,7 +46,7 @@
       <AlertsTakedAllPills v-else-if="stats?.taken_percentage == 100" />
       <AlertsPillsNotfound v-else />
     </div>
-    <StatusWeeklyStatus :stats="stats" />
+    <StatusWeeklyStatus v-if="stats" :stats="stats" />
   </section>
 </div>
 </template>
@@ -53,8 +61,8 @@ const localePath = useLocalePath()
 const scheduleStore = useNewMdcStore()
 const isPathEqual = (path) => route.path === localePath(path) 
 
-const is_user_allow_notfication = ref('')
-onMounted(async () => is_user_allow_notfication.value = Notification.permission === 'granted')
+const isUserAllowNotfication = ref(false)
+onMounted(async () => isUserAllowNotfication.value = Notification.permission === 'granted')
 
 // const my_medication_store = useMyMedicationStore()
 // onMounted(my_medication_store.getMedicationList)

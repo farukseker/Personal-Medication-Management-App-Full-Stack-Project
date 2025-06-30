@@ -1,5 +1,5 @@
 from celery import shared_task
-from medication.models import PushSubscription
+from notification_base.models import PushSubscription
 from pywebpush import webpush, WebPushException
 import json
 
