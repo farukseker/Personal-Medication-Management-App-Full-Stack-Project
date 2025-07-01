@@ -14,6 +14,7 @@
       <div>
         <div class="flex w-full">
           <h2 class="text-lg font-semibold mb-2 w-full">Bugün, 13 Mayıs. Aldığın ilaçlar</h2>
+          <button class="btn btn-sm btn-success">Rapor Al </button>
         </div>
         <div class="card bg-base-100 sm:shadow mb-3">
             <div class="card-body flex flex-row gap-2 p-0 sm:p-5 w-full justify-between">
@@ -30,7 +31,7 @@
                 class="btn btn-sm"
                 :class="filter_type === 'month' ? 'btn-primary': 'btn-outline'"
                 @click="filter_type='month'">Bu Ay</button>
-                <button class="btn btn-sm btn-success">Rapor Al </button>
+                <button class="btn btn-sm btn-secondary">Özel Tarih </button>
             </div>
         </div>
         <div class="underline font-semibold text-primary-content" v-if="!(medication_history_list?.length > 0)">

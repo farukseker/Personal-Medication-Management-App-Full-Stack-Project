@@ -13,7 +13,6 @@
 
   <div class="flex w-full">
     <h2 class="text-lg font-semibold mb-2 w-full">{{ $t('index.today') }}, {{ today }}</h2>
-
   </div>
   <NavTabsNav />
   <section>
@@ -84,6 +83,7 @@
 import { computed } from 'vue'
 import { faBucket, faGlassWater, faDroplet, faMugSaucer, faX } from '@fortawesome/free-solid-svg-icons'
 import { useLocaleRouter } from '~/composables/useLocaleRouter'
+import dayjs from 'dayjs'
 
 const { $api } = useNuxtApp()
 const { go } = useLocaleRouter()
@@ -92,6 +92,7 @@ const goal = ref(0)
 const history = ref([])
 const total = computed(() => history.value.reduce((sum, h) => sum + h.amount, 0))
 const progress = computed(() => Math.min(Math.round((total.value / goal.value) * 100), 100))
+const today = dayjs().format('YYYY-MM-DD')
 
 const formatTime = (timestamp) => {
   return new Date(timestamp).toLocaleTimeString('tr-TR', {
@@ -114,7 +115,7 @@ const fetchGoalAndEntries = async () => {
   try {
     const [goalResponse, entriesResponse] = await Promise.all([
       $api('/health/water/goal/'),
-      $api('/health/water/entries/')
+      $api(`/health/water/entries/${today}/`)
     ])
     goal.value = goalResponse.daily_goal
     history.value = entriesResponse.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
