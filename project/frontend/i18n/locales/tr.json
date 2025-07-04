@@ -12,7 +12,7 @@
     },
     "index": {
         "title": "İlaç Takibi",
-        "today": "Bu gün",
+        "today": "Bugün",
         "add_medication": "İlaç Ekle",
         "medications": "İlaçlar",
         "counter": "Sayaçlar",
@@ -32,7 +32,7 @@
         "pills_not_found_message": "Bugün almanız gereken hiçbir ilaç yok!"
     },
     "status": {
-        "today": "Bu gün",
+        "today": "Bugün",
         "dos_taken": "Alındı"
     },
     "counter": {
@@ -50,5 +50,6 @@
         "take": "Al",
         "edit": "Düzenle",
         "del": "Sil"
-    }
+    },
+    "month_names": {"January": "Ocak", "February": "Şubat", "March": "Mart", "April": "Nisan", "May": "May", "June": "Haziran", "July": "Temmuz", "August": "Ağustos", "September": "Eylül", "October": "Ekim", "November": "Kasım", "December": "Aralık", "Jan": "Oca", "Feb": "Şub", "Mar": "Mar", "Apr": "Nis", "Jun": "Haz", "Jul": "Tem", "Aug": "Ağu", "Sep": "Eyl", "Oct": "Eki", "Nov": "Kas", "Dec": "Ara"}
 }

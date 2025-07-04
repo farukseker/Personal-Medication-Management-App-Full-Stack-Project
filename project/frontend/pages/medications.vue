@@ -12,7 +12,7 @@
         </div>
       <div>
         <div class="flex w-full">
-          <h2 class="text-lg font-semibold mb-2 w-full">Bugün, {{ today }}</h2>
+          <h2 class="text-lg font-semibold mb-2 w-full"><TodayMessage /></h2>
           <button 
           class="btn btn-primary btn-sm"
           @click="go_new_medicine_form"
@@ -38,6 +38,7 @@ import dayjs from 'dayjs'
 import { useNewMdcStore } from '@/stores/new_mdc_store.js'
 import { useLocaleRouter } from '~/composables/useLocaleRouter'
 
+const today_month_name = ref(null)
 const { go } = useLocaleRouter()
 
 const scheduleStore = useNewMdcStore()

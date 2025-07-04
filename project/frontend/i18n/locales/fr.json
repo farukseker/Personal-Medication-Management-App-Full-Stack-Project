@@ -50,5 +50,6 @@
     "take": "Prendre",
     "edit": "Modifier",
     "del": "Suppr."
-  }
+  },
+  "month_names": {"January": "Janvier", "February": "Février", "March": "Mars", "April": "Avril", "May": "Mai", "June": "Juin", "July": "Juillet", "August": "Août", "September": "Septembre", "October": "Octobre", "November": "Novembre", "December": "Décembre", "Jan": "Jan", "Feb": "Fév", "Mar": "Mar", "Apr": "Avr", "Jun": "Juin", "Jul": "Juil", "Aug": "Aoû", "Sep": "Sep", "Oct": "Oct", "Nov": "Nov", "Dec": "Déc"}
 }

@@ -11,8 +11,10 @@
       </div>
     </div>
 
-    <div class="flex w-full">
-      <h2 class="text-lg font-semibold mb-2 w-full">{{ $t('index.today') }}, {{ today }}</h2>
+    <div class="flex w-full my-2">
+      <h2 class="text-lg font-semibold w-full my-auto">
+        <TodayMessage />
+      </h2>
       <div 
           @click="go('/new_counter')"
           class="rounded shadow bg-base-200 border-2 border-dashed border-gray-400 text-gray-600 px-2 py-0 flex cursor-pointer min-w-fit text-sm">
@@ -39,6 +41,7 @@
 
 <script setup>
 import { useLocaleRouter } from '~/composables/useLocaleRouter'
+
 const { $api } = useNuxtApp()
 const { go } = useLocaleRouter()
 

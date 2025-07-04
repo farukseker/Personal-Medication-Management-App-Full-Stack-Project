@@ -12,8 +12,10 @@
     </div>
   </div>
 
-  <div class="flex w-full">
-    <h2 class="text-lg font-semibold mb-2 w-full">{{ $t('index.today') }}, {{ today }}</h2>
+  <div class="flex w-full my-2">
+    <h2 class="text-lg font-semibold w-full">
+      <TodayMessage />
+    </h2>
     <button class="btn btn-primary btn-sm" @click="go_new_medicine_form">
       + {{ $t('index.add_medication') }}
     </button>
@@ -52,7 +54,6 @@
 </template>
   
 <script setup>
-import dayjs from 'dayjs'
 import { useNewMdcStore } from '@/stores/new_mdc_store.js'
 import { useLocaleRouter } from '~/composables/useLocaleRouter'
 const { go } = useLocaleRouter()
@@ -68,7 +69,7 @@ onMounted(async () => isUserAllowNotfication.value = Notification.permission ===
 // onMounted(my_medication_store.getMedicationList)
 const { $api } = useNuxtApp()
 const medication_today_list = ref([])
-const today = ref()
+
 const stats = ref()
 const on_loading = ref(false)
 
@@ -78,10 +79,6 @@ const load_medication_today_list = async () => {
   await get_stats()
   return true 
 }
-
-onMounted(()=>{
-    today.value = dayjs().format('DD MMMM')
-})
 
 const get_stats = async () => {
   if (medication_today_list.value){

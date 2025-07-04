@@ -12,7 +12,7 @@
   </div>
 
   <div class="flex w-full">
-    <h2 class="text-lg font-semibold mb-2 w-full">{{ $t('index.today') }}, {{ today }}</h2>
+    <h2 class="text-lg font-semibold w-full"><TodayMessage /></h2>
   </div>
   <NavTabsNav />
   <section>

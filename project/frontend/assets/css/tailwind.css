@@ -19,3 +19,56 @@
     font-weight: 400;
     font-style: normal;
 }
+
+@plugin "daisyui/theme" {
+  name: "colorblind";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+
+  /* Base Grays - yüksek kontrastlı, nötr */
+  --color-base-100: oklch(97% 0.01 260);
+  --color-base-200: oklch(90% 0.015 260);
+  --color-base-300: oklch(80% 0.02 260);
+  --color-base-content: oklch(20% 0.03 260);
+
+  /* Ana renkler - renk körleri için optimize (tonları uzak, doygunluk düşük) */
+  --color-primary: oklch(60% 0.25 20);   /* turuncuya yakın kırmızı */
+  --color-primary-content: oklch(98% 0.01 20);
+
+  --color-secondary: oklch(60% 0.22 280); /* morumsu ton - kırmızı/yeşil körlüğe karşı iyi */
+  --color-secondary-content: oklch(98% 0.01 280);
+
+  --color-accent: oklch(70% 0.25 180); /* camgöbeği - tritanopia için güvenli */
+  --color-accent-content: oklch(98% 0.01 180);
+
+  /* Bilgi renkleri */
+  --color-info: oklch(80% 0.22 220);  /* mavimsi */
+  --color-info-content: oklch(10% 0.02 220);
+
+  --color-success: oklch(70% 0.20 140); /* açık yeşil (az doygun) */
+  --color-success-content: oklch(10% 0.02 140);
+
+  --color-warning: oklch(85% 0.25 90); /* sarımsı ama çok parlak değil */
+  --color-warning-content: oklch(20% 0.03 90);
+
+  --color-error: oklch(60% 0.25 25);  /* kırmızımsı turuncu */
+  --color-error-content: oklch(98% 0.01 25);
+
+  /* Nötr */
+  --color-neutral: oklch(50% 0.05 240);
+  --color-neutral-content: oklch(98% 0.01 240);
+
+  /* Radius ve boyutlar */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  --border: 1px;
+
+  --depth: 1;
+  --noise: 0;
+}

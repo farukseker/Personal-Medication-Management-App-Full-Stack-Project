@@ -33,7 +33,12 @@
                 to="/settings/change_language" 
                 :description="locale.toUpperCase()"
             />
-            <ThemeProvider />
+            <SettingsButton 
+                :icon="faCircleHalfStroke"
+                title="Tema"
+                to="/settings/themes" 
+                :description="themeStore.theme.toUpperCase().slice(0, 1).toUpperCase() + themeStore.theme.slice(1)"
+            />
         </fieldset>
     </article>
     <article>
@@ -62,8 +67,8 @@ import {
     faDoorOpen,
     faScroll,
     faBell,
- } from '@fortawesome/free-solid-svg-icons'
-import { onMounted } from 'vue'
+    faCircleHalfStroke
+} from '@fortawesome/free-solid-svg-icons'
 import ThemeProvider from '~/components/ThemeProvider.vue'
 import { useLocaleRouter } from '~/composables/useLocaleRouter'
 
@@ -79,5 +84,7 @@ const logout = () => {
   refreshToken.value = ''
   go('/auth/login')
 }
+
+const themeStore = useThemeStore()
 
 </script>
