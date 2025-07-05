@@ -1,7 +1,9 @@
 <template>
 <section class="px-4 space-y-4 max-w-md mx-auto">
     <header>
-        <button class="btn btn-ghost ps-0 text-xl">
+        <button 
+        @click="$router.back()"
+        class="btn btn-ghost ps-0 text-xl">
             <font-awesome :icon="faArrowLeft" />
         </button>
         <h1 class="text-xl font-bold">Ayarlar</h1>
@@ -53,7 +55,7 @@
             <SettingsButton @click="logout" btnStyle="btn btn-ghost text-error" :icon="faDoorOpen" title="Çıkış yap" />
         </fieldset>
     </article>
-    <p class="text-gray-400 text-xs font-semibold text-center">Version. V1.14.6</p>
+    <p class="text-gray-400 text-xs font-semibold text-center">Version. V1.14.8</p>
 </section>
 </template>
 
@@ -69,7 +71,6 @@ import {
     faBell,
     faCircleHalfStroke
 } from '@fortawesome/free-solid-svg-icons'
-import ThemeProvider from '~/components/ThemeProvider.vue'
 import { useLocaleRouter } from '~/composables/useLocaleRouter'
 
 //color-scheme

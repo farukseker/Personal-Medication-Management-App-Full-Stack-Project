@@ -1,11 +1,9 @@
 <template>
 <section class="
     w-full min-h-screen mt-5 md:mt-0 md:flex justify-center
-    bg-gradient-to-t 
-    from-base-300 to-base-100
     text-xl
     ">
-    <div class="m-auto w-full sm:w-8/12 lg:w-4/12 px-4">
+    <div class="m-auto w-full px-4">
         <article class="w-fit mx-auto">
             <img src="/pill.svg" alt="">
             <h1 class="text-4xl font-bold text-center">{{ $t('auth.register') }}</h1>

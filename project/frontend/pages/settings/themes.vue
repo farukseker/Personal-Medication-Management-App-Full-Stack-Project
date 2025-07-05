@@ -29,7 +29,7 @@
                     <h2 class="min-w-fit">Tüm temalar</h2>
                     <hr class="w-full text-gray-300 my-auto ms-2">
                 </div>
-                <ul class="gap-2 grid grid-cols-2 md:grid-cols-3 flex-col mt-2">
+                <ul class="gap-2 grid grid-cols-2 flex-col mt-2">
                     <li 
                         v-for="theme of filteredThemes" :key="theme"
                         @click="selectedTheme = theme"
