@@ -50,7 +50,7 @@
 
     <fieldset class="w-full fieldset border-b-2 shadow card border-base-300 rounded-box p-4">
         <legend class="fieldset-legend font-bold">İlaç Notu</legend>
-        <textarea v-model="new_mdc_store.medicine_notes" class="input w-full min-h-32"></textarea>
+        <textarea v-model="new_mdc_store.medicine_notes" class="input w-full min-h-22"></textarea>
     </fieldset>
     
     <fieldset class="w-full fieldset border-b-2 shadow card border-base-300 rounded-box p-4">

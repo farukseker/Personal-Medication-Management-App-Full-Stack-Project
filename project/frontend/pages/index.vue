@@ -11,7 +11,6 @@
       </button>
     </div>
   </div>
-
   <div class="flex w-full my-2">
     <h2 class="text-lg font-semibold w-full">
       <TodayMessage />

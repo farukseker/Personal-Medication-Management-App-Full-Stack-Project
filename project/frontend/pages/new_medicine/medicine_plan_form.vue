@@ -11,7 +11,7 @@
         <button class="btn btn-sm btn-primary text-white" @click="saveSchedule" :disabled="!form_is_vaild()">Kaydet</button>
     </div>
 </header>
-<fieldset class="fieldset  rounded-box w-xs p-4 max-w-md mx-auto">
+<fieldset class="fieldset  rounded-box p-4 mx-auto">
     <legend class="fieldset-legend text-xl">Plan 1.</legend>
     <article class="flex flex-col gap-4">
         <fieldset class="w-full bg-base-200 fieldset border-b-2 shadow card border-base-300 rounded-box p-4">

@@ -10,7 +10,7 @@
         <li class="w-5 h-5 flex text-sm bg-accent text-accent-content border justify-center">A</li>
         <li class="w-5 h-5 flex text-sm bg-neutral text-neutral-content border justify-center">A</li>
         <li class="w-5 h-5 bg-primary-content btn btn-primary"></li>
-        <li class="w-5 h-5 bg-secondary-content rounded-2xl border border-dashed"></li>
+        <li class="min-w-5 max-w-5 min-h-5 max-h-5 bg-secondary-content rounded-2xl border border-dashed"></li>
     </ul>
     </div>
 </div>
