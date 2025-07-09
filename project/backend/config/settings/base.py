@@ -56,7 +56,6 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django_filters',
     'django_celery_beat',
-    'sslserver',
     "allauth",
     "allauth.account",
     "allauth.mfa",

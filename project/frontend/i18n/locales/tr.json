@@ -36,6 +36,7 @@
         "dos_taken": "Alındı"
     },
     "counter": {
+        "title": "Sayaçlar",
         "add_counter": "Sayaç ekle"
     },
     "bottom_navigation": {

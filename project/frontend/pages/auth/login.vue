@@ -47,8 +47,8 @@
 </template>
 <script setup>
 import { faGoogle, faMeta, faGithub } from '@fortawesome/free-brands-svg-icons'
-import { useI18n } from 'vue-i18n'
 import { useLocaleRouter } from '~/composables/useLocaleRouter'
+import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 const { go } = useLocaleRouter()

@@ -1,27 +1,12 @@
 <template>
    <div class="p-4 space-y-4 max-w-md mx-auto">
-    <div class="flex flex-col gap-4 flex-1">
-      <div class="flex justify-between items-center">
-        <h1 class="text-xl font-bold">{{ $t('index.title') }}</h1>
-        <button 
-          @click="go('/settings')"
-          class="btn btn-ghost btn-circle text-2xl p-0">
-          <img class="w-[36px] h-[36px] object-cover rounded-full shadow-md" src="/pp.jpg" alt="">
-        </button>
-      </div>
-    </div>
-
-    <div class="flex w-full my-2">
-      <h2 class="text-lg font-semibold w-full my-auto">
-        <TodayMessage />
-      </h2>
+  <headersMainHeader :title="$t('counter.title')">
       <div 
           @click="go('/new_counter')"
           class="rounded shadow bg-base-200 border-2 border-dashed border-gray-400 text-gray-600 px-2 py-0 flex cursor-pointer min-w-fit text-sm">
           <span class="my-auto">{{ $t('counter.add_counter') }}</span>
       </div>
-    </div>
-
+  </headersMainHeader>
   <NavTabsNav />
 
   <article>

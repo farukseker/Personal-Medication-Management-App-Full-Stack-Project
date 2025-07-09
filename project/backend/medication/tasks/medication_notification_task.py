@@ -37,7 +37,7 @@ def notification_dispatcher():
                 key = f"notif:{schedule.id}:{dose_time.time}:{today}"
                 if cache.get(key):
                     continue
-                cache.set(key, True, timeout=3600)  # 1 saat sonra silinir
+                cache.set(key, True, timeout=3600)
 
                 pyload: dict[str, str] = {
                     "title": "İlaç Hatırlatıcı",

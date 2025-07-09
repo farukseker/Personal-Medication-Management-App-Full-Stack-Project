@@ -1,25 +1,11 @@
 
 <template>
 <div class="p-4 space-y-4 max-w-md mx-auto">
-  <div class="flex flex-col gap-4 flex-1">
-    <div class="flex justify-between items-center">
-      <h1 class="text-xl font-bold">{{ $t('index.title') }}</h1>
-      <button 
-        @click="go('/settings')"
-        class="btn btn-ghost btn-circle text-2xl p-0">
-        <img class="w-[36px] h-[36px] object-cover rounded-full shadow-md" src="/pp.jpg" alt="">
-      </button>
-    </div>
-  </div>
-  <div class="flex w-full my-2">
-    <h2 class="text-lg font-semibold w-full">
-      <TodayMessage />
-    </h2>
+  <headersMainHeader :title="$t('index.title')">
     <button class="btn btn-primary btn-sm" @click="go_new_medicine_form">
       + {{ $t('index.add_medication') }}
     </button>
-  </div>
-
+  </headersMainHeader>
   <NavTabsNav />
 
   <section>

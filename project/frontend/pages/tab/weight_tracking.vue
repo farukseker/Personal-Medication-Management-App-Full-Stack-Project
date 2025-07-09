@@ -1,22 +1,12 @@
 <template>
   <div class="p-4 space-y-4 max-w-md mx-auto">
-  <div class="flex flex-col gap-4 flex-1">
-    <div class="flex justify-between items-center">
-      <h1 class="text-xl font-bold">{{ $t('index.title') }}</h1>
-      <button 
-        @click="go('/settings')"
-        class="btn btn-ghost btn-circle text-2xl p-0">
-        <img class="w-[36px] h-[36px] object-cover rounded-full shadow-md" src="/pp.jpg" alt="">
-      </button>
-    </div>
-  </div>
+    <headersMainHeader>
+    <button class="btn btn-primary btn-sm" @click="go('/tab/add_weight')">
+      Tartıl
+    </button>
 
-  <div class="flex w-full">
-    <h2 class="text-lg font-semibold mb-2 w-full">
-      <TodayMessage />
-    </h2>
-  </div>
-  <NavTabsNav />
+    </headersMainHeader>
+    <NavTabsNav />
   <div class="w-full text-center">
     <font-awesome :icon="faWeightScale" class="text-4xl text-primary mx-2" />
     <div class="flex flex-col">

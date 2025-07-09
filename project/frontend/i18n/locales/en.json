@@ -36,6 +36,7 @@
         "dos_taken": "Dos Taken"
     },
     "counter": {
+        "title": "Counters",
         "add_counter": "Add a counter"
     },
     "bottom_navigation": {
