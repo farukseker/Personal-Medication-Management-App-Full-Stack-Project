@@ -22,6 +22,20 @@ services:
     networks:
       - my_network
 
+  mongo:
+    image: mongo:latest
+    container_name: medication-mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password_mongo
+      MONGO_INITDB_DATABASE: medication_mongo
+    ports:
+      - 5003:27017
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - my_network
+
   backend:
     build:
       context: ./backend
@@ -73,6 +87,7 @@ volumes:
   postgres_data:
     driver: local
   frontend_dist:
+  mongo_data:
 
 networks:
   my_network:

@@ -49,7 +49,7 @@ FROM base AS build
 COPY --from=install /usr/src/app/node_modules ./node_modules
 COPY . .
 ENV NODE_ENV=production
-RUN npm run build
+RUN nuxt generate
 
 # Final imaj (sadece çıktılar ve prod modül)
 FROM base AS release
