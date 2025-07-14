@@ -7,19 +7,25 @@ from medication.models import MedicationLog
 from rest_framework.filters import OrderingFilter
 
 
+"""
+Shit kodun farkındayım ui üzerinde filitreleme için daha uygun bir arayüz uygulandığında bu blok düzeltilecektir  
+"""
+
 class MedicationLogListCreateView(ListCreateAPIView):
     serializer_class = MedicationLogListSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        if date := self.request.query_params.get('date', None):
-            if date == 'today':
+        if filter_type := self.request.query_params.get('date', None):
+            if filter_type == 'today':
                 date = localdate()
                 return MedicationLog.objects.filter(user=self.request.user, date=date)
-            if date == 'yesterday':
+
+            if filter_type == 'yesterday':
                 date = localdate() - timedelta(days=1)
                 return MedicationLog.objects.filter(user=self.request.user, date=date)
-            if date == 'week':
+            
+            if filter_type == 'week':
                 today = localdate()
                 week_start = today  - timedelta(days=today.weekday())
                 week_end = week_start + timedelta(days=6)
@@ -27,22 +33,34 @@ class MedicationLogListCreateView(ListCreateAPIView):
                     user=self.request.user,
                     date__range=(week_start, week_end)
                 )
-            if date == 'month':
-                bugun = localdate()
-                ay_basi = bugun.replace(day=1)
 
-                # Bir sonraki ayın ilk günü:
-                if bugun.month == 12:
-                    sonraki_ay_basi = bugun.replace(year=bugun.year + 1, month=1, day=1)
+            if filter_type == 'month':
+                today = localdate()
+                start_of_month = today.replace(day=1)
+
+                # Gelecek ayın ilk günü
+                if today.month == 12:
+                    start_of_next_month = today.replace(year=today.year + 1, month=1, day=1)
                 else:
-                    sonraki_ay_basi = bugun.replace(month=bugun.month + 1, day=1)
+                    start_of_next_month = today.replace(month=today.month + 1, day=1)
 
-                ay_sonu = sonraki_ay_basi - timedelta(days=1)
+                end_of_month = start_of_next_month - timedelta(days=1)
                 return MedicationLog.objects.filter(
                     user=self.request.user,
-                    date__range=(ay_basi, ay_sonu)
+                    date__range=(start_of_month, end_of_month)
                 )
 
+            if filter_type == 'range':
+                start_date = self.request.query_params.get('start_date')
+                end_date = self.request.query_params.get('end_date') or str(localdate())  # Eğer end_date yoksa bugünün string hali
+
+                if not start_date:
+                    raise ValueError("start_date parametresi range filtresi için zorunludur")
+
+                return MedicationLog.objects.filter(
+                    user=self.request.user,
+                    date__range=(start_date, end_date)
+                )
 
         return MedicationLog.objects.filter(user=self.request.user)
 
@@ -62,35 +80,51 @@ class MedicationLogListView(ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_medication_logs(self):
-        if date := self.request.query_params.get('date', None):
-            if date == 'today':
+        if filter_type := self.request.query_params.get('date', None):
+            if filter_type == 'today':
                 date = localdate()
                 return MedicationLog.objects.filter(user=self.request.user, date=date)
-            if date == 'yesterday':
+
+            if filter_type == 'yesterday':
                 date = localdate() - timedelta(days=1)
                 return MedicationLog.objects.filter(user=self.request.user, date=date)
-            if date == 'week':
+
+            if filter_type == 'week':
                 today = localdate()
-                week_start = today  - timedelta(days=today.weekday())
+                week_start = today - timedelta(days=today.weekday())
                 week_end = week_start + timedelta(days=6)
                 return MedicationLog.objects.filter(
                     user=self.request.user,
                     date__range=(week_start, week_end)
                 )
-            if date == 'month':
-                bugun = localdate()
-                ay_basi = bugun.replace(day=1)
 
-                # Bir sonraki ayın ilk günü:
-                if bugun.month == 12:
-                    sonraki_ay_basi = bugun.replace(year=bugun.year + 1, month=1, day=1)
+            if filter_type == 'month':
+                today = localdate()
+                start_of_month = today.replace(day=1)
+
+                # Gelecek ayın ilk günü
+                if today.month == 12:
+                    start_of_next_month = today.replace(year=today.year + 1, month=1, day=1)
                 else:
-                    sonraki_ay_basi = bugun.replace(month=bugun.month + 1, day=1)
+                    start_of_next_month = today.replace(month=today.month + 1, day=1)
 
-                ay_sonu = sonraki_ay_basi - timedelta(days=1)
+                end_of_month = start_of_next_month - timedelta(days=1)
                 return MedicationLog.objects.filter(
                     user=self.request.user,
-                    date__range=(ay_basi, ay_sonu)
+                    date__range=(start_of_month, end_of_month)
+                )
+
+            if filter_type == 'range':
+                start_date = self.request.query_params.get('start_date')
+                end_date = self.request.query_params.get('end_date') or str(
+                    localdate())  # Eğer end_date yoksa bugünün string hali
+
+                if not start_date:
+                    raise ValueError("start_date parametresi range filtresi için zorunludur")
+
+                return MedicationLog.objects.filter(
+                    user=self.request.user,
+                    date__range=(start_date, end_date)
                 )
         return MedicationLog.objects.filter(user=self.request.user)
 

@@ -8,3 +8,5 @@ admin.site.register(MedicationSchedule)
 admin.site.register(MedicationLog)
 admin.site.register(DailyNote)
 admin.site.register(MedicationDoseTime)
+
+admin.site.register(MedicationAutoCompilationModel) #  TEMP
