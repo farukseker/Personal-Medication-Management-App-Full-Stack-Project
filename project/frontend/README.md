@@ -1,5 +1,11 @@
 # Nuxt Minimal Starter
 
+npx nuxt dev --host 192.168.123.97 --port 4080 --https --ssl-cert .ssl/192.168.123.97.pem --ssl-key .ssl/192.168.123.97-key.pem
+
+
+chrome://inspect#devices
+
+
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
 ## Setup
@@ -76,4 +82,3 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
-npx nuxt dev --host 192.168.123.97 --port 4080 --https --ssl-cert .ssl/192.168.123.97.pem --ssl-key .ssl/192.168.123.97-key.pem

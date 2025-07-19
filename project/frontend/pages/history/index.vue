@@ -1,23 +1,9 @@
 <template>
   <!-- <History.vue /> -->
    <div class="p-4 space-y-4 max-w-md mx-auto">
-      <div class="flex flex-col gap-4 flex-1">
-        <div class="flex justify-between items-center">
-            <h1 class="text-xl font-bold">İlaç Takibi</h1>
-            <button 
-              @click="go('/settings')"
-              class="btn btn-ghost text-2xl p-0">
-                <img class="w-[36px] h-[36px] object-cover rounded-full shadow-md" src="/pp.jpg" alt="">
-            </button>
-            </div>
-        </div>
-      <div>
-        <div class="flex w-full my-2">
-          <h2 class="text-lg font-semibold w-full my-auto">
-            <TodayMessage />
-          </h2>
+      <headersMainHeader :title="$t('index.title')">
           <button class="btn btn-sm btn-success">Rapor Al </button>
-        </div>
+      </headersMainHeader>
         <div class="card bg-base-100 sm:shadow mb-3">
             <div class="card-body flex flex-row gap-2 p-0 sm:p-5 w-full justify-between">
                 <button class="btn btn-sm"
@@ -33,7 +19,10 @@
                 class="btn btn-sm"
                 :class="filter_type === 'month' ? 'btn-primary': 'btn-outline'"
                 @click="filter_type='month'">Bu Ay</button>
-                <button class="btn btn-sm btn-outline text-secondary">Özel Tarih </button>
+                <button 
+                class="btn btn-sm btn-outline"
+                @click="go('/history/date_filter')"
+                >Özel Tarih</button>
             </div>
         </div>
         <div class="underline font-semibold text-primary-content" v-if="!(medication_history_list?.length > 0)">
@@ -65,7 +54,6 @@
           </div>
         </div>
       </div>
-   </div>
 </template>
   
 <script setup>

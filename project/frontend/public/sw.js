@@ -70,21 +70,75 @@ self.addEventListener('push', function (event) {
   );
 });
 
+// click
+async function fetchWithRefresh(url, options = {}) {
+  const response = await fetch(url, {
+    ...options,
+    credentials: 'include',
+  });
+
+  if (response.status === 401) {
+    const refreshResponse = await fetch('/auth/refresh', {
+      method: 'POST',
+      credentials: 'include', 
+    });
+    console.log(refreshResponse)
+    if (!refreshResponse.ok) {
+      console.error('Refresh başarısız, oturum süresi dolmuş olabilir');
+      return response;
+    }
+
+    return await fetch(url, {
+      ...options,
+      credentials: 'include',
+    });
+  }
+
+  return response;
+}
+
 self.addEventListener('notificationclick', function (event) {
   event.notification.close();
 
+  const action = event.action;
+  const type = event.notification.data?.type;
   const urlToOpen = event.notification.data?.url || '/';
 
-  event.waitUntil(
-    clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function (clientList) {
-      for (let client of clientList) {
-        if (client.url === urlToOpen && 'focus' in client) {
-          return client.focus();
+  if (action === 'take') {
+    event.waitUntil(
+      fetch('https://api.siten.com/medicine/take/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',  // 🍪 Cookie içindeki JWT otomatik gönderilir
+        body: JSON.stringify({
+          timestamp: new Date().toISOString(),
+          type: type || 'medicine',
+        }),
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error('API çağrısı başarısız');
+          return res.json();
+        })
+        .then((data) => console.log('API yanıtı:', data))
+        .catch((err) => console.error('API hatası:', err))
+    );
+  } else if (action === 'skip') {
+    console.log('Kullanıcı pas geçti.');
+  } else {
+    // Bildirime normal tıklanırsa pencereyi aç
+    event.waitUntil(
+      clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+        for (let client of clientList) {
+          if (client.url === urlToOpen && 'focus' in client) {
+            return client.focus();
+          }
         }
-      }
-      if (clients.openWindow) {
-        return clients.openWindow(urlToOpen);
-      }
-    })
-  );
+        if (clients.openWindow) {
+          return clients.openWindow(urlToOpen);
+        }
+      })
+    );
+  }
 });

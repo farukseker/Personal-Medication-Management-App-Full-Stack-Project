@@ -19,6 +19,7 @@ import {
     faMoon,
     faCircleHalfStroke
 } from '@fortawesome/free-solid-svg-icons'
+
 const themes = [
   'system',
   'light',
