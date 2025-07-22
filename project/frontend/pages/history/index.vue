@@ -28,6 +28,7 @@
         <div class="underline font-semibold text-primary-content" v-if="!(medication_history_list?.length > 0)">
           liste boş
         </div>
+        
         <div class="space-y-3" v-if="filter_type === 'today' || filter_type === 'yesterday'">
           <MedicationPillReminder v-for="medication_today in medication_history_list" :key="medication_today.id + 3" :medication="medication_today" @load_medication='load_medication_history_list' />
         </div>
@@ -62,12 +63,21 @@ import { useLocaleRouter } from '~/composables/useLocaleRouter'
 const { go } = useLocaleRouter()
 const { $api } = useNuxtApp()
 import dayjs from 'dayjs'
+import { onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 
 const medication_history_list = ref([])
 const split_medication_history_list = ref([])
 const filter_type = ref('today') //today 
 
 const is_revresed_list = ref(false) 
+
+const route = useRoute()
+onMounted(() => {
+  if (route.query.filter_type){
+    filter_type.value = route.query.filter_type
+  }
+})
 
 watch(filter_type, async new_filter_type => {
   if (new_filter_type === 'today' || new_filter_type === 'yesterday' ) {
