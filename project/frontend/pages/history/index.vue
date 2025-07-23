@@ -25,10 +25,14 @@
                 >Özel Tarih</button>
             </div>
         </div>
-        <div class="underline font-semibold text-primary-content" v-if="!(medication_history_list?.length > 0)">
+        <div class="underline font-semibold text-primary-content text-center animate-pulse" v-if="!(medication_history_list?.length > 0) && (filter_type === 'today' || filter_type === 'yesterday')">
+          <font-awesome :icon="faFolderOpen" />
           liste boş
         </div>
-        
+        <div class="underline font-semibold text-primary-content text-center animate-pulse" v-else-if="!(split_medication_history_list?.length > 0) && !(filter_type === 'today' || filter_type === 'yesterday')">
+          <font-awesome :icon="faFolderOpen" />
+          liste boş
+        </div>
         <div class="space-y-3" v-if="filter_type === 'today' || filter_type === 'yesterday'">
           <MedicationPillReminder v-for="medication_today in medication_history_list" :key="medication_today.id + 3" :medication="medication_today" @load_medication='load_medication_history_list' />
         </div>
@@ -59,6 +63,7 @@
   
 <script setup>
 import { useLocaleRouter } from '~/composables/useLocaleRouter'
+import { faFolderOpen } from '@fortawesome/free-regular-svg-icons'
 
 const { go } = useLocaleRouter()
 const { $api } = useNuxtApp()

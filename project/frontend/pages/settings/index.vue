@@ -55,7 +55,7 @@
             <SettingsButton @click="logout" btnStyle="btn btn-ghost text-error" :icon="faDoorOpen" title="Çıkış yap" />
         </fieldset>
     </article>
-    <p class="text-gray-400 text-xs font-semibold text-center">Version. V1.14.8</p>
+    <p class="text-gray-400 text-xs font-semibold text-center">Version. V1.18.10</p>
 </section>
 </template>
 
